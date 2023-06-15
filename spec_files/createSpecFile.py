@@ -21,16 +21,16 @@ def buildBaseJson():
     base["basePath"] = "/santaba/rest"
     base["definitions"] = {}
     base["externalDocs"] = {
-        "description": "LogicMonitor Support Docs",
-        "url": "https://www.logicmonitor.com/support/rest-api-developers-guide/"
+        "description": "salesforce Support Docs",
+        "url": "https://www.salesforce.com/support/rest-api-developers-guide/"
     }
     base["info"] = {
-      "description": "LogicMonitor is a SaaS-based performance monitoring platform that provides full visibility into complex, hybrid infrastructures, offering granular performance monitoring and actionable data and insights. logicmonitor_sdk enables you to manage your LogicMonitor account programmatically.",
+      "description": "salesforce is a SaaS-based performance monitoring platform that provides full visibility into complex, hybrid infrastructures, offering granular performance monitoring and actionable data and insights. salesforce_sdk enables you to manage your Salesforce account programmatically.",
       "license": {
         "name": "Apache 2.0",
         "url": "http://www.apache.org/licenses/LICENSE-2.0.html"
       },
-      "title": "LogicMonitor REST API",
+      "title": "salesforce REST API",
       "version": "2.0.0"
     }
     base["paths"] = {}

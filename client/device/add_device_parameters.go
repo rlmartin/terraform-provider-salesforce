@@ -16,7 +16,7 @@ import (
 	"github.com/go-openapi/strfmt"
 	"github.com/go-openapi/swag"
 
-	"tf-provider-example/models"
+	"vestahealthcare/models"
 )
 
 // NewAddDeviceParams creates a new AddDeviceParams object,

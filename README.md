@@ -1,4 +1,4 @@
-# Automatically Writing a Terraform Provider for LogicMonitor
+# Automatically Writing a Terraform Provider for Salesforce
 
 <img src="LM_logo.png" width="600">
 
@@ -18,18 +18,18 @@ Learn more by checking out the article!
 ## Building the Provider
 Clone repository (here, using SSH):
 ```sh
-$ git clone git@github.com:logicmonitor/automated-terraform-provider.git
+$ git clone git@github.com:vestahealthcare/salesforce-terraform-provider.git
 ```
 Enter the provider directory and build the provider:
 ```sh
-$ cd automated-terraform-provider/
+$ cd salesforce-terraform-provider/
 $ make
 ```
 The Makefile will then generate the code, build the binary, and copy it to the Terraform plugin directory.
 
 ## Using the provider
 
-The LogicMonitor Terraform Provider has two methods for setting required arguments:
+The Salesforce Terraform Provider has two methods for setting required arguments:
 Environment Variables
 ```sh
 export LM_API_ID=xyz
@@ -39,10 +39,10 @@ export LM_COMPANY=xyz
 
 Provider Initialization
 ```sh
-provider "logicmonitor" {
-  api_id = var.logicmonitor_api_id
-  api_key = var.logicmonitor_api_key
-  company = var.logicmonitor_company
+provider "salesforce" {
+  api_id = var.salesforce_api_id
+  api_key = var.salesforce_api_key
+  company = var.salesforce_company
 }
 ```
-Test cases can be found in the `/automated-terraform-provider/Test` directory.
+Test cases can be found in the `/salesforce-terraform-provider/Test` directory.

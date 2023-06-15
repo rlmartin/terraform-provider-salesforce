@@ -1,4 +1,4 @@
-package logicmonitor 
+package salesforce 
 
 import (
 )
@@ -24,12 +24,12 @@ func Provider() *schema.Provider {
 		},
 		ResourcesMap: map[string]*schema.Resource{
 			{{- range .OperationGroups }}
-			"logicmonitor_{{ humanize .Name | snakize }}": resources.{{ pascalize .Name }}(),
+			"salesforce_{{ humanize .Name | snakize }}": resources.{{ pascalize .Name }}(),
 			{{- end }}
 		},
 		DataSourcesMap: map[string]*schema.Resource{
 			{{- range .OperationGroups }}
-			"logicmonitor_{{ humanize .Name | snakize }}": resources.DataResource{{ pascalize .Name }}(),
+			"salesforce_{{ humanize .Name | snakize }}": resources.DataResource{{ pascalize .Name }}(),
 			{{- end }}
 		},
 		ConfigureContextFunc: providerConfigure,
@@ -41,7 +41,7 @@ func providerConfigure(ctx context.Context, d *schema.ResourceData) (interface{}
 
  	id := d.Get("api_id").(string)
  	key := d.Get("api_key").(string)
- 	company := d.Get("company").(string) + ".logicmonitor.com"
+ 	company := d.Get("company").(string) + ".salesforce.com"
 	config := client.NewConfig()
 	config.SetAccessKey(&key)
 	config.SetAccessID(&id)

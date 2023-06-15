@@ -14,7 +14,7 @@ package schemata
 
 import (
 	{{- if $needsUtils }}
-	"tf-provider-example/logicmonitor/utils"
+	"vestahealthcare/salesforce/utils"
 	{{- end }}
 )
 
@@ -122,7 +122,7 @@ func DataSource{{ $operationGroup }}Schema() map[string]*schema.Schema {
 		},
 		{{ end }}
 		"filter": { {{/* all of LM's GetList endpoints support a filter parameter for, well, filtering! Check our endpoint filtering documentation below */}}
-			Type:     schema.TypeString, {{/* https://www.logicmonitor.com/support/rest-api-developers-guide/v1/devices/get-devices */}}
+			Type:     schema.TypeString, {{/* https://www.salesforce.com/support/rest-api-developers-guide/v1/devices/get-devices */}}
             Optional: true,
 		},
 	}

@@ -1,7 +1,7 @@
 package main
 
 import (
-	"tf-provider-example/logicmonitor"
+	"vestahealthcare/salesforce"
 
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/plugin"
@@ -10,7 +10,7 @@ import (
 func main() {
 	opts := &plugin.ServeOpts{
 		ProviderFunc: func() *schema.Provider {
-			return logicmonitor.Provider()
+			return salesforce.Provider()
 		},
 	}
 

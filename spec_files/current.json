@@ -303,7 +303,7 @@
                     }
           },
           "externalDocs": {
-                    "description": "LogicMonitor Support Docs",
+                    "description": "Salesforce Support Docs",
                     "url": "https://www.logicmonitor.com/support/rest-api-developers-guide/"
           },
           "info": {
@@ -312,7 +312,7 @@
                               "name": "Apache 2.0",
                               "url": "http://www.apache.org/licenses/LICENSE-2.0.html"
                     },
-                    "title": "LogicMonitor REST API",
+                    "title": "Salesforce REST API",
                     "version": "2.0.0"
           },
           "paths": {

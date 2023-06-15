@@ -24,7 +24,7 @@ package resources
 // Editing this file might prove futile when you re-run the swagger generate command
 
 import (
-	"tf-provider-example/logicmonitor/utils"
+	"vestahealthcare/salesforce/utils"
 )
 
 /*
@@ -95,7 +95,7 @@ func {{ $operation }}(ctx context.Context, d *schema.ResourceData, m interface{}
 
 		{{- end }}
 
-	client := m.(*client.LogicMonitorRESTAPI)
+	client := m.(*client.SalesforceRESTAPI)
 
 	resp, err := client.{{ pascalize $operationGroup }}.{{ pascalize $operation }}(params)
 	log.Printf("[TRACE] response: %v", resp)
@@ -128,7 +128,7 @@ func {{ $operation }}(ctx context.Context, d *schema.ResourceData, m interface{}
 	params := {{ $operationGroup }}.New{{ pascalize $operation }}Params()
 	params.SetBody(model)
 
-	client := m.(*client.LogicMonitorRESTAPI)
+	client := m.(*client.SalesforceRESTAPI)
 
 	resp, err := client.{{ pascalize $operationGroup }}.{{ pascalize $operation }}(params)
 	log.Printf("[TRACE] response: %v", resp)
@@ -170,7 +170,7 @@ func {{ $operation }}(ctx context.Context, d *schema.ResourceData, m interface{}
 		}
 	}
 
-	client := m.(*client.LogicMonitorRESTAPI)
+	client := m.(*client.SalesforceRESTAPI)
 
 	// makes a bulk update for all properties that were changed
 	resp, err := client.{{ pascalize $operationGroup }}.{{ pascalize $operation }}(params)
@@ -196,7 +196,7 @@ func {{ $operation }}(ctx context.Context, d *schema.ResourceData, m interface{}
 		{{- template "handleNonBodyParam" . -}}
 	{{ end }}
 
-	client := m.(*client.LogicMonitorRESTAPI)
+	client := m.(*client.SalesforceRESTAPI)
 
 	resp, err := client.{{ pascalize $operationGroup }}.{{ pascalize $operation }}(params)
 	log.Printf("[TRACE] response: %v", resp)

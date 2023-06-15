@@ -10,11 +10,11 @@ layout:
       file_name: "main.go"
     - name: provider 
       source: "provider.gtpl"
-      target: "{{ joinFilePath .Target }}/logicmonitor"
+      target: "{{ joinFilePath .Target }}/salesforce"
       file_name: "provider.go"
     - name: utils 
       source: "utils.gtpl"
-      target: "{{ joinFilePath .Target }}/logicmonitor/utils"
+      target: "{{ joinFilePath .Target }}/salesforce/utils"
       file_name: "helper_functions.go"
     - name: datadump
       source: "datadump.gtpl"
@@ -27,7 +27,7 @@ layout:
       file_name: "{{ (snakize (pascalize .Name)) }}.go"
     - name: schemata
       source: "schemata.gtpl" 
-      target: "{{ joinFilePath .Target }}/logicmonitor/schemata"
+      target: "{{ joinFilePath .Target }}/salesforce/schemata"
       file_name: "{{ camelize .Name }}_schema.go"
     - name: datadump
       source: "datadump.gtpl"
@@ -53,7 +53,7 @@ layout:
       file_name: "{{ (snakize (pascalize .Name)) }}_client.go"
     - name: resources 
       source: "resources.gtpl" 
-      target: "{{ joinFilePath .Target }}/logicmonitor/resources"
+      target: "{{ joinFilePath .Target }}/salesforce/resources"
       file_name: "{{ camelize .Name }}_resource.go"
     - name: datadump
       source: "datadump.gtpl"

@@ -1,6 +1,6 @@
-HOSTNAME=logicmonitor.com
+HOSTNAME=salesforce.com
 NAMESPACE=com
-NAME=logicmonitor
+NAME=salesforce
 BINARY=terraform-provider-${NAME}
 VERSION=0.2
 OS_ARCH=darwin_amd64
@@ -9,7 +9,7 @@ default: install
 
 clean:
 	rm -Rf data_profile/
-	rm -Rf logicmonitor/*
+	rm -Rf salesforce/*
 
 build:  clean
 	swagger generate client -f ./spec_files/current.json --template-dir templates -C config.yml > swagrun.log

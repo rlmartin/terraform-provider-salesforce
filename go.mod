@@ -1,4 +1,4 @@
-module tf-provider-example
+module vestahealthcare
 
 go 1.16
 
