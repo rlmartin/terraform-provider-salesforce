@@ -55,10 +55,12 @@ func NewUpdateDeviceParamsWithHTTPClient(client *http.Client) *UpdateDeviceParam
 	}
 }
 
-/* UpdateDeviceParams contains all the parameters to send to the API endpoint
-   for the update device operation.
+/*
+UpdateDeviceParams contains all the parameters to send to the API endpoint
 
-   Typically these are written to a http.Request.
+	for the update device operation.
+
+	Typically these are written to a http.Request.
 */
 type UpdateDeviceParams struct {
 

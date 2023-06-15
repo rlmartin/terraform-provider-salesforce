@@ -55,10 +55,12 @@ func NewAddDeviceParamsWithHTTPClient(client *http.Client) *AddDeviceParams {
 	}
 }
 
-/* AddDeviceParams contains all the parameters to send to the API endpoint
-   for the add device operation.
+/*
+AddDeviceParams contains all the parameters to send to the API endpoint
 
-   Typically these are written to a http.Request.
+	for the add device operation.
+
+	Typically these are written to a http.Request.
 */
 type AddDeviceParams struct {
 

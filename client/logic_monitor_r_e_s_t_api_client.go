@@ -136,7 +136,7 @@ func (c *LogicMonitorRESTAPI) SetTransport(transport runtime.ClientTransport) {
 
 }
 
-//TODO: See if there is a way to move this out of Facade Template and into Main or Provider templates
+// TODO: See if there is a way to move this out of Facade Template and into Main or Provider templates
 func LMv1Auth(accessId, accessKey string) runtime.ClientAuthInfoWriter {
 	return runtime.ClientAuthInfoWriterFunc(func(r runtime.ClientRequest, _ strfmt.Registry) error {
 		// get epoch
