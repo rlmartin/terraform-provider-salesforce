@@ -29,10 +29,10 @@ func Provider() *schema.Provider {
 			},
 		},
 		ResourcesMap: map[string]*schema.Resource{
-			"salesforce_device": resources.Device(),
+			"salesforce_platform_event_channel": resources.PlatformEventChannel(),
 		},
 		DataSourcesMap: map[string]*schema.Resource{
-			"salesforce_device": resources.DataResourceDevice(),
+			"salesforce_platform_event_channel": resources.DataResourcePlatformEventChannel(),
 		},
 		ConfigureContextFunc: providerConfigure,
 	}

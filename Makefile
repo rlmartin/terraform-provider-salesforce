@@ -8,8 +8,10 @@ OS_ARCH=darwin_amd64
 default: install
 
 clean:
+	rm -Rf client/
 	rm -Rf data_profile/
-	rm -Rf salesforce/*
+	rm -Rf models/
+	rm -Rf salesforce/
 
 build:  clean
 	swagger generate client -f ./spec_files/current.json --template-dir templates -C config.yml > swagrun.log

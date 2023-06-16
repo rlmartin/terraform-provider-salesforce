@@ -1,0 +1,97 @@
+{
+  "definitions": {
+    "ErrorResponse": {
+      "properties": {
+        "Message": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "Message"
+      ],
+      "type": "object"
+    },
+    "PlatformEventChannel": {
+      "properties": {
+        "Id": {
+          "example": "1234",
+          "type": "string"
+        },
+        "FullName": {
+          "example": "My_Channel__chn",
+          "type": "string"
+        },
+        "Metadata": {
+          "$ref": "#/definitions/PlatformEventChannelMetadata"
+        }
+      },
+      "required": [
+        "FullName"
+      ],
+      "type": "object"
+    },
+    "PlatformEventChannelMetadata": {
+      "properties": {
+        "channelType": {
+          "example": "1234",
+          "type": "string",
+          "enum": [
+            "data",
+            "event"
+          ]
+        },
+        "label": {
+          "example": "My Channel",
+          "type": "string"
+        }
+      },
+      "required": [
+        "channelType",
+        "label"
+      ],
+      "type": "object"
+    }
+  },
+  "paths": {
+    "/PlatformEventChannel/{Id}": {
+      "get": {
+        "description": "",
+        "operationId": "getPlatformEventChannel",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "Id",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": {
+                "$ref": "#/definitions/PlatformEventChannel"
+            }
+          },
+          "default": {
+            "description": "Error",
+            "schema": {
+                "$ref": "#/definitions/ErrorResponse"
+            }
+          }
+        },
+        "summary": "GET PlatformEventChannel",
+        "tags": [
+          "PlatformEventChannel"
+        ]
+      }
+    }
+  },
+  "tags": [
+    {
+      "name": "PlatformEventChannel"
+    }
+  ]
+}

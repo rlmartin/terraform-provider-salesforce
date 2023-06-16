@@ -1,10 +1,6 @@
 package utils
 
-import (
-	"vestahealthcare/models"
-
-	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
-)
+import "github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
 
 // retrieve resource custom properties from resource structure
 func GetPropertiesFromResource(d *schema.ResourceData, key string) (t []*models.NameAndValue) {

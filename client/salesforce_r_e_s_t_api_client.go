@@ -21,7 +21,7 @@ import (
 
 	strfmt "github.com/go-openapi/strfmt"
 
-	"vestahealthcare/client/device"
+	"vestahealthcare/client/platform_event_channel"
 )
 
 const (
@@ -30,7 +30,7 @@ const (
 	DefaultHost string = "localhost"
 	// DefaultBasePath is the default BasePath
 	// found in Meta (info) section of spec file
-	DefaultBasePath string = "/santaba/rest"
+	DefaultBasePath string = "/services/data/v57.0/tooling/sobjects"
 )
 
 // DefaultSchees are the default schemes found in Meta (info) section of spec file
@@ -77,7 +77,7 @@ func New(c *Config) *SalesforceRESTAPI {
 	cli := new(SalesforceRESTAPI)
 	cli.Transport = transport
 
-	cli.Device = device.New(transport, strfmt.Default, authInfo)
+	cli.PlatformEventChannel = platform_event_channel.New(transport, strfmt.Default, authInfo)
 
 	return cli
 }
@@ -123,7 +123,7 @@ func (cfg *TransportConfig) WithSchemes(schemes []string) *TransportConfig {
 
 // SalesforceRESTAPI is a client for salesforce r e s t API
 type SalesforceRESTAPI struct {
-	Device *device.Client
+	PlatformEventChannel *platform_event_channel.Client
 
 	Transport runtime.ClientTransport
 }
@@ -132,7 +132,7 @@ type SalesforceRESTAPI struct {
 func (c *SalesforceRESTAPI) SetTransport(transport runtime.ClientTransport) {
 	c.Transport = transport
 
-	c.Device.SetTransport(transport)
+	c.PlatformEventChannel.SetTransport(transport)
 
 }
 

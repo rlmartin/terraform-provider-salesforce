@@ -19,33 +19,16 @@ import (
 // swagger:model ErrorResponse
 type ErrorResponse struct {
 
-	// The error code
-	// Read Only: true
-	ErrorCode int32 `json:"errorCode,omitempty"`
-
-	// The error detail
-	// Read Only: true
-	ErrorDetail interface{} `json:"errorDetail,omitempty"`
-
-	// The error message
-	// Read Only: true
-	ErrorMessage string `json:"errorMessage,omitempty"`
+	// message
+	// Required: true
+	Message *string `json:"Message"`
 }
 
 // Validate validates this error response
 func (m *ErrorResponse) Validate(formats strfmt.Registry) error {
-	return nil
-}
-
-// ContextValidate validate this error response based on the context it is used
-func (m *ErrorResponse) ContextValidate(ctx context.Context, formats strfmt.Registry) error {
 	var res []error
 
-	if err := m.contextValidateErrorCode(ctx, formats); err != nil {
-		res = append(res, err)
-	}
-
-	if err := m.contextValidateErrorMessage(ctx, formats); err != nil {
+	if err := m.validateMessage(formats); err != nil {
 		res = append(res, err)
 	}
 
@@ -55,21 +38,17 @@ func (m *ErrorResponse) ContextValidate(ctx context.Context, formats strfmt.Regi
 	return nil
 }
 
-func (m *ErrorResponse) contextValidateErrorCode(ctx context.Context, formats strfmt.Registry) error {
+func (m *ErrorResponse) validateMessage(formats strfmt.Registry) error {
 
-	if err := validate.ReadOnly(ctx, "errorCode", "body", int32(m.ErrorCode)); err != nil {
+	if err := validate.Required("Message", "body", m.Message); err != nil {
 		return err
 	}
 
 	return nil
 }
 
-func (m *ErrorResponse) contextValidateErrorMessage(ctx context.Context, formats strfmt.Registry) error {
-
-	if err := validate.ReadOnly(ctx, "errorMessage", "body", string(m.ErrorMessage)); err != nil {
-		return err
-	}
-
+// ContextValidate validates this error response based on context it is used
+func (m *ErrorResponse) ContextValidate(ctx context.Context, formats strfmt.Registry) error {
 	return nil
 }
 

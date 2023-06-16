@@ -3,7 +3,7 @@
 {{ define "handleNonBodyParam" }}
 	{{ camelize .ID }}Val, {{ camelize .ID }}IsSet := d.GetOk("{{ snakize .ID}}")
 	if({{ camelize .ID }}IsSet){
-		{{- if eq (camelize .ID) "id" }}
+		{{- if and (eq (camelize .ID) "id") (not (eq .SwaggerType "string")) }}
 			{{ camelize .ID }}, _ := strconv.Atoi({{ camelize .ID }}Val.(string))
 			params.{{ pascalize .ID}} = {{ if and (not .IsArray) (not .IsMap) (not .HasDiscriminator) (not .IsInterface) (not .IsStream) (or .IsNullable  ) }}{{ end }}{{ if not .IsFileParam }}{{ if and (not .IsArray) (not .IsMap) (not .HasDiscriminator) (not .IsInterface) (not .IsStream) (or .IsNullable  ) }}&{{ end }}int32({{ camelize .ID }}){{ else }}runtime.NamedReadCloser{{- end -}}
 		{{- else }}
