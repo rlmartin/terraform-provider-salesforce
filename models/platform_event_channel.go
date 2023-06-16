@@ -15,6 +15,7 @@ import (
 )
 
 // PlatformEventChannel platform event channel
+// Example: isResource
 //
 // swagger:model PlatformEventChannel
 type PlatformEventChannel struct {

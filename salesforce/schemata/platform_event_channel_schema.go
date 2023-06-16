@@ -1,6 +1,10 @@
 package schemata
 
-import "github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
+import (
+	"vestahealthcare/models"
+
+	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
+)
 
 // Schema mapping representing the PlatformEventChannel resource defined in the Terraform configuration
 func PlatformEventChannelSchema() map[string]*schema.Schema {
@@ -20,6 +24,35 @@ func PlatformEventChannelSchema() map[string]*schema.Schema {
 			Elem: &schema.Resource{
 				Schema: PlatformEventChannelMetadataSchema(),
 			},
+			Optional: true,
+		},
+	}
+}
+
+// Schema mapping representing the resource's respective datasource object defined in Terraform configuration
+// Only difference between this and PlatformEventChannelSchema() are the computabilty of the id field and the inclusion of a filter field for datasources
+func DataSourcePlatformEventChannelSchema() map[string]*schema.Schema {
+	return map[string]*schema.Schema{
+		"full_name": {
+			Type:     schema.TypeString,
+			Optional: true,
+		},
+
+		"id": {
+			Type:     schema.TypeString,
+			Optional: true,
+		},
+
+		"metadata": {
+			Type: schema.TypeList, //GoType: PlatformEventChannelMetadata
+			Elem: &schema.Resource{
+				Schema: PlatformEventChannelMetadataSchema(),
+			},
+			Optional: true,
+		},
+
+		"filter": {
+			Type:     schema.TypeString,
 			Optional: true,
 		},
 	}
@@ -56,7 +89,9 @@ func PlatformEventChannelModel(d *schema.ResourceData) *models.PlatformEventChan
 	MetadataInterface, MetadataIsSet := d.GetOk("metadata")
 	if MetadataIsSet {
 		MetadataMap := MetadataInterface.([]interface{})[0].(map[string]interface{})
-		metadata = PlatformEventChannelMetadataModel(MetadataMap)
+		var m schema.ResourceData
+		m.Set("meta", MetadataMap)
+		metadata = PlatformEventChannelMetadataModel(&m)
 	}
 
 	return &models.PlatformEventChannel{

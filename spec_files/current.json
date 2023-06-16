@@ -13,6 +13,7 @@
                               "type": "object"
                     },
                     "PlatformEventChannel": {
+                              "example": "isResource",
                               "properties": {
                                         "FullName": {
                                                   "example": "My_Channel__chn",

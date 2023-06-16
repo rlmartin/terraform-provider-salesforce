@@ -13,6 +13,7 @@ package schemata
 {{- end }}
 
 import (
+	"vestahealthcare/models"
 	{{- if $needsUtils }}
 	"vestahealthcare/salesforce/utils"
 	{{- end }}
@@ -178,7 +179,9 @@ func {{ $operationGroup }}Model(d *schema.ResourceData) *models.{{ $operationGro
 	{{ .Name }}Interface, {{ .Name }}IsSet := d.GetOk("{{ snakize .Name }}")
 	if {{ .Name }}IsSet {
 		{{ .Name }}Map := {{ .Name }}Interface.([]interface{})[0].(map[string]interface{})
-		{{ varname .Name }} = {{ .GoType }}Model({{ .Name }}Map)
+		var m schema.ResourceData
+		m.Set("meta", {{ .Name }}Map)
+		{{ varname .Name }} = {{ .GoType }}Model(&m)
 	}
 			{{- else if stringContains .Name "Properties" }}
 	{{ varname .Name }} := utils.GetPropertiesFromResource(d, "{{ snakize .Name }}")

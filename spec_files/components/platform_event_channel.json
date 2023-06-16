@@ -12,6 +12,7 @@
       "type": "object"
     },
     "PlatformEventChannel": {
+      "example": "isResource",
       "properties": {
         "Id": {
           "example": "1234",
