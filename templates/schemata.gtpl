@@ -24,7 +24,7 @@ func {{ $operationGroup }}Schema() map[string]*schema.Schema {
 	return map[string]*schema.Schema{
 		{{- range .Properties }}
 		"{{ snakize .Name }}": {
-				{{- if (eq .Name "id") }}
+				{{- if (eq (camelize .Name) "id") }}
 			Type: schema.TypeString,
 			Computed: true,
 				{{- else }}

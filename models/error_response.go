@@ -19,9 +19,12 @@ import (
 // swagger:model ErrorResponse
 type ErrorResponse struct {
 
+	// error code
+	ErrorCode string `json:"errorCode,omitempty"`
+
 	// message
 	// Required: true
-	Message *string `json:"Message"`
+	Message *string `json:"message"`
 }
 
 // Validate validates this error response
@@ -40,7 +43,7 @@ func (m *ErrorResponse) Validate(formats strfmt.Registry) error {
 
 func (m *ErrorResponse) validateMessage(formats strfmt.Registry) error {
 
-	if err := validate.Required("Message", "body", m.Message); err != nil {
+	if err := validate.Required("message", "body", m.Message); err != nil {
 		return err
 	}
 

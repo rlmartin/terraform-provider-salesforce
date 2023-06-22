@@ -14,28 +14,24 @@ import (
 	"github.com/go-openapi/validate"
 )
 
-// PlatformEventChannel platform event channel
+// PlatformEventChannelCreateRequest platform event channel create request
 // Example: isResource
 //
-// swagger:model PlatformEventChannel
-type PlatformEventChannel struct {
+// swagger:model PlatformEventChannelCreateRequest
+type PlatformEventChannelCreateRequest struct {
 
 	// full name
 	// Example: My_Channel__chn
 	// Required: true
 	FullName *string `json:"FullName"`
 
-	// Id
-	// Example: 1234
-	ID string `json:"Id,omitempty"`
-
 	// metadata
 	// Required: true
 	Metadata *PlatformEventChannelMetadata `json:"Metadata"`
 }
 
-// Validate validates this platform event channel
-func (m *PlatformEventChannel) Validate(formats strfmt.Registry) error {
+// Validate validates this platform event channel create request
+func (m *PlatformEventChannelCreateRequest) Validate(formats strfmt.Registry) error {
 	var res []error
 
 	if err := m.validateFullName(formats); err != nil {
@@ -52,7 +48,7 @@ func (m *PlatformEventChannel) Validate(formats strfmt.Registry) error {
 	return nil
 }
 
-func (m *PlatformEventChannel) validateFullName(formats strfmt.Registry) error {
+func (m *PlatformEventChannelCreateRequest) validateFullName(formats strfmt.Registry) error {
 
 	if err := validate.Required("FullName", "body", m.FullName); err != nil {
 		return err
@@ -61,7 +57,7 @@ func (m *PlatformEventChannel) validateFullName(formats strfmt.Registry) error {
 	return nil
 }
 
-func (m *PlatformEventChannel) validateMetadata(formats strfmt.Registry) error {
+func (m *PlatformEventChannelCreateRequest) validateMetadata(formats strfmt.Registry) error {
 
 	if err := validate.Required("Metadata", "body", m.Metadata); err != nil {
 		return err
@@ -81,8 +77,8 @@ func (m *PlatformEventChannel) validateMetadata(formats strfmt.Registry) error {
 	return nil
 }
 
-// ContextValidate validate this platform event channel based on the context it is used
-func (m *PlatformEventChannel) ContextValidate(ctx context.Context, formats strfmt.Registry) error {
+// ContextValidate validate this platform event channel create request based on the context it is used
+func (m *PlatformEventChannelCreateRequest) ContextValidate(ctx context.Context, formats strfmt.Registry) error {
 	var res []error
 
 	if err := m.contextValidateMetadata(ctx, formats); err != nil {
@@ -95,7 +91,7 @@ func (m *PlatformEventChannel) ContextValidate(ctx context.Context, formats strf
 	return nil
 }
 
-func (m *PlatformEventChannel) contextValidateMetadata(ctx context.Context, formats strfmt.Registry) error {
+func (m *PlatformEventChannelCreateRequest) contextValidateMetadata(ctx context.Context, formats strfmt.Registry) error {
 
 	if m.Metadata != nil {
 
@@ -113,7 +109,7 @@ func (m *PlatformEventChannel) contextValidateMetadata(ctx context.Context, form
 }
 
 // MarshalBinary interface implementation
-func (m *PlatformEventChannel) MarshalBinary() ([]byte, error) {
+func (m *PlatformEventChannelCreateRequest) MarshalBinary() ([]byte, error) {
 	if m == nil {
 		return nil, nil
 	}
@@ -121,8 +117,8 @@ func (m *PlatformEventChannel) MarshalBinary() ([]byte, error) {
 }
 
 // UnmarshalBinary interface implementation
-func (m *PlatformEventChannel) UnmarshalBinary(b []byte) error {
-	var res PlatformEventChannel
+func (m *PlatformEventChannelCreateRequest) UnmarshalBinary(b []byte) error {
+	var res PlatformEventChannelCreateRequest
 	if err := swag.ReadJSON(b, &res); err != nil {
 		return err
 	}

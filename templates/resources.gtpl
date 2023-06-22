@@ -16,6 +16,18 @@
 	} {{ end }}
 {{ end }}
 
+{{ define "getBodyModel" }}
+{{- if .HasBodyParams }}
+	{{- range .Params }}
+	  {{- if eq (camelize .ID) "body" }}
+		  {{- .Schema.GoType | replace "models." "" }}
+		{{- end -}}
+	{{ end -}}
+{{- else }}
+	{{ pascalize .Name }}
+{{- end -}}
+{{ end }}
+
 {{- $operationGroup := .Name -}} {{/* friendly reminder that operation groups map to OpenAPI Tags */}}
 
 package resources
@@ -46,7 +58,7 @@ func {{ pascalize $operationGroup }}() *schema.Resource {
 			{{- if eq .Method "POST" }}
 		CreateContext: {{ $operation }},
 			{{- end }}
-			{{- if eq .Method "PUT" }} {{/* this template can be easily expanded to use PATCH instead of PUT if your API supports it */}}
+			{{- if or (eq .Method "PUT") (eq .Method "PATCH") }}
 		UpdateContext: {{ $operation }},
 			{{- end }}
 			{{- if eq .Method "DELETE" }}
@@ -54,6 +66,9 @@ func {{ pascalize $operationGroup }}() *schema.Resource {
 			{{- end }}
 			{{- end }}
 		{{- end }}
+		Importer: &schema.ResourceImporter{
+			StateContext: schema.ImportStatePassthroughContext,
+		},
 		Schema: schemata.{{- pascalize $operationGroup -}}Schema(),
 	}
 }
@@ -74,7 +89,7 @@ func DataResource{{ pascalize $operationGroup }}() *schema.Resource {
 
 {{ range .Operations }}
 	{{- $operation := .Name }}
-	{{- if or (eq .Method "GET") (eq .Method "POST") (eq .Method "PUT") (eq .Method "DELETE") }} {{/* the only valid API methods for us */}}
+	{{- if or (eq .Method "GET") (eq .Method "POST") (eq .Method "PUT") (eq .Method "PATCH") (eq .Method "DELETE") }} {{/* the only valid API methods for us */}}
 func {{ $operation }}(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
 	var diags diag.Diagnostics
 	{{- end}}
@@ -126,7 +141,7 @@ func {{ $operation }}(ctx context.Context, d *schema.ResourceData, m interface{}
 
 	{{- if eq .Method "POST" }}
 
-	model := schemata.{{ pascalize $operationGroup }}Model(d)
+	model := schemata.{{ template "getBodyModel" . }}Model(d)
 	params := {{ $operationGroup }}.New{{ pascalize $operation }}Params()
 	params.SetBody(model)
 
@@ -140,17 +155,15 @@ func {{ $operation }}(ctx context.Context, d *schema.ResourceData, m interface{}
 	}
 
 	respModel := resp.GetPayload()
-	schemata.Set{{ pascalize $operationGroup }}ResourceData(d, respModel)
-	d.SetId(strconv.Itoa(int(resp.Payload.ID)))
-
+	schemata.Set{{ .SuccessResponse.Schema.GoType | replace "models." "" }}ResourceData(d, respModel)
 	return diags
 }
 	{{- end }}
 
-	{{- if eq .Method "PUT" }}
+	{{- if or (eq .Method "PUT") (eq .Method "PATCH") }}
 	d.Partial(true)
 
-	model := schemata.{{pascalize $operationGroup }}Model(d)
+	model := schemata.{{ template "getBodyModel" . }}Model(d)
 	params := {{ $operationGroup }}.New{{ pascalize $operation }}Params()
 
 	{{ range .Params }}
@@ -182,8 +195,10 @@ func {{ $operation }}(ctx context.Context, d *schema.ResourceData, m interface{}
 		return diags
 	}
 
+	{{- if not (eq .SuccessResponse.Code 204) }}
 	respModel := resp.GetPayload()	
-	schemata.Set{{ pascalize $operationGroup }}ResourceData(d, respModel)
+	schemata.Set{{ .SuccessResponse.Schema.GoType | replace "models." "" }}ResourceData(d, respModel)
+	{{ end }}
 	d.Partial(false)
 
 	return diags

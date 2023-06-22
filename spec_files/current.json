@@ -3,12 +3,15 @@
           "definitions": {
                     "ErrorResponse": {
                               "properties": {
-                                        "Message": {
+                                        "errorCode": {
+                                                  "type": "string"
+                                        },
+                                        "message": {
                                                   "type": "string"
                                         }
                               },
                               "required": [
-                                        "Message"
+                                        "message"
                               ],
                               "type": "object"
                     },
@@ -28,8 +31,36 @@
                                         }
                               },
                               "required": [
-                                        "FullName"
+                                        "FullName",
+                                        "Metadata"
                               ],
+                              "type": "object"
+                    },
+                    "PlatformEventChannelCreateRequest": {
+                              "example": "isResource",
+                              "properties": {
+                                        "FullName": {
+                                                  "example": "My_Channel__chn",
+                                                  "type": "string"
+                                        },
+                                        "Metadata": {
+                                                  "$ref": "#/definitions/PlatformEventChannelMetadata"
+                                        }
+                              },
+                              "required": [
+                                        "FullName",
+                                        "Metadata"
+                              ],
+                              "type": "object"
+                    },
+                    "PlatformEventChannelCreateResponse": {
+                              "example": "isResource",
+                              "properties": {
+                                        "Id": {
+                                                  "example": "1234",
+                                                  "type": "string"
+                                        }
+                              },
                               "type": "object"
                     },
                     "PlatformEventChannelMetadata": {
@@ -52,6 +83,19 @@
                                         "label"
                               ],
                               "type": "object"
+                    },
+                    "PlatformEventChannelUpdateRequest": {
+                              "example": "isResource",
+                              "properties": {
+                                        "FullName": {
+                                                  "example": "My_Channel__chn",
+                                                  "type": "string"
+                                        },
+                                        "Metadata": {
+                                                  "$ref": "#/definitions/PlatformEventChannelMetadata"
+                                        }
+                              },
+                              "type": "object"
                     }
           },
           "externalDocs": {
@@ -68,7 +112,74 @@
                     "version": "2.0.0"
           },
           "paths": {
+                    "/PlatformEventChannel": {
+                              "post": {
+                                        "description": "",
+                                        "operationId": "createPlatformEventChannel",
+                                        "parameters": [
+                                                  {
+                                                            "in": "body",
+                                                            "name": "body",
+                                                            "required": true,
+                                                            "schema": {
+                                                                      "$ref": "#/definitions/PlatformEventChannel"
+                                                            }
+                                                  }
+                                        ],
+                                        "produces": [
+                                                  "application/json"
+                                        ],
+                                        "responses": {
+                                                  "200": {
+                                                            "description": "successful operation",
+                                                            "schema": {
+                                                                      "$ref": "#/definitions/PlatformEventChannelCreateResponse"
+                                                            }
+                                                  },
+                                                  "default": {
+                                                            "description": "Error",
+                                                            "schema": {
+                                                                      "$ref": "#/definitions/ErrorResponse"
+                                                            }
+                                                  }
+                                        },
+                                        "summary": "Create PlatformEventChannel",
+                                        "tags": [
+                                                  "PlatformEventChannel"
+                                        ]
+                              }
+                    },
                     "/PlatformEventChannel/{Id}": {
+                              "delete": {
+                                        "description": "",
+                                        "operationId": "deletePlatformEventChannel",
+                                        "parameters": [
+                                                  {
+                                                            "in": "path",
+                                                            "name": "Id",
+                                                            "required": true,
+                                                            "type": "string"
+                                                  }
+                                        ],
+                                        "produces": [
+                                                  "application/json"
+                                        ],
+                                        "responses": {
+                                                  "204": {
+                                                            "description": "successful operation"
+                                                  },
+                                                  "default": {
+                                                            "description": "Error",
+                                                            "schema": {
+                                                                      "$ref": "#/definitions/ErrorResponse"
+                                                            }
+                                                  }
+                                        },
+                                        "summary": "Delete PlatformEventChannel",
+                                        "tags": [
+                                                  "PlatformEventChannel"
+                                        ]
+                              },
                               "get": {
                                         "description": "",
                                         "operationId": "getPlatformEventChannel",
@@ -97,7 +208,45 @@
                                                             }
                                                   }
                                         },
-                                        "summary": "GET PlatformEventChannel",
+                                        "summary": "Get PlatformEventChannel",
+                                        "tags": [
+                                                  "PlatformEventChannel"
+                                        ]
+                              },
+                              "patch": {
+                                        "description": "",
+                                        "operationId": "updatePlatformEventChannel",
+                                        "parameters": [
+                                                  {
+                                                            "in": "path",
+                                                            "name": "Id",
+                                                            "required": true,
+                                                            "type": "string"
+                                                  },
+                                                  {
+                                                            "in": "body",
+                                                            "name": "body",
+                                                            "required": true,
+                                                            "schema": {
+                                                                      "$ref": "#/definitions/PlatformEventChannelUpdateRequest"
+                                                            }
+                                                  }
+                                        ],
+                                        "produces": [
+                                                  "application/json"
+                                        ],
+                                        "responses": {
+                                                  "204": {
+                                                            "description": "successful operation"
+                                                  },
+                                                  "default": {
+                                                            "description": "Error",
+                                                            "schema": {
+                                                                      "$ref": "#/definitions/ErrorResponse"
+                                                            }
+                                                  }
+                                        },
+                                        "summary": "Update PlatformEventChannel",
                                         "tags": [
                                                   "PlatformEventChannel"
                                         ]

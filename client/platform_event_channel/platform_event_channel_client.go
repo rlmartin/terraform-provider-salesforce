@@ -30,7 +30,63 @@ type Client struct {
 }
 
 /*
-GetPlatformEventChannel gs e t platform event channel
+CreatePlatformEventChannel creates platform event channel
+*/
+func (a *Client) CreatePlatformEventChannel(params *CreatePlatformEventChannelParams) (*CreatePlatformEventChannelOK, error) {
+	// TODO: Validate the params before sending
+	if params == nil {
+		params = NewCreatePlatformEventChannelParams()
+	}
+
+	result, err := a.transport.Submit(&runtime.ClientOperation{
+		ID:                 "createPlatformEventChannel",
+		Method:             "POST",
+		PathPattern:        "/PlatformEventChannel",
+		ProducesMediaTypes: []string{"application/json"},
+		ConsumesMediaTypes: []string{"application/json"},
+		Schemes:            []string{"https"},
+		Params:             params,
+		Reader:             &CreatePlatformEventChannelReader{formats: a.formats},
+		Context:            params.Context,
+		Client:             params.HTTPClient,
+	})
+	if err != nil {
+		return nil, err
+	}
+	return result.(*CreatePlatformEventChannelOK), nil
+
+}
+
+/*
+DeletePlatformEventChannel deletes platform event channel
+*/
+func (a *Client) DeletePlatformEventChannel(params *DeletePlatformEventChannelParams) (*DeletePlatformEventChannelNoContent, error) {
+	// TODO: Validate the params before sending
+	if params == nil {
+		params = NewDeletePlatformEventChannelParams()
+	}
+
+	result, err := a.transport.Submit(&runtime.ClientOperation{
+		ID:                 "deletePlatformEventChannel",
+		Method:             "DELETE",
+		PathPattern:        "/PlatformEventChannel/{Id}",
+		ProducesMediaTypes: []string{"application/json"},
+		ConsumesMediaTypes: []string{"application/json"},
+		Schemes:            []string{"https"},
+		Params:             params,
+		Reader:             &DeletePlatformEventChannelReader{formats: a.formats},
+		Context:            params.Context,
+		Client:             params.HTTPClient,
+	})
+	if err != nil {
+		return nil, err
+	}
+	return result.(*DeletePlatformEventChannelNoContent), nil
+
+}
+
+/*
+GetPlatformEventChannel gets platform event channel
 */
 func (a *Client) GetPlatformEventChannel(params *GetPlatformEventChannelParams) (*GetPlatformEventChannelOK, error) {
 	// TODO: Validate the params before sending
@@ -54,6 +110,34 @@ func (a *Client) GetPlatformEventChannel(params *GetPlatformEventChannelParams) 
 		return nil, err
 	}
 	return result.(*GetPlatformEventChannelOK), nil
+
+}
+
+/*
+UpdatePlatformEventChannel updates platform event channel
+*/
+func (a *Client) UpdatePlatformEventChannel(params *UpdatePlatformEventChannelParams) (*UpdatePlatformEventChannelNoContent, error) {
+	// TODO: Validate the params before sending
+	if params == nil {
+		params = NewUpdatePlatformEventChannelParams()
+	}
+
+	result, err := a.transport.Submit(&runtime.ClientOperation{
+		ID:                 "updatePlatformEventChannel",
+		Method:             "PATCH",
+		PathPattern:        "/PlatformEventChannel/{Id}",
+		ProducesMediaTypes: []string{"application/json"},
+		ConsumesMediaTypes: []string{"application/json"},
+		Schemes:            []string{"https"},
+		Params:             params,
+		Reader:             &UpdatePlatformEventChannelReader{formats: a.formats},
+		Context:            params.Context,
+		Client:             params.HTTPClient,
+	})
+	if err != nil {
+		return nil, err
+	}
+	return result.(*UpdatePlatformEventChannelNoContent), nil
 
 }
 

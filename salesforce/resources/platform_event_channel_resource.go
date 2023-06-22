@@ -11,6 +11,7 @@ import (
 	"vestahealthcare/client"
 	"vestahealthcare/client/platform_event_channel"
 	"vestahealthcare/salesforce/schemata"
+	"vestahealthcare/salesforce/utils"
 
 	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
@@ -22,8 +23,14 @@ PlatformEventChannel platform event channel API
 
 func PlatformEventChannel() *schema.Resource {
 	return &schema.Resource{
-		ReadContext: getPlatformEventChannel,
-		Schema:      schemata.PlatformEventChannelSchema(),
+		CreateContext: createPlatformEventChannel,
+		DeleteContext: deletePlatformEventChannel,
+		ReadContext:   getPlatformEventChannel,
+		UpdateContext: updatePlatformEventChannel,
+		Importer: &schema.ResourceImporter{
+			StateContext: schema.ImportStatePassthroughContext,
+		},
+		Schema: schemata.PlatformEventChannelSchema(),
 	}
 }
 
@@ -31,6 +38,54 @@ func DataResourcePlatformEventChannel() *schema.Resource {
 	return &schema.Resource{
 		Schema: schemata.DataSourcePlatformEventChannelSchema(),
 	}
+}
+
+func createPlatformEventChannel(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
+	var diags diag.Diagnostics
+
+	model := schemata.PlatformEventChannelModel(d)
+	params := platform_event_channel.NewCreatePlatformEventChannelParams()
+	params.SetBody(model)
+
+	client := m.(*client.SalesforceRESTAPI)
+
+	resp, err := client.PlatformEventChannel.CreatePlatformEventChannel(params)
+	log.Printf("[TRACE] response: %v", resp)
+	if err != nil {
+		diags = append(diags, diag.Errorf("unexpected: %s", err)...)
+		return diags
+	}
+
+	respModel := resp.GetPayload()
+	schemata.SetPlatformEventChannelCreateResponseResourceData(d, respModel)
+	return diags
+}
+
+func deletePlatformEventChannel(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
+	var diags diag.Diagnostics
+
+	params := platform_event_channel.NewDeletePlatformEventChannelParams()
+
+	idVal, idIsSet := d.GetOk("id")
+	if idIsSet {
+		params.ID = idVal.(string)
+	} else {
+		diags = append(diags, diag.Errorf("unexpected: Missing parameter - Id")...)
+		diags = append(diags, diag.Errorf("ending operation")...)
+		return diags
+	}
+
+	client := m.(*client.SalesforceRESTAPI)
+
+	resp, err := client.PlatformEventChannel.DeletePlatformEventChannel(params)
+	log.Printf("[TRACE] response: %v", resp)
+	if err != nil {
+		diags = append(diags, diag.Errorf("unexpected: %s", err)...)
+		return diags
+	}
+
+	d.SetId("")
+	return diags
 }
 
 func getPlatformEventChannel(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
@@ -58,6 +113,49 @@ func getPlatformEventChannel(ctx context.Context, d *schema.ResourceData, m inte
 
 	respModel := resp.GetPayload()
 	schemata.SetPlatformEventChannelResourceData(d, respModel)
+
+	return diags
+}
+
+func updatePlatformEventChannel(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
+	var diags diag.Diagnostics
+	d.Partial(true)
+
+	model := schemata.PlatformEventChannelUpdateRequestModel(d)
+	params := platform_event_channel.NewUpdatePlatformEventChannelParams()
+
+	idVal, idIsSet := d.GetOk("id")
+	if idIsSet {
+		params.ID = idVal.(string)
+	} else {
+		diags = append(diags, diag.Errorf("unexpected: Missing parameter - Id")...)
+		diags = append(diags, diag.Errorf("ending operation")...)
+		return diags
+	}
+
+	params.SetBody(model)
+
+	// list of available properties
+	props := schemata.GetPlatformEventChannelPropertyFields()
+
+	// loops through array of properties to see which one has changed, the ones that did not change are removed from the list
+	for _, v := range props {
+		if d.HasChange(v) {
+		} else {
+			props = utils.Remove(props, v)
+		}
+	}
+
+	client := m.(*client.SalesforceRESTAPI)
+
+	// makes a bulk update for all properties that were changed
+	resp, err := client.PlatformEventChannel.UpdatePlatformEventChannel(params)
+	log.Printf("[TRACE] response: %v", resp)
+	if err != nil {
+		diags = append(diags, diag.Errorf("unexpected: %s", err)...)
+		return diags
+	}
+	d.Partial(false)
 
 	return diags
 }

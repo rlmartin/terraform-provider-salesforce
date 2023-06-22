@@ -16,7 +16,7 @@ func PlatformEventChannelSchema() map[string]*schema.Schema {
 
 		"id": {
 			Type:     schema.TypeString,
-			Optional: true,
+			Computed: true,
 		},
 
 		"metadata": {
@@ -24,7 +24,7 @@ func PlatformEventChannelSchema() map[string]*schema.Schema {
 			Elem: &schema.Resource{
 				Schema: PlatformEventChannelMetadataSchema(),
 			},
-			Optional: true,
+			Required: true,
 		},
 	}
 }
