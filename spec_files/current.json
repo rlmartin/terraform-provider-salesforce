@@ -143,6 +143,11 @@
                                                             }
                                                   }
                                         },
+                                        "security": [
+                                                  {
+                                                            "OAuth2PasswordGrant": []
+                                                  }
+                                        ],
                                         "summary": "Create PlatformEventChannel",
                                         "tags": [
                                                   "PlatformEventChannel"
@@ -175,6 +180,11 @@
                                                             }
                                                   }
                                         },
+                                        "security": [
+                                                  {
+                                                            "OAuth2PasswordGrant": []
+                                                  }
+                                        ],
                                         "summary": "Delete PlatformEventChannel",
                                         "tags": [
                                                   "PlatformEventChannel"
@@ -208,6 +218,11 @@
                                                             }
                                                   }
                                         },
+                                        "security": [
+                                                  {
+                                                            "OAuth2PasswordGrant": []
+                                                  }
+                                        ],
                                         "summary": "Get PlatformEventChannel",
                                         "tags": [
                                                   "PlatformEventChannel"
@@ -246,6 +261,11 @@
                                                             }
                                                   }
                                         },
+                                        "security": [
+                                                  {
+                                                            "OAuth2PasswordGrant": []
+                                                  }
+                                        ],
                                         "summary": "Update PlatformEventChannel",
                                         "tags": [
                                                   "PlatformEventChannel"

@@ -6,6 +6,8 @@ package platform_event_channel
 // Editing this file might prove futile when you re-run the swagger generate command
 
 import (
+	"log"
+
 	"github.com/go-openapi/runtime"
 
 	strfmt "github.com/go-openapi/strfmt"
@@ -47,10 +49,12 @@ func (a *Client) CreatePlatformEventChannel(params *CreatePlatformEventChannelPa
 		Schemes:            []string{"https"},
 		Params:             params,
 		Reader:             &CreatePlatformEventChannelReader{formats: a.formats},
+		AuthInfo:           a.authInfo,
 		Context:            params.Context,
 		Client:             params.HTTPClient,
 	})
 	if err != nil {
+		log.Printf("[TRACE] err: %+v", err)
 		return nil, err
 	}
 	return result.(*CreatePlatformEventChannelOK), nil
@@ -75,10 +79,12 @@ func (a *Client) DeletePlatformEventChannel(params *DeletePlatformEventChannelPa
 		Schemes:            []string{"https"},
 		Params:             params,
 		Reader:             &DeletePlatformEventChannelReader{formats: a.formats},
+		AuthInfo:           a.authInfo,
 		Context:            params.Context,
 		Client:             params.HTTPClient,
 	})
 	if err != nil {
+		log.Printf("[TRACE] err: %+v", err)
 		return nil, err
 	}
 	return result.(*DeletePlatformEventChannelNoContent), nil
@@ -103,10 +109,12 @@ func (a *Client) GetPlatformEventChannel(params *GetPlatformEventChannelParams) 
 		Schemes:            []string{"https"},
 		Params:             params,
 		Reader:             &GetPlatformEventChannelReader{formats: a.formats},
+		AuthInfo:           a.authInfo,
 		Context:            params.Context,
 		Client:             params.HTTPClient,
 	})
 	if err != nil {
+		log.Printf("[TRACE] err: %+v", err)
 		return nil, err
 	}
 	return result.(*GetPlatformEventChannelOK), nil
@@ -131,10 +139,12 @@ func (a *Client) UpdatePlatformEventChannel(params *UpdatePlatformEventChannelPa
 		Schemes:            []string{"https"},
 		Params:             params,
 		Reader:             &UpdatePlatformEventChannelReader{formats: a.formats},
+		AuthInfo:           a.authInfo,
 		Context:            params.Context,
 		Client:             params.HTTPClient,
 	})
 	if err != nil {
+		log.Printf("[TRACE] err: %+v", err)
 		return nil, err
 	}
 	return result.(*UpdatePlatformEventChannelNoContent), nil

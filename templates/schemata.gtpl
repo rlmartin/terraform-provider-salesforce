@@ -17,6 +17,7 @@ import (
 	{{- if $needsUtils }}
 	"vestahealthcare/salesforce/utils"
 	{{- end }}
+	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
 )
 
 // Schema mapping representing the {{ $operationGroup }} resource defined in the Terraform configuration

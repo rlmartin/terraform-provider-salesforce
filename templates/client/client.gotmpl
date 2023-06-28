@@ -13,6 +13,7 @@ package {{ .Name }}
 // Editing this file might prove futile when you re-run the swagger generate command
 
 import (
+  "log"
   "net/http"
   "github.com/go-openapi/errors"
   "github.com/go-openapi/swag"
@@ -72,6 +73,7 @@ func (a *Client) {{ pascalize .Name }}(params *{{ pascalize .Name }}Params{{ if 
     Client: params.HTTPClient,
   })
   if err != nil {
+    log.Printf("[TRACE] err: %+v", err)
     return {{ if .SuccessResponse }}{{ padSurround "nil" "nil" 0 $length }}, {{ end }}err
   }
   {{ if .SuccessResponse }}{{ if eq $length 1 }}return result.(*{{ pascalize .SuccessResponse.Name }}), nil{{ else }}switch value := result.(type) { {{ range $i, $v := .SuccessResponses }}

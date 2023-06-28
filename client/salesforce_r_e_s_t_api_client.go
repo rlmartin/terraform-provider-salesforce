@@ -7,12 +7,14 @@ package client
 
 import (
 	"bytes"
+	"context"
 	"crypto/hmac"
 	"crypto/sha256"
 	"encoding/base64"
 	"encoding/hex"
 	"encoding/json"
 	"fmt"
+	"log"
 	"strconv"
 	"time"
 
@@ -20,6 +22,7 @@ import (
 	httptransport "github.com/go-openapi/runtime/client"
 
 	strfmt "github.com/go-openapi/strfmt"
+	"golang.org/x/oauth2"
 
 	"vestahealthcare/client/platform_event_channel"
 )
@@ -38,9 +41,12 @@ var DefaultSchemes = []string{"https"}
 
 // Config information for SalesforceRESTAPI client
 type Config struct {
-	AccessKey    *string
-	AccessID     *string
+	ClientId     *string
+	ClientSecret *string
+	TokenUrl     *string
 	TransportCfg *TransportConfig
+	Username     *string
+	Password     *string
 }
 
 // NewConfig create a new empty client Config
@@ -50,14 +56,29 @@ func NewConfig() *Config {
 	}
 }
 
-// SetAccessID for the client Config
-func (c *Config) SetAccessID(accessID *string) {
-	c.AccessID = accessID
+// SetClientId for the client Config
+func (c *Config) SetClientId(clientId *string) {
+	c.ClientId = clientId
 }
 
-// SetAccessKey for the client Config
-func (c *Config) SetAccessKey(accessKey *string) {
-	c.AccessKey = accessKey
+// SetClientSecret for the client Config
+func (c *Config) SetClientSecret(clientSecret *string) {
+	c.ClientSecret = clientSecret
+}
+
+// SetTokenUrl for the client Config
+func (c *Config) SetTokenUrl(tokenUrl *string) {
+	c.TokenUrl = tokenUrl
+}
+
+// SetUsername for the client Config
+func (c *Config) SetUsername(username *string) {
+	c.Username = username
+}
+
+// SetPassword for the client Config
+func (c *Config) SetPassword(password *string) {
+	c.Password = password
 }
 
 // SetAccountDomain for the client Config
@@ -72,7 +93,7 @@ func (c *Config) SetAccountDomain(accountDomain *string) {
 // New creates a new salesforce r e s t API client
 func New(c *Config) *SalesforceRESTAPI {
 	transport := httptransport.New(c.TransportCfg.Host, c.TransportCfg.BasePath, c.TransportCfg.Schemes)
-	authInfo := LMv1Auth(*c.AccessID, *c.AccessKey)
+	authInfo := OAuth2PasswordGrantAuth(*c.ClientId, *c.ClientSecret, *c.TokenUrl, *c.Username, *c.Password)
 
 	cli := new(SalesforceRESTAPI)
 	cli.Transport = transport
@@ -174,5 +195,24 @@ func LMv1Auth(accessId, accessKey string) runtime.ClientAuthInfoWriter {
 		r.SetHeaderParam("Authorization", fmt.Sprintf("LMv1 %s:%s:%s", accessId, signature, epoch))
 		//TODO Consider moving this up to terraform template level of config
 		return r.SetHeaderParam("X-version", "3")
+	})
+}
+
+func OAuth2PasswordGrantAuth(clientId, clientSecret, tokenUrl, username, password string) runtime.ClientAuthInfoWriter {
+	return runtime.ClientAuthInfoWriterFunc(func(r runtime.ClientRequest, _ strfmt.Registry) error {
+		config := &oauth2.Config{
+			ClientID:     clientId,
+			ClientSecret: clientSecret,
+			Endpoint: oauth2.Endpoint{
+				TokenURL: tokenUrl,
+			},
+		}
+		ctx := context.Background()
+		token, err := config.PasswordCredentialsToken(ctx, username, password)
+		if err != nil {
+			log.Printf("[TRACE] token err: %+v", err)
+			log.Fatal(err)
+		}
+		return r.SetHeaderParam("Authorization", fmt.Sprintf("Bearer %s", token.AccessToken))
 	})
 }

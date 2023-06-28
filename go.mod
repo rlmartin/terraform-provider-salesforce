@@ -9,4 +9,5 @@ require (
 	github.com/go-openapi/swag v0.19.15
 	github.com/go-openapi/validate v0.20.3
 	github.com/hashicorp/terraform-plugin-sdk/v2 v2.6.1
+	golang.org/x/oauth2 v0.9.0
 )
