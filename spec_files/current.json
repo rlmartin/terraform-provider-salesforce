@@ -99,16 +99,16 @@
                     }
           },
           "externalDocs": {
-                    "description": "salesforce Support Docs",
+                    "description": "Salesforce Support Docs",
                     "url": "https://www.salesforce.com/support/rest-api-developers-guide/"
           },
           "info": {
-                    "description": "salesforce is a SaaS-based performance monitoring platform that provides full visibility into complex, hybrid infrastructures, offering granular performance monitoring and actionable data and insights. salesforce_sdk enables you to manage your Salesforce account programmatically.",
+                    "description": "Salesforce is a SaaS-based performance monitoring platform that provides full visibility into complex, hybrid infrastructures, offering granular performance monitoring and actionable data and insights. salesforce_sdk enables you to manage your Salesforce account programmatically.",
                     "license": {
                               "name": "Apache 2.0",
                               "url": "http://www.apache.org/licenses/LICENSE-2.0.html"
                     },
-                    "title": "salesforce REST API",
+                    "title": "Salesforce REST API",
                     "version": "2.0.0"
           },
           "paths": {
@@ -145,7 +145,7 @@
                                         },
                                         "security": [
                                                   {
-                                                            "OAuth2PasswordGrant": []
+                                                            "oauth2_password": []
                                                   }
                                         ],
                                         "summary": "Create PlatformEventChannel",
@@ -182,7 +182,7 @@
                                         },
                                         "security": [
                                                   {
-                                                            "OAuth2PasswordGrant": []
+                                                            "oauth2_password": []
                                                   }
                                         ],
                                         "summary": "Delete PlatformEventChannel",
@@ -220,7 +220,7 @@
                                         },
                                         "security": [
                                                   {
-                                                            "OAuth2PasswordGrant": []
+                                                            "oauth2_password": []
                                                   }
                                         ],
                                         "summary": "Get PlatformEventChannel",
@@ -263,7 +263,7 @@
                                         },
                                         "security": [
                                                   {
-                                                            "OAuth2PasswordGrant": []
+                                                            "oauth2_password": []
                                                   }
                                         ],
                                         "summary": "Update PlatformEventChannel",
@@ -277,10 +277,10 @@
                     "https"
           ],
           "securityDefinitions": {
-                    "LMv1": {
-                              "in": "header",
-                              "name": "Authorization",
-                              "type": "apiKey"
+                    "oauth2_password": {
+                              "flow": "password",
+                              "tokenUrl": "https://vestahealthcare--uat.sandbox.my.salesforce.com/services/oauth2/token",
+                              "type": "oauth2"
                     }
           },
           "swagger": "2.0",

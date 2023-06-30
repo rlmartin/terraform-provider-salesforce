@@ -41,10 +41,10 @@ var DefaultSchemes = []string{"https"}
 
 // Config information for SalesforceRESTAPI client
 type Config struct {
+	TransportCfg *TransportConfig
 	ClientId     *string
 	ClientSecret *string
 	TokenUrl     *string
-	TransportCfg *TransportConfig
 	Username     *string
 	Password     *string
 }
@@ -93,12 +93,13 @@ func (c *Config) SetAccountDomain(accountDomain *string) {
 // New creates a new salesforce r e s t API client
 func New(c *Config) *SalesforceRESTAPI {
 	transport := httptransport.New(c.TransportCfg.Host, c.TransportCfg.BasePath, c.TransportCfg.Schemes)
-	authInfo := OAuth2PasswordGrantAuth(*c.ClientId, *c.ClientSecret, *c.TokenUrl, *c.Username, *c.Password)
+
+	oauth2PasswordAuthInfo := OAuth2PasswordFlow(*c.ClientId, *c.ClientSecret, *c.TokenUrl, *c.Username, *c.Password)
 
 	cli := new(SalesforceRESTAPI)
 	cli.Transport = transport
 
-	cli.PlatformEventChannel = platform_event_channel.New(transport, strfmt.Default, authInfo)
+	cli.PlatformEventChannel = platform_event_channel.New(transport, strfmt.Default, oauth2PasswordAuthInfo)
 
 	return cli
 }
@@ -198,7 +199,7 @@ func LMv1Auth(accessId, accessKey string) runtime.ClientAuthInfoWriter {
 	})
 }
 
-func OAuth2PasswordGrantAuth(clientId, clientSecret, tokenUrl, username, password string) runtime.ClientAuthInfoWriter {
+func OAuth2PasswordFlow(clientId, clientSecret, tokenUrl, username, password string) runtime.ClientAuthInfoWriter {
 	return runtime.ClientAuthInfoWriterFunc(func(r runtime.ClientRequest, _ strfmt.Registry) error {
 		config := &oauth2.Config{
 			ClientID:     clientId,

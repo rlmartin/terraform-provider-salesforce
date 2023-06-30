@@ -6,6 +6,13 @@ import (
 func Provider() *schema.Provider {
 	return &schema.Provider{
 		Schema: map[string]*schema.Schema{
+			"subdomain": {
+				Type:        schema.TypeString,
+				Required:    true,
+				DefaultFunc: schema.EnvDefaultFunc("SF_SUBDOMAIN", nil),
+			},
+			{{- range .SecurityDefinitions }}
+			{{- if and .IsOAuth2 (eq .Flow "password") }}
 			"client_id": {
 				Type:        schema.TypeString,
 				Required:    true,
@@ -16,14 +23,9 @@ func Provider() *schema.Provider {
 				Required:    true,
 				DefaultFunc: schema.EnvDefaultFunc("SF_CLIENT_SECRET", nil),
 			},
-			"subdomain": {
-				Type:        schema.TypeString,
-				Required:    true,
-				DefaultFunc: schema.EnvDefaultFunc("SF_SUBDOMAIN", nil),
-			},
 			"token_url": {
 				Type:        schema.TypeString,
-				Required:    true,
+				Required:    false,
 				DefaultFunc: schema.EnvDefaultFunc("SF_TOKEN_URL", nil),
 			},
 			"username": {
@@ -36,6 +38,8 @@ func Provider() *schema.Provider {
 				Required:    true,
 				DefaultFunc: schema.EnvDefaultFunc("SF_PASSWORD", nil),
 			},
+			{{ end }}
+			{{ end -}}
 		},
 		ResourcesMap: map[string]*schema.Resource{
 			{{- range .OperationGroups }}
@@ -50,23 +54,28 @@ func Provider() *schema.Provider {
 		ConfigureContextFunc: providerConfigure,
 	}
 }
-{{/* if you make your own provider using our repo as a template, you'll likely need to change how yours is configured */}}
+
 func providerConfigure(ctx context.Context, d *schema.ResourceData) (interface{}, diag.Diagnostics) {
 	var diags diag.Diagnostics
 
- 	clientId := d.Get("client_id").(string)
- 	clientSecret := d.Get("client_secret").(string)
- 	subdomain := d.Get("subdomain").(string) + ".my.salesforce.com"
-	tokenUrl := d.Get("token_url").(string)
-	username := d.Get("username").(string)
-	password := d.Get("password").(string)
 	config := client.NewConfig()
+
+ 	domain := d.Get("subdomain").(string) + ".my.salesforce.com"
+	config.SetAccountDomain(&domain)
+	{{- range .SecurityDefinitions }}
+	{{- if and .IsOAuth2 (eq .Flow "password") }}
+ 	clientId := d.Get("client_id").(string)
 	config.SetClientId(&clientId)
+ 	clientSecret := d.Get("client_secret").(string)
 	config.SetClientSecret(&clientSecret)
-	config.SetAccountDomain(&subdomain)
+	tokenUrl := d.Get("token_url").(string)
 	config.SetTokenUrl(&tokenUrl)
+	username := d.Get("username").(string)
 	config.SetUsername(&username)
+	password := d.Get("password").(string)
 	config.SetPassword(&password)
+	{{ end -}}
+	{{ end }}
 
 	c := client.New(config)
 

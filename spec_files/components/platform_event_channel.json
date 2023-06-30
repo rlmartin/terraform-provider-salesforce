@@ -131,7 +131,7 @@
         },
         "security": [
           {
-              "OAuth2PasswordGrant": []
+              "oauth2_password": []
           }
         ],
         "summary": "Create PlatformEventChannel",
@@ -168,7 +168,7 @@
         },
         "security": [
           {
-              "OAuth2PasswordGrant": []
+              "oauth2_password": []
           }
         ],
         "summary": "Delete PlatformEventChannel",
@@ -206,7 +206,7 @@
         },
         "security": [
           {
-              "OAuth2PasswordGrant": []
+              "oauth2_password": []
           }
         ],
         "summary": "Get PlatformEventChannel",
@@ -249,7 +249,7 @@
         },
         "security": [
           {
-              "OAuth2PasswordGrant": []
+              "oauth2_password": []
           }
         ],
         "summary": "Update PlatformEventChannel",

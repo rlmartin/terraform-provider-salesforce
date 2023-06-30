@@ -22,25 +22,25 @@ def buildBaseJson():
     base["basePath"] = "/services/data/v57.0/tooling/sobjects"
     base["definitions"] = {}
     base["externalDocs"] = {
-        "description": "salesforce Support Docs",
+        "description": "Salesforce Support Docs",
         "url": "https://www.salesforce.com/support/rest-api-developers-guide/"
     }
     base["info"] = {
-      "description": "salesforce is a SaaS-based performance monitoring platform that provides full visibility into complex, hybrid infrastructures, offering granular performance monitoring and actionable data and insights. salesforce_sdk enables you to manage your Salesforce account programmatically.",
+      "description": "Salesforce is a SaaS-based performance monitoring platform that provides full visibility into complex, hybrid infrastructures, offering granular performance monitoring and actionable data and insights. salesforce_sdk enables you to manage your Salesforce account programmatically.",
       "license": {
         "name": "Apache 2.0",
         "url": "http://www.apache.org/licenses/LICENSE-2.0.html"
       },
-      "title": "salesforce REST API",
+      "title": "Salesforce REST API",
       "version": "2.0.0"
     }
     base["paths"] = {}
     base["schemes"] = ["https"]
     base["securityDefinitions"] = {
-      "LMv1": {
-            "in": "header",
-            "name": "Authorization",
-            "type": "apiKey"
+      "oauth2_password": {
+            "type": "oauth2",
+            "flow": "password",
+            "tokenUrl": "https://vestahealthcare--uat.sandbox.my.salesforce.com/services/oauth2/token"
         }
     }
     base["swagger"] = "2.0"
