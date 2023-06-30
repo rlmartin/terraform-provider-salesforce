@@ -1,5 +1,5 @@
 terraform {
-	required_version = ">= 0.12.00"
+	required_version = ">= 0.12.0"
 	required_providers {
 		salesforce = {
 			source  = "salesforce.com/com/salesforce"
@@ -9,30 +9,22 @@ terraform {
 }
 
 provider "salesforce" {
-	api_id = <ADD YOUR LM API_ID HERE>
-	api_key = <ADD YOUR LM API_KEY HERE>
-	company = <ADD YOUR LM PORTAL NAME HERE>
+	client_id     = <ADD YOUR SALESFORCE CLIENT_ID HERE>
+	client_secret = <ADD YOUR SALESFORCE CLIENT_SECRET HERE>
+	subdomain     = <ADD YOUR SALESFORCE SUBDOMAIN HERE>
+	token_url     = <ADD YOUR SALESFORCE TOKEN_URL HERE>
+	username      = <ADD YOUR SALESFORCE USERNAME HERE>
+	password      = <ADD YOUR PASSWORD HERE>
 }
 
-resource "salesforce_device" "my_device"{
-	preferred_collector_id = 1
-	custom_properties = [
-		{
-			name = "addr"
-      		value = "127.0.0.1"
-		},
-		{
-			name = "host"
-      		value = "localhost"
+resource "salesforce_device" "my_channel" {
+  foo_channel = {
+    full_name = "my_channel"
+    metadata  = {
+      label        = "my_channel"
+      channel_type = "my_channel_type"
 		}
-	]
-	description = "This is a Cisco Router"
-	device_type  = 0
-	disable_alerting = true
-	display_name = "Cisco Router"
-	enable_netflow = false
-	link = "www.ciscorouter.com"
-	name = "collector.host"
+	}
 }
 
 data "salesforce_device" "my_devices" {
@@ -43,7 +35,7 @@ data "salesforce_device" "my_devices" {
 	]
 }
 
-output "devices" {
-  description = "devices list"
-  value       = data.salesforce_device.my_devices
+output "my_channel_id" {
+  description = "unique identifier for my_channel"
+  value       = salesforce_device.my_channel.id
 }

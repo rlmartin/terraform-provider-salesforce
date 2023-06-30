@@ -5,9 +5,9 @@ clean:
 	terraform init
 
 plan:
-	terraform plan -out=lm.tfstate
+	terraform plan -out=state.tfstate
 
 build: clean plan apply
 
 apply:
-	terraform apply lm.tfstate
+	terraform apply state.tfstate

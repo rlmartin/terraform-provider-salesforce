@@ -4,7 +4,7 @@ layout:
       source: asset:clientFacade
       target: "{{ joinFilePath .Target .ClientPackage }}"
       file_name: "{{ .Name }}_client.go"
-    - name: lmmain 
+    - name: sfmain 
       source: "main.gtpl"
       target: "{{ joinFilePath .Target }}"
       file_name: "main.go"
