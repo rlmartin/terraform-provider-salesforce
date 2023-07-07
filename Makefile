@@ -1,9 +1,8 @@
-HOSTNAME=terraform.local
-NAMESPACE=com
+HOSTNAME=github.com
+NAMESPACE=vestahealthcare
+VERSION := $(shell git describe --tags --dirty | sed -e 's/^v//g')
 NAME=salesforce
 BINARY=terraform-provider-${NAME}
-VERSION=0.2.0
-OS_ARCH=darwin_arm64
 
 default: install
 
@@ -13,15 +12,26 @@ clean:
 	rm -Rf models/
 	rm -Rf salesforce/
 
-build:  clean
+generate: clean
 	swagger generate client -f ./spec_files/current.json --template-dir templates -C config.yml > swagrun.log
-	go build -o ${BINARY}
 
-install: build
-	mkdir -p ~/.terraform.d/plugins/${HOSTNAME}/${NAMESPACE}/${NAME}/${VERSION}/${OS_ARCH}
-	cp ${BINARY} ~/.terraform.d/plugins/${HOSTNAME}/${NAMESPACE}/${NAME}/${VERSION}/${OS_ARCH}
+build: generate
+	go build -ldflags="-X main.version=$(base_version) -X main.commit=n/a" -o ${BINARY}
+
+install-%: build
+	mkdir -p ~/.terraform.d/plugins/${HOSTNAME}/${NAMESPACE}/${NAME}/${VERSION}/${@:install-%=%}
+	mv ${BINARY} ~/.terraform.d/plugins/${HOSTNAME}/${NAMESPACE}/${NAME}/${VERSION}/${@:install-%=%}/terraform-provider-slack_v$(base_version)
+
+fmt:
+	gofmt -w .
+
+fmt-check:
+	gofmt .
 
 nogen: 
-	go build -o ${BINARY}
-	mkdir -p ~/.terraform.d/plugins/${HOSTNAME}/${NAMESPACE}/${NAME}/${VERSION}/${OS_ARCH}
-	mv ${BINARY} ~/.terraform.d/plugins/${HOSTNAME}/${NAMESPACE}/${NAME}/${VERSION}/${OS_ARCH}
+	go build -ldflags="-X main.version=$(base_version) -X main.commit=n/a" -o ${BINARY}
+	mkdir -p ~/.terraform.d/plugins/${HOSTNAME}/${NAMESPACE}/${NAME}/${VERSION}/${@:install-%=%}
+	mv ${BINARY} ~/.terraform.d/plugins/${HOSTNAME}/${NAMESPACE}/${NAME}/${VERSION}/${@:install-%=%}
+
+test:
+	TF_ACC=1 go test ./... -timeout 120m -v
