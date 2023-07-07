@@ -13,6 +13,12 @@ jobs:
         uses: actions/setup-go@v3
         with:
           go-version: 1.17
+      - name: Setup go-swagger
+        run: |
+          dir=$(mktemp -d)
+          git clone https://github.com/go-swagger/go-swagger "$dir" 
+          cd "$dir"
+          go install ./cmd/swagger
       - name: Generate provider
         run: make generate
       - name: Run tests
