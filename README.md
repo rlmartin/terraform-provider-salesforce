@@ -22,6 +22,16 @@ $ make
 The Makefile will then generate the code, build the binary, and copy it to the Terraform plugin directory.
 
 
+### Bootstrapping
+The first time deploying this provider will require the following:
+
+1. If you don't already have one, create a [Terraform Registry](https://registry.terraform.io/) account. You will need to grant access to the GitHub org in which the provider is published.
+2. Follow the [GitHub documentation for generating a new GPG key](https://docs.github.com/en/authentication/managing-commit-signature-verification/generating-a-new-gpg-key), steps 1-13 (everything except adding it to GitHub, which is not needed).
+3. [Add the GPG key](https://registry.terraform.io/settings/gpg-keys/new) to your Terraform Registry account. `Source` and `Source URL` are optional.
+4. Export the secret key (`gpg --armor --export-secret-keys {your key id here} | pbcopy`) and add it as a secret on the GitHub repo called `GPG_PRIVATE_KEY`.
+5. Add a second secret on the GitHub repo called `PASSPHRASE`, which contains the passphrase you set on the key file.
+
+
 ## Using the provider
 
 The Salesforce Terraform Provider has two methods for setting required arguments:
