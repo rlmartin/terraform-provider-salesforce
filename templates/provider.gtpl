@@ -25,7 +25,7 @@ func Provider() *schema.Provider {
 			},
 			"token_url": {
 				Type:        schema.TypeString,
-				Required:    false,
+				Required:    true,
 				DefaultFunc: schema.EnvDefaultFunc("SF_TOKEN_URL", nil),
 			},
 			"username": {

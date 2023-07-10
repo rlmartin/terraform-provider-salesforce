@@ -4,7 +4,16 @@ VERSION := $(shell git describe --tags --dirty | sed -e 's/^v//g')
 NAME=salesforce
 BINARY=terraform-provider-${NAME}
 
+.PHONY: docs
+
 default: install
+
+docs:
+	rm -rf docs
+	mkdir docs
+	go generate ./...
+	rm docs/*.gtpl
+	rm -rf docs/client
 
 clean:
 	rm -Rf client/
