@@ -30,6 +30,11 @@ The first time deploying this provider will require the following:
 3. [Add the GPG key](https://registry.terraform.io/settings/gpg-keys/new) to your Terraform Registry account. `Source` and `Source URL` are optional.
 4. Export the secret key (`gpg --armor --export-secret-keys {your key id here} | pbcopy`) and add it as a secret on the GitHub repo called `GPG_PRIVATE_KEY`.
 5. Add a second secret on the GitHub repo called `PASSPHRASE`, which contains the passphrase you set on the key file.
+6. Publish the initial version manually from local:
+  1. Create a temporary [GitHub token](https://github.com/settings/tokens) and copy it. It should have `repo` and `write:packages` permissions.
+  2. Run `GITHUB_TOKEN={your GitHub token here} GPG_FINGERPRINT={your key id here} goreleaser release --clean`.
+  3. Once successful delete the temporary token.
+7. [Add the provider](https://registry.terraform.io/publish/provider) in the Terraform Registry. It may take a couple minutes, post-creation, for the first version to appear on the listing.
 
 
 ## Using the provider
