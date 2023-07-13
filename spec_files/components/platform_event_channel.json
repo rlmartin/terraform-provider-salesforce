@@ -1,19 +1,5 @@
 {
   "definitions": {
-    "ErrorResponse": {
-      "properties": {
-        "message": {
-          "type": "string"
-        },
-        "errorCode": {
-          "type": "string"
-        }
-      },
-      "required": [
-        "message"
-      ],
-      "type": "object"
-    },
     "PlatformEventChannel": {
       "example": "isResource",
       "properties": {
