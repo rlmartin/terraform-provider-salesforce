@@ -44,10 +44,12 @@ func Provider() *schema.Provider {
 			},
 		},
 		ResourcesMap: map[string]*schema.Resource{
-			"salesforce_platform_event_channel": resources.PlatformEventChannel(),
+			"salesforce_platform_event_channel":        resources.PlatformEventChannel(),
+			"salesforce_platform_event_channel_member": resources.PlatformEventChannelMember(),
 		},
 		DataSourcesMap: map[string]*schema.Resource{
-			"salesforce_platform_event_channel": resources.DataResourcePlatformEventChannel(),
+			"salesforce_platform_event_channel":        resources.DataResourcePlatformEventChannel(),
+			"salesforce_platform_event_channel_member": resources.DataResourcePlatformEventChannelMember(),
 		},
 		ConfigureContextFunc: providerConfigure,
 	}

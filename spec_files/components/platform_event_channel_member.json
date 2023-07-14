@@ -1,0 +1,249 @@
+{
+  "definitions": {
+    "PlatformEventChannelMember": {
+      "example": "isResource",
+      "properties": {
+        "Id": {
+          "example": "1234",
+          "type": "string"
+        },
+        "FullName": {
+          "example": "My_Channel__chn_MyEvent",
+          "type": "string"
+        },
+        "Metadata": {
+          "$ref": "#/definitions/PlatformEventChannelMemberMetadata"
+        }
+      },
+      "required": [
+        "FullName",
+        "Metadata"
+      ],
+      "type": "object"
+    },
+    "PlatformEventChannelMemberCreateRequest": {
+      "example": "isResource",
+      "properties": {
+        "FullName": {
+          "example": "My_Channel__chn_MyEvent",
+          "type": "string"
+        },
+        "Metadata": {
+          "$ref": "#/definitions/PlatformEventChannelMemberMetadata"
+        }
+      },
+      "required": [
+        "FullName",
+        "Metadata"
+      ],
+      "type": "object"
+    },
+    "PlatformEventChannelMemberCreateResponse": {
+      "example": "isResource",
+      "properties": {
+        "Id": {
+          "example": "1234",
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "PlatformEventChannelMemberMetadata": {
+      "properties": {
+        "eventChannel": {
+          "example": "My_Channel__chn",
+          "type": "string"
+        },
+        "selectedEntity": {
+          "example": "AccountChangeEvent",
+          "type": "string"
+        }
+      },
+      "required": [
+        "eventChannel",
+        "selectedEntity"
+      ],
+      "type": "object"
+    },
+    "PlatformEventChannelMemberUpdateRequest": {
+      "example": "isResource",
+      "properties": {
+        "FullName": {
+          "example": "My_Channel__chn",
+          "type": "string"
+        },
+        "Metadata": {
+          "$ref": "#/definitions/PlatformEventChannelMemberMetadata"
+        }
+      },
+      "type": "object"
+    }
+  },
+  "paths": {
+    "/PlatformEventChannelMember": {
+      "post": {
+        "description": "",
+        "operationId": "createPlatformEventChannelMember",
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/PlatformEventChannelMember"
+            }
+          }
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": {
+                "$ref": "#/definitions/PlatformEventChannelMemberCreateResponse"
+            }
+          },
+          "default": {
+            "description": "Error",
+            "schema": {
+                "$ref": "#/definitions/ErrorResponse"
+            }
+          }
+        },
+        "security": [
+          {
+              "oauth2_password": []
+          }
+        ],
+        "summary": "Create PlatformEventChannelMember",
+        "tags": [
+          "PlatformEventChannelMember"
+        ]
+      }
+    },
+    "/PlatformEventChannelMember/{Id}": {
+      "delete": {
+        "description": "",
+        "operationId": "deletePlatformEventChannelMember",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "Id",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "204": {
+            "description": "successful operation"
+          },
+          "default": {
+            "description": "Error",
+            "schema": {
+                "$ref": "#/definitions/ErrorResponse"
+            }
+          }
+        },
+        "security": [
+          {
+              "oauth2_password": []
+          }
+        ],
+        "summary": "Delete PlatformEventChannelMember",
+        "tags": [
+          "PlatformEventChannelMember"
+        ]
+      },
+      "get": {
+        "description": "",
+        "operationId": "getPlatformEventChannelMember",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "Id",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": {
+                "$ref": "#/definitions/PlatformEventChannelMember"
+            }
+          },
+          "default": {
+            "description": "Error",
+            "schema": {
+                "$ref": "#/definitions/ErrorResponse"
+            }
+          }
+        },
+        "security": [
+          {
+              "oauth2_password": []
+          }
+        ],
+        "summary": "Get PlatformEventChannelMember",
+        "tags": [
+          "PlatformEventChannelMember"
+        ]
+      },
+      "patch": {
+        "description": "",
+        "operationId": "updatePlatformEventChannelMember",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "Id",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "in": "body",
+            "name": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/PlatformEventChannelMemberUpdateRequest"
+            }
+          }
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "204": {
+            "description": "successful operation"
+          },
+          "default": {
+            "description": "Error",
+            "schema": {
+                "$ref": "#/definitions/ErrorResponse"
+            }
+          }
+        },
+        "security": [
+          {
+              "oauth2_password": []
+          }
+        ],
+        "summary": "Update PlatformEventChannelMember",
+        "tags": [
+          "PlatformEventChannelMember"
+        ]
+      }
+    }
+  },
+  "tags": [
+    {
+      "name": "PlatformEventChannelMember"
+    }
+  ]
+}
