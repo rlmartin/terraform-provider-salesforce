@@ -53,6 +53,17 @@ func ErrorResponseModel(d *schema.ResourceData) *models.ErrorResponse {
 	}
 }
 
+// Function to perform the following actions:
+func ErrorResponseModelFromMap(m map[string]interface{}) *models.ErrorResponse {
+	errorCode := m["error_code"].(string)
+	message := m["message"].(string)
+
+	return &models.ErrorResponse{
+		ErrorCode: errorCode,
+		Message:   &message,
+	}
+}
+
 // Retrieve property field names for updating the ErrorResponse resource
 func GetErrorResponsePropertyFields() (t []string) {
 	return []string{

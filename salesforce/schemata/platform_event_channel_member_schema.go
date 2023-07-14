@@ -89,9 +89,23 @@ func PlatformEventChannelMemberModel(d *schema.ResourceData) *models.PlatformEve
 	MetadataInterface, MetadataIsSet := d.GetOk("metadata")
 	if MetadataIsSet {
 		MetadataMap := MetadataInterface.([]interface{})[0].(map[string]interface{})
-		var m schema.ResourceData
-		m.Set("meta", MetadataMap)
-		metadata = PlatformEventChannelMemberMetadataModel(&m)
+		metadata = PlatformEventChannelMemberMetadataModelFromMap(MetadataMap)
+	}
+
+	return &models.PlatformEventChannelMember{
+		FullName: &fullName,
+		ID:       id,
+		Metadata: metadata,
+	}
+}
+
+// Function to perform the following actions:
+func PlatformEventChannelMemberModelFromMap(m map[string]interface{}) *models.PlatformEventChannelMember {
+	fullName := m["full_name"].(string)
+	id := m["id"].(string)
+	var metadata *models.PlatformEventChannelMemberMetadata = nil //hit complex
+	if m["metadata"] != nil {
+		metadata = PlatformEventChannelMemberMetadataModelFromMap(m["metadata"].(map[string]interface{}))
 	}
 
 	return &models.PlatformEventChannelMember{

@@ -22,6 +22,7 @@ func DataSourcePlatformEventChannelMemberCreateResponseSchema() map[string]*sche
 	return map[string]*schema.Schema{
 		"id": {
 			Type:     schema.TypeString,
+			Computed: true,
 			Optional: true,
 		},
 
@@ -34,7 +35,7 @@ func DataSourcePlatformEventChannelMemberCreateResponseSchema() map[string]*sche
 
 // Update the underlying PlatformEventChannelMemberCreateResponse resource data in the Terraform configuration using the resource model built from the CREATE/UPDATE/READ LM API request response
 func SetPlatformEventChannelMemberCreateResponseResourceData(d *schema.ResourceData, m *models.PlatformEventChannelMemberCreateResponse) {
-	d.Set("id", m.ID)
+	d.SetId(m.ID)
 }
 
 // Iterate throught and update the PlatformEventChannelMemberCreateResponse resource data within a pagination response (typically defined in the items array field) retrieved from a READ operation for multiple LM resources
@@ -54,6 +55,15 @@ func SetPlatformEventChannelMemberCreateResponseSubResourceData(m []*models.Plat
 // (2) Translate LM API response object from (1) or from a READ operation into a model that can be used to mofify the underlying resource data in the Terrraform configuration
 func PlatformEventChannelMemberCreateResponseModel(d *schema.ResourceData) *models.PlatformEventChannelMemberCreateResponse {
 	id := d.Get("id").(string)
+
+	return &models.PlatformEventChannelMemberCreateResponse{
+		ID: id,
+	}
+}
+
+// Function to perform the following actions:
+func PlatformEventChannelMemberCreateResponseModelFromMap(m map[string]interface{}) *models.PlatformEventChannelMemberCreateResponse {
+	id := m["id"].(string)
 
 	return &models.PlatformEventChannelMemberCreateResponse{
 		ID: id,

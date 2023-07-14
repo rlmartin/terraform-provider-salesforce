@@ -59,6 +59,9 @@ func (o *DeletePlatformEventChannelMemberNoContent) Error() string {
 }
 
 func (o *DeletePlatformEventChannelMemberNoContent) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {
+	//  bytes, _ := io.ReadAll(response.Body())
+	//  log.Printf("[TRACE] response body: ", string(bytes))
+	//  log.Printf("[TRACE] response code: ", response.Code())
 
 	return nil
 }
@@ -94,6 +97,9 @@ func (o *DeletePlatformEventChannelMemberDefault) GetPayload() *models.ErrorResp
 }
 
 func (o *DeletePlatformEventChannelMemberDefault) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {
+	//  bytes, _ := io.ReadAll(response.Body())
+	//  log.Printf("[TRACE] response body: ", string(bytes))
+	//  log.Printf("[TRACE] response code: ", response.Code())
 
 	o.Payload = new(models.ErrorResponse)
 

@@ -4,6 +4,19 @@ This provider includes resources from the [Salesforce REST API](https://develope
 This is a work-in-progress, but any resources already included in this provider are functional. The WIP part is to add new [Tooling API](https://developer.salesforce.com/docs/atlas.en-us.api_tooling.meta/api_tooling/reference_objects_list.htm) models as needed. If you need a resource that is not already included here, please either [submit an issue](https://github.com/rlmartin/terraform-provider-salesforce/issues) or follow [the instructions below](#adding-new-resources) and submit a PR.
 
 
+## Authentication
+In order to use this provider, you must provide the following information:
+
+1. `subdomain`: This is the part of your environment's hostname that comes before `.my.salesforce.com`.
+2. `token_url`: This will be `https://{your subdomain}.my.salesforce.com/services/oauth2/token`.
+3. `client_id`/`client_secret`: These are provided __TODO__
+4. `username`/`password`: These are the actual credentials for the user connected to the __TODO__.
+
+
+### Setup
+
+
+
 ## Development
 
 ### Requirements
@@ -20,7 +33,7 @@ $ git clone git@github.com:vestahealthcare/salesforce-terraform-provider.git
 Enter the provider directory and build the provider:
 ```sh
 $ cd salesforce-terraform-provider/
-$ make
+$ make install
 ```
 The Makefile will then generate the code, build the binary, and copy it to the Terraform plugin directory.
 
@@ -28,12 +41,12 @@ The Makefile will then generate the code, build the binary, and copy it to the T
 ### Adding new resources
 1. Each resource has its own file in [spec_files/components](./spec_files/components). Create a new `{resource_name}.json` file in this directory.
 2. Copy one of the existing resource definitions as a template, and paste it into the new `.json` file. A few notes about this definition:
-  1. The Terraform provider model requires all four CRUD methods (Create = POST, Request = GET, Update = PATCH/PUT, Delete = DELETE). If you don't define all of these endpoints, the provider will not build.
-  2. The CRUD operations for a given resource are unified via a common `tag` on each of the defined paths/methods. An example is: `"tags": ["PlatformEventChannel"]`; this also must be set on the top-level object in the definition.
-  3. For the model generation in this repo, each model that you want generated (i.e. all of them) must include `"example": "isResource"`; this flags the model for generation (and is non-obvious).
-  4. The supported security option(s) must be defined on each endpoint. For this Salesforce provider this will always be `"security": [{"oauth2_password": []}]`.
-  5. The `id` field of the main resource definition (which likely is set, returned, and thus loaded into Terraform state) must _not_ be required.
-  6. It is possible that the `id` field _must_ be that name (case-insensitive); I would need to double-check the `go-swagger` code to verify this.
+    1. The Terraform provider model requires all four CRUD methods (Create = POST, Request = GET, Update = PATCH/PUT, Delete = DELETE). If you don't define all of these endpoints, the provider will not build.
+    2. The CRUD operations for a given resource are unified via a common `tag` on each of the defined paths/methods. An example is: `"tags": ["PlatformEventChannel"]`; this also must be set on the top-level object in the definition.
+    3. For the model generation in this repo, each model that you want generated (i.e. all of them) must include `"example": "isResource"`; this flags the model for generation (and is non-obvious).
+    4. The supported security option(s) must be defined on each endpoint. For this Salesforce provider this will always be `"security": [{"oauth2_password": []}]`.
+    5. The `id` field of the main resource definition (which likely is set, returned, and thus loaded into Terraform state) must _not_ be required.
+    6. It is possible that the `id` field _must_ be that name (case-insensitive); I would need to double-check the `go-swagger` code to verify this.
 3. Consult the model definitions in the [Tooling API](https://developer.salesforce.com/docs/atlas.en-us.api_tooling.meta/api_tooling/reference_objects_list.htm). Add definitions for your new resource.
 4. Replace the copied resource name with your new resource name in all locations.
 5. Run `cd spec_files; python3 createSpecFile.py; cd ..`.

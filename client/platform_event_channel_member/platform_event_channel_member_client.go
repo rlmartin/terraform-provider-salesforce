@@ -34,7 +34,7 @@ type Client struct {
 /*
 CreatePlatformEventChannelMember creates platform event channel member
 */
-func (a *Client) CreatePlatformEventChannelMember(params *CreatePlatformEventChannelMemberParams) (*CreatePlatformEventChannelMemberOK, error) {
+func (a *Client) CreatePlatformEventChannelMember(params *CreatePlatformEventChannelMemberParams) (*CreatePlatformEventChannelMemberCreated, error) {
 	// TODO: Validate the params before sending
 	if params == nil {
 		params = NewCreatePlatformEventChannelMemberParams()
@@ -57,7 +57,7 @@ func (a *Client) CreatePlatformEventChannelMember(params *CreatePlatformEventCha
 		log.Printf("[TRACE] err: %+v", err)
 		return nil, err
 	}
-	return result.(*CreatePlatformEventChannelMemberOK), nil
+	return result.(*CreatePlatformEventChannelMemberCreated), nil
 
 }
 
