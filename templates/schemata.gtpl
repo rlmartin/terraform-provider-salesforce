@@ -134,8 +134,12 @@ func DataSource{{ $operationGroup }}Schema() map[string]*schema.Schema {
 // Update the underlying {{ $operationGroup }} resource data in the Terraform configuration using the resource model built from the CREATE/UPDATE/READ LM API request response
 func Set{{ $operationGroup }}ResourceData(d *schema.ResourceData, m *models.{{ $operationGroup }}) {
 	{{- range .Properties }}
-		{{- if (eq .Name "id") }}
-	d.Set("id", strconv.Itoa(int(m.ID)))
+		{{- if eq .Name "id" }}
+			{{- if not (eq .SwaggerType "string") }}
+	d.SetId(strconv.Itoa(int(m.ID)))
+			{{- else }}
+	d.SetId(m.ID)
+			{{- end }}
 		{{- else if or .IsComplexObject }}
 	d.Set("{{ snakize .Name }}", Set{{ pascalize .GoType }}SubResourceData([]*models.{{ pascalize .GoType }}{m.{{ pascalize .Name }}}))
 		{{- else if stringContains .GoType "[]*" }}
@@ -173,16 +177,14 @@ func Set{{ $operationGroup }}SubResourceData(m []*models.{{ $operationGroup }}) 
 func {{ $operationGroup }}Model(d *schema.ResourceData) *models.{{ $operationGroup }} {
 	{{- range .Properties }}
 		{{- if or (not .ReadOnly) (and (eq .Name "id") (not $isReadOnlyModel)) }}
-			{{- if (eq .Name "id") }}
+			{{- if and (eq .Name "id") (not (eq .SwaggerType "string")) }}
 	id, _ := strconv.Atoi(d.Get("id").(string))
 			{{- else if .IsComplexObject }}
 	var {{ varname .Name }} *models.{{ pascalize .GoType }} = nil//hit complex
 	{{ .Name }}Interface, {{ .Name }}IsSet := d.GetOk("{{ snakize .Name }}")
 	if {{ .Name }}IsSet {
 		{{ .Name }}Map := {{ .Name }}Interface.([]interface{})[0].(map[string]interface{})
-		var m schema.ResourceData
-		m.Set("meta", {{ .Name }}Map)
-		{{ varname .Name }} = {{ .GoType }}Model(&m)
+		{{ varname .Name }} = {{ .GoType }}ModelFromMap({{ .Name }}Map)
 	}
 			{{- else if stringContains .Name "Properties" }}
 	{{ varname .Name }} := utils.GetPropertiesFromResource(d, "{{ snakize .Name }}")
@@ -202,7 +204,49 @@ func {{ $operationGroup }}Model(d *schema.ResourceData) *models.{{ $operationGro
 		{{- if not $isReadOnlyModel }}
 		{{- range .Properties }}
 			{{- if or (not .ReadOnly) (eq .Name "id") }}
-				{{- if eq .Name "id" }}
+				{{- if and (eq .Name "id") (not (eq .SwaggerType "string")) }}
+		{{ pascalize .Name }}: int32({{ varname .Name }}),
+				{{- else if and (and (not .IsMap) .IsNullable (not .IsSuperAlias)) (not .IsComplexObject) }}
+		{{ pascalize .Name }}: &{{ varname .Name }},
+				{{- else }}
+		{{ pascalize .Name }}: {{ varname .Name }},
+				{{- end }}
+			{{- end }}
+		{{- end }}
+		{{- end }}
+	}
+}
+
+// Function to perform the following actions:
+func {{ $operationGroup }}ModelFromMap(m map[string]interface{}) *models.{{ $operationGroup }} {
+	{{- range .Properties }}
+		{{- if or (not .ReadOnly) (and (eq .Name "id") (not $isReadOnlyModel)) }}
+			{{- if and (eq .Name "id") (not (eq .SwaggerType "string")) }}
+	id, _ := strconv.Atoi(m["id"].(string))
+			{{- else if .IsComplexObject }}
+	var {{ varname .Name }} *models.{{ pascalize .GoType }} = nil//hit complex
+	if m["{{ snakize .Name }}"] != nil {
+		{{ varname .Name }} = {{ .GoType }}ModelFromMap(m["{{ snakize .Name }}"].(map[string]interface{}))
+	}
+			{{- else if stringContains .Name "Properties" }}
+	{{ varname .Name }} := utils.GetPropertiesFromResource(d, "{{ snakize .Name }}")
+			{{- else if eq .GoType "interface{}" }}
+	{{ varname .Name }} := m["{{ snakize .Name }}"]
+			{{- else if or (eq .GoType "int32") ( eq .GoType "int64") }}
+	{{ varname .Name }} := {{ .GoType }}(m["{{ snakize .Name }}"].(int))
+			{{- else if and (not (eq .GoType "string")) (not (eq .GoType "[]string")) (not (eq .GoType "bool")) (not (eq .GoType "int")) (not (eq .GoType "float32")) (not (eq .GoType "float64")) (not (eq .GoType "uint32")) (not (eq .GoType "uint64")) }}
+	{{ varname .Name }} := m["{{ snakize .Name }}"].({{ if hasPrefix .GoType "[]" }}[]{{ end }}*models.{{ pascalize .GoType }})
+			{{- else }}
+	{{ varname .Name }} := m["{{ snakize .Name }}"].({{ .GoType }})
+			{{- end }}
+		{{- end }}
+	{{- end }}
+	
+	return &models.{{ $operationGroup }} {
+		{{- if not $isReadOnlyModel }}
+		{{- range .Properties }}
+			{{- if or (not .ReadOnly) (eq .Name "id") }}
+				{{- if and (eq .Name "id") (not (eq .SwaggerType "string")) }}
 		{{ pascalize .Name }}: int32({{ varname .Name }}),
 				{{- else if and (and (not .IsMap) .IsNullable (not .IsSuperAlias)) (not .IsComplexObject) }}
 		{{ pascalize .Name }}: &{{ varname .Name }},

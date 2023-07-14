@@ -18,9 +18,9 @@ import (
 // swagger:model PlatformEventChannelCreateResponse
 type PlatformEventChannelCreateResponse struct {
 
-	// Id
+	// id
 	// Example: 1234
-	ID string `json:"Id,omitempty"`
+	ID string `json:"id,omitempty"`
 }
 
 // Validate validates this platform event channel create response

@@ -53,6 +53,17 @@ func PlatformEventChannelMetadataModel(d *schema.ResourceData) *models.PlatformE
 	}
 }
 
+// Function to perform the following actions:
+func PlatformEventChannelMetadataModelFromMap(m map[string]interface{}) *models.PlatformEventChannelMetadata {
+	channelType := m["channel_type"].(string)
+	label := m["label"].(string)
+
+	return &models.PlatformEventChannelMetadata{
+		ChannelType: &channelType,
+		Label:       &label,
+	}
+}
+
 // Retrieve property field names for updating the PlatformEventChannelMetadata resource
 func GetPlatformEventChannelMetadataPropertyFields() (t []string) {
 	return []string{

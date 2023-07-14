@@ -41,7 +41,7 @@
     "PlatformEventChannelMemberCreateResponse": {
       "example": "isResource",
       "properties": {
-        "Id": {
+        "id": {
           "example": "1234",
           "type": "string"
         }
@@ -98,7 +98,7 @@
           "application/json"
         ],
         "responses": {
-          "200": {
+          "201": {
             "description": "successful operation",
             "schema": {
                 "$ref": "#/definitions/PlatformEventChannelMemberCreateResponse"
