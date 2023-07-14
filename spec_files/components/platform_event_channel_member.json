@@ -1,6 +1,6 @@
 {
   "definitions": {
-    "PlatformEventChannel": {
+    "PlatformEventChannelMember": {
       "example": "isResource",
       "properties": {
         "Id": {
@@ -8,11 +8,11 @@
           "type": "string"
         },
         "FullName": {
-          "example": "My_Channel__chn",
+          "example": "My_Channel__chn_MyEvent",
           "type": "string"
         },
         "Metadata": {
-          "$ref": "#/definitions/PlatformEventChannelMetadata"
+          "$ref": "#/definitions/PlatformEventChannelMemberMetadata"
         }
       },
       "required": [
@@ -21,15 +21,15 @@
       ],
       "type": "object"
     },
-    "PlatformEventChannelCreateRequest": {
+    "PlatformEventChannelMemberCreateRequest": {
       "example": "isResource",
       "properties": {
         "FullName": {
-          "example": "My_Channel__chn",
+          "example": "My_Channel__chn_MyEvent",
           "type": "string"
         },
         "Metadata": {
-          "$ref": "#/definitions/PlatformEventChannelMetadata"
+          "$ref": "#/definitions/PlatformEventChannelMemberMetadata"
         }
       },
       "required": [
@@ -38,7 +38,7 @@
       ],
       "type": "object"
     },
-    "PlatformEventChannelCreateResponse": {
+    "PlatformEventChannelMemberCreateResponse": {
       "example": "isResource",
       "properties": {
         "Id": {
@@ -48,28 +48,24 @@
       },
       "type": "object"
     },
-    "PlatformEventChannelMetadata": {
+    "PlatformEventChannelMemberMetadata": {
       "properties": {
-        "channelType": {
-          "example": "1234",
-          "type": "string",
-          "enum": [
-            "data",
-            "event"
-          ]
+        "eventChannel": {
+          "example": "My_Channel__chn",
+          "type": "string"
         },
-        "label": {
-          "example": "My Channel",
+        "selectedEntity": {
+          "example": "AccountChangeEvent",
           "type": "string"
         }
       },
       "required": [
-        "channelType",
-        "label"
+        "eventChannel",
+        "selectedEntity"
       ],
       "type": "object"
     },
-    "PlatformEventChannelUpdateRequest": {
+    "PlatformEventChannelMemberUpdateRequest": {
       "example": "isResource",
       "properties": {
         "FullName": {
@@ -77,24 +73,24 @@
           "type": "string"
         },
         "Metadata": {
-          "$ref": "#/definitions/PlatformEventChannelMetadata"
+          "$ref": "#/definitions/PlatformEventChannelMemberMetadata"
         }
       },
       "type": "object"
     }
   },
   "paths": {
-    "/PlatformEventChannel": {
+    "/PlatformEventChannelMember": {
       "post": {
         "description": "",
-        "operationId": "createPlatformEventChannel",
+        "operationId": "createPlatformEventChannelMember",
         "parameters": [
           {
             "in": "body",
             "name": "body",
             "required": true,
             "schema": {
-              "$ref": "#/definitions/PlatformEventChannel"
+              "$ref": "#/definitions/PlatformEventChannelMember"
             }
           }
         ],
@@ -105,7 +101,7 @@
           "200": {
             "description": "successful operation",
             "schema": {
-                "$ref": "#/definitions/PlatformEventChannelCreateResponse"
+                "$ref": "#/definitions/PlatformEventChannelMemberCreateResponse"
             }
           },
           "default": {
@@ -120,16 +116,16 @@
               "oauth2_password": []
           }
         ],
-        "summary": "Create PlatformEventChannel",
+        "summary": "Create PlatformEventChannelMember",
         "tags": [
-          "PlatformEventChannel"
+          "PlatformEventChannelMember"
         ]
       }
     },
-    "/PlatformEventChannel/{Id}": {
+    "/PlatformEventChannelMember/{Id}": {
       "delete": {
         "description": "",
-        "operationId": "deletePlatformEventChannel",
+        "operationId": "deletePlatformEventChannelMember",
         "parameters": [
           {
             "in": "path",
@@ -157,14 +153,14 @@
               "oauth2_password": []
           }
         ],
-        "summary": "Delete PlatformEventChannel",
+        "summary": "Delete PlatformEventChannelMember",
         "tags": [
-          "PlatformEventChannel"
+          "PlatformEventChannelMember"
         ]
       },
       "get": {
         "description": "",
-        "operationId": "getPlatformEventChannel",
+        "operationId": "getPlatformEventChannelMember",
         "parameters": [
           {
             "in": "path",
@@ -180,7 +176,7 @@
           "200": {
             "description": "successful operation",
             "schema": {
-                "$ref": "#/definitions/PlatformEventChannel"
+                "$ref": "#/definitions/PlatformEventChannelMember"
             }
           },
           "default": {
@@ -195,14 +191,14 @@
               "oauth2_password": []
           }
         ],
-        "summary": "Get PlatformEventChannel",
+        "summary": "Get PlatformEventChannelMember",
         "tags": [
-          "PlatformEventChannel"
+          "PlatformEventChannelMember"
         ]
       },
       "patch": {
         "description": "",
-        "operationId": "updatePlatformEventChannel",
+        "operationId": "updatePlatformEventChannelMember",
         "parameters": [
           {
             "in": "path",
@@ -215,7 +211,7 @@
             "name": "body",
             "required": true,
             "schema": {
-              "$ref": "#/definitions/PlatformEventChannelUpdateRequest"
+              "$ref": "#/definitions/PlatformEventChannelMemberUpdateRequest"
             }
           }
         ],
@@ -238,16 +234,16 @@
               "oauth2_password": []
           }
         ],
-        "summary": "Update PlatformEventChannel",
+        "summary": "Update PlatformEventChannelMember",
         "tags": [
-          "PlatformEventChannel"
+          "PlatformEventChannelMember"
         ]
       }
     }
   },
   "tags": [
     {
-      "name": "PlatformEventChannel"
+      "name": "PlatformEventChannelMember"
     }
   ]
 }

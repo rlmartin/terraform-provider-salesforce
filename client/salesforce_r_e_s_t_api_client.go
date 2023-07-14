@@ -25,6 +25,7 @@ import (
 	"golang.org/x/oauth2"
 
 	"vestahealthcare/client/platform_event_channel"
+	"vestahealthcare/client/platform_event_channel_member"
 )
 
 const (
@@ -101,6 +102,8 @@ func New(c *Config) *SalesforceRESTAPI {
 
 	cli.PlatformEventChannel = platform_event_channel.New(transport, strfmt.Default, oauth2PasswordAuthInfo)
 
+	cli.PlatformEventChannelMember = platform_event_channel_member.New(transport, strfmt.Default, oauth2PasswordAuthInfo)
+
 	return cli
 }
 
@@ -147,6 +150,8 @@ func (cfg *TransportConfig) WithSchemes(schemes []string) *TransportConfig {
 type SalesforceRESTAPI struct {
 	PlatformEventChannel *platform_event_channel.Client
 
+	PlatformEventChannelMember *platform_event_channel_member.Client
+
 	Transport runtime.ClientTransport
 }
 
@@ -155,6 +160,8 @@ func (c *SalesforceRESTAPI) SetTransport(transport runtime.ClientTransport) {
 	c.Transport = transport
 
 	c.PlatformEventChannel.SetTransport(transport)
+
+	c.PlatformEventChannelMember.SetTransport(transport)
 
 }
 
