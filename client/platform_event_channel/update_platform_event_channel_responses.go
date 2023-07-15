@@ -59,9 +59,6 @@ func (o *UpdatePlatformEventChannelNoContent) Error() string {
 }
 
 func (o *UpdatePlatformEventChannelNoContent) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {
-	//  bytes, _ := io.ReadAll(response.Body())
-	//  log.Printf("[TRACE] response body: ", string(bytes))
-	//  log.Printf("[TRACE] response code: ", response.Code())
 
 	return nil
 }
@@ -81,7 +78,7 @@ Error
 type UpdatePlatformEventChannelDefault struct {
 	_statusCode int
 
-	Payload *models.ErrorResponse
+	Payload []*models.ErrorResponse
 }
 
 // Code gets the status code for the update platform event channel default response
@@ -92,19 +89,14 @@ func (o *UpdatePlatformEventChannelDefault) Code() int {
 func (o *UpdatePlatformEventChannelDefault) Error() string {
 	return fmt.Sprintf("[PATCH /PlatformEventChannel/{Id}][%d] updatePlatformEventChannel default  %+v", o._statusCode, o.Payload)
 }
-func (o *UpdatePlatformEventChannelDefault) GetPayload() *models.ErrorResponse {
+func (o *UpdatePlatformEventChannelDefault) GetPayload() []*models.ErrorResponse {
 	return o.Payload
 }
 
 func (o *UpdatePlatformEventChannelDefault) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {
-	//  bytes, _ := io.ReadAll(response.Body())
-	//  log.Printf("[TRACE] response body: ", string(bytes))
-	//  log.Printf("[TRACE] response code: ", response.Code())
-
-	o.Payload = new(models.ErrorResponse)
 
 	// response payload
-	if err := consumer.Consume(response.Body(), o.Payload); err != nil && err != io.EOF {
+	if err := consumer.Consume(response.Body(), &o.Payload); err != nil && err != io.EOF {
 		return err
 	}
 

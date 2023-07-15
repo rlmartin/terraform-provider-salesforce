@@ -217,7 +217,10 @@
                                                   "default": {
                                                             "description": "Error",
                                                             "schema": {
-                                                                      "$ref": "#/definitions/ErrorResponse"
+                                                                      "items": {
+                                                                                "$ref": "#/definitions/ErrorResponse"
+                                                                      },
+                                                                      "type": "array"
                                                             }
                                                   }
                                         },
@@ -254,7 +257,10 @@
                                                   "default": {
                                                             "description": "Error",
                                                             "schema": {
-                                                                      "$ref": "#/definitions/ErrorResponse"
+                                                                      "items": {
+                                                                                "$ref": "#/definitions/ErrorResponse"
+                                                                      },
+                                                                      "type": "array"
                                                             }
                                                   }
                                         },
@@ -292,7 +298,10 @@
                                                   "default": {
                                                             "description": "Error",
                                                             "schema": {
-                                                                      "$ref": "#/definitions/ErrorResponse"
+                                                                      "items": {
+                                                                                "$ref": "#/definitions/ErrorResponse"
+                                                                      },
+                                                                      "type": "array"
                                                             }
                                                   }
                                         },
@@ -335,7 +344,10 @@
                                                   "default": {
                                                             "description": "Error",
                                                             "schema": {
-                                                                      "$ref": "#/definitions/ErrorResponse"
+                                                                      "items": {
+                                                                                "$ref": "#/definitions/ErrorResponse"
+                                                                      },
+                                                                      "type": "array"
                                                             }
                                                   }
                                         },
@@ -377,7 +389,10 @@
                                                   "default": {
                                                             "description": "Error",
                                                             "schema": {
-                                                                      "$ref": "#/definitions/ErrorResponse"
+                                                                      "items": {
+                                                                                "$ref": "#/definitions/ErrorResponse"
+                                                                      },
+                                                                      "type": "array"
                                                             }
                                                   }
                                         },
@@ -414,7 +429,10 @@
                                                   "default": {
                                                             "description": "Error",
                                                             "schema": {
-                                                                      "$ref": "#/definitions/ErrorResponse"
+                                                                      "items": {
+                                                                                "$ref": "#/definitions/ErrorResponse"
+                                                                      },
+                                                                      "type": "array"
                                                             }
                                                   }
                                         },
@@ -452,7 +470,10 @@
                                                   "default": {
                                                             "description": "Error",
                                                             "schema": {
-                                                                      "$ref": "#/definitions/ErrorResponse"
+                                                                      "items": {
+                                                                                "$ref": "#/definitions/ErrorResponse"
+                                                                      },
+                                                                      "type": "array"
                                                             }
                                                   }
                                         },
@@ -495,7 +516,10 @@
                                                   "default": {
                                                             "description": "Error",
                                                             "schema": {
-                                                                      "$ref": "#/definitions/ErrorResponse"
+                                                                      "items": {
+                                                                                "$ref": "#/definitions/ErrorResponse"
+                                                                      },
+                                                                      "type": "array"
                                                             }
                                                   }
                                         },

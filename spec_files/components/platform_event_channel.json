@@ -111,7 +111,10 @@
           "default": {
             "description": "Error",
             "schema": {
-                "$ref": "#/definitions/ErrorResponse"
+                "type": "array",
+                "items": {
+                  "$ref": "#/definitions/ErrorResponse"
+                }
             }
           }
         },
@@ -148,7 +151,10 @@
           "default": {
             "description": "Error",
             "schema": {
+              "type": "array",
+              "items": {
                 "$ref": "#/definitions/ErrorResponse"
+              }
             }
           }
         },
@@ -186,7 +192,10 @@
           "default": {
             "description": "Error",
             "schema": {
+              "type": "array",
+              "items": {
                 "$ref": "#/definitions/ErrorResponse"
+              }
             }
           }
         },
@@ -229,7 +238,10 @@
           "default": {
             "description": "Error",
             "schema": {
+              "type": "array",
+              "items": {
                 "$ref": "#/definitions/ErrorResponse"
+              }
             }
           }
         },

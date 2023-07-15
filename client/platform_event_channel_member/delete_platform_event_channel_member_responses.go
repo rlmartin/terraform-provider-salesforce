@@ -59,9 +59,6 @@ func (o *DeletePlatformEventChannelMemberNoContent) Error() string {
 }
 
 func (o *DeletePlatformEventChannelMemberNoContent) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {
-	//  bytes, _ := io.ReadAll(response.Body())
-	//  log.Printf("[TRACE] response body: ", string(bytes))
-	//  log.Printf("[TRACE] response code: ", response.Code())
 
 	return nil
 }
@@ -81,7 +78,7 @@ Error
 type DeletePlatformEventChannelMemberDefault struct {
 	_statusCode int
 
-	Payload *models.ErrorResponse
+	Payload []*models.ErrorResponse
 }
 
 // Code gets the status code for the delete platform event channel member default response
@@ -92,19 +89,14 @@ func (o *DeletePlatformEventChannelMemberDefault) Code() int {
 func (o *DeletePlatformEventChannelMemberDefault) Error() string {
 	return fmt.Sprintf("[DELETE /PlatformEventChannelMember/{Id}][%d] deletePlatformEventChannelMember default  %+v", o._statusCode, o.Payload)
 }
-func (o *DeletePlatformEventChannelMemberDefault) GetPayload() *models.ErrorResponse {
+func (o *DeletePlatformEventChannelMemberDefault) GetPayload() []*models.ErrorResponse {
 	return o.Payload
 }
 
 func (o *DeletePlatformEventChannelMemberDefault) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {
-	//  bytes, _ := io.ReadAll(response.Body())
-	//  log.Printf("[TRACE] response body: ", string(bytes))
-	//  log.Printf("[TRACE] response code: ", response.Code())
-
-	o.Payload = new(models.ErrorResponse)
 
 	// response payload
-	if err := consumer.Consume(response.Body(), o.Payload); err != nil && err != io.EOF {
+	if err := consumer.Consume(response.Body(), &o.Payload); err != nil && err != io.EOF {
 		return err
 	}
 
