@@ -24,6 +24,7 @@ import (
 	strfmt "github.com/go-openapi/strfmt"
 	"golang.org/x/oauth2"
 
+	"vestahealthcare/client/named_credential"
 	"vestahealthcare/client/platform_event_channel"
 	"vestahealthcare/client/platform_event_channel_member"
 )
@@ -100,6 +101,8 @@ func New(c *Config) *SalesforceRESTAPI {
 	cli := new(SalesforceRESTAPI)
 	cli.Transport = transport
 
+	cli.NamedCredential = named_credential.New(transport, strfmt.Default, oauth2PasswordAuthInfo)
+
 	cli.PlatformEventChannel = platform_event_channel.New(transport, strfmt.Default, oauth2PasswordAuthInfo)
 
 	cli.PlatformEventChannelMember = platform_event_channel_member.New(transport, strfmt.Default, oauth2PasswordAuthInfo)
@@ -148,6 +151,8 @@ func (cfg *TransportConfig) WithSchemes(schemes []string) *TransportConfig {
 
 // SalesforceRESTAPI is a client for salesforce r e s t API
 type SalesforceRESTAPI struct {
+	NamedCredential *named_credential.Client
+
 	PlatformEventChannel *platform_event_channel.Client
 
 	PlatformEventChannelMember *platform_event_channel_member.Client
@@ -158,6 +163,8 @@ type SalesforceRESTAPI struct {
 // SetTransport changes the transport on the client and all its subresources
 func (c *SalesforceRESTAPI) SetTransport(transport runtime.ClientTransport) {
 	c.Transport = transport
+
+	c.NamedCredential.SetTransport(transport)
 
 	c.PlatformEventChannel.SetTransport(transport)
 

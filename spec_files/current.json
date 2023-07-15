@@ -15,6 +15,119 @@
                               ],
                               "type": "object"
                     },
+                    "NamedCredential": {
+                              "example": "isResource",
+                              "properties": {
+                                        "FullName": {
+                                                  "example": "AWS_US_East_1",
+                                                  "type": "string"
+                                        },
+                                        "Id": {
+                                                  "example": "1234",
+                                                  "type": "string"
+                                        },
+                                        "Metadata": {
+                                                  "$ref": "#/definitions/NamedCredentialMetadata"
+                                        }
+                              },
+                              "required": [
+                                        "FullName",
+                                        "Metadata"
+                              ],
+                              "type": "object"
+                    },
+                    "NamedCredentialCreateRequest": {
+                              "example": "isResource",
+                              "properties": {
+                                        "FullName": {
+                                                  "example": "AWS_US_East_1",
+                                                  "type": "string"
+                                        },
+                                        "Metadata": {
+                                                  "$ref": "#/definitions/NamedCredentialMetadata"
+                                        }
+                              },
+                              "required": [
+                                        "FullName",
+                                        "Metadata"
+                              ],
+                              "type": "object"
+                    },
+                    "NamedCredentialCreateResponse": {
+                              "example": "isResource",
+                              "properties": {
+                                        "id": {
+                                                  "example": "1234",
+                                                  "type": "string"
+                                        }
+                              },
+                              "type": "object"
+                    },
+                    "NamedCredentialMetadata": {
+                              "properties": {
+                                        "allowMergeFieldsInBody": {
+                                                  "example": "false",
+                                                  "type": "boolean"
+                                        },
+                                        "allowMergeFieldsInHeader": {
+                                                  "example": "false",
+                                                  "type": "boolean"
+                                        },
+                                        "endpoint": {
+                                                  "example": "arn:aws:US-EAST-1:XXXXXXXXXX",
+                                                  "type": "string"
+                                        },
+                                        "generateAuthorizationHeader": {
+                                                  "example": "true",
+                                                  "type": "boolean"
+                                        },
+                                        "label": {
+                                                  "example": "AWS US-East-1",
+                                                  "type": "string"
+                                        },
+                                        "principalType": {
+                                                  "enum": [
+                                                            "Anonymous",
+                                                            "NamedUser",
+                                                            "PerUser"
+                                                  ],
+                                                  "example": "Anonymous",
+                                                  "type": "string"
+                                        },
+                                        "protocol": {
+                                                  "enum": [
+                                                            "AwsSv4",
+                                                            "Jwt",
+                                                            "JwtExchange",
+                                                            "NoAuthentication",
+                                                            "Oauth",
+                                                            "Password"
+                                                  ],
+                                                  "example": "NoAuthentication",
+                                                  "type": "string"
+                                        }
+                              },
+                              "required": [
+                                        "endpoint",
+                                        "label",
+                                        "principalType",
+                                        "protocol"
+                              ],
+                              "type": "object"
+                    },
+                    "NamedCredentialUpdateRequest": {
+                              "example": "isResource",
+                              "properties": {
+                                        "FullName": {
+                                                  "example": "My_Channel__chn",
+                                                  "type": "string"
+                                        },
+                                        "Metadata": {
+                                                  "$ref": "#/definitions/NamedCredentialMetadata"
+                                        }
+                              },
+                              "type": "object"
+                    },
                     "PlatformEventChannel": {
                               "example": "isResource",
                               "properties": {
@@ -190,6 +303,178 @@
                     "version": "2.0.0"
           },
           "paths": {
+                    "/NamedCredential": {
+                              "post": {
+                                        "description": "",
+                                        "operationId": "createNamedCredential",
+                                        "parameters": [
+                                                  {
+                                                            "in": "body",
+                                                            "name": "body",
+                                                            "required": true,
+                                                            "schema": {
+                                                                      "$ref": "#/definitions/NamedCredential"
+                                                            }
+                                                  }
+                                        ],
+                                        "produces": [
+                                                  "application/json"
+                                        ],
+                                        "responses": {
+                                                  "201": {
+                                                            "description": "successful operation",
+                                                            "schema": {
+                                                                      "$ref": "#/definitions/NamedCredentialCreateResponse"
+                                                            }
+                                                  },
+                                                  "default": {
+                                                            "description": "Error",
+                                                            "schema": {
+                                                                      "items": {
+                                                                                "$ref": "#/definitions/ErrorResponse"
+                                                                      },
+                                                                      "type": "array"
+                                                            }
+                                                  }
+                                        },
+                                        "security": [
+                                                  {
+                                                            "oauth2_password": []
+                                                  }
+                                        ],
+                                        "summary": "Create NamedCredential",
+                                        "tags": [
+                                                  "NamedCredential"
+                                        ]
+                              }
+                    },
+                    "/NamedCredential/{Id}": {
+                              "delete": {
+                                        "description": "",
+                                        "operationId": "deleteNamedCredential",
+                                        "parameters": [
+                                                  {
+                                                            "in": "path",
+                                                            "name": "Id",
+                                                            "required": true,
+                                                            "type": "string"
+                                                  }
+                                        ],
+                                        "produces": [
+                                                  "application/json"
+                                        ],
+                                        "responses": {
+                                                  "204": {
+                                                            "description": "successful operation"
+                                                  },
+                                                  "default": {
+                                                            "description": "Error",
+                                                            "schema": {
+                                                                      "items": {
+                                                                                "$ref": "#/definitions/ErrorResponse"
+                                                                      },
+                                                                      "type": "array"
+                                                            }
+                                                  }
+                                        },
+                                        "security": [
+                                                  {
+                                                            "oauth2_password": []
+                                                  }
+                                        ],
+                                        "summary": "Delete NamedCredential",
+                                        "tags": [
+                                                  "NamedCredential"
+                                        ]
+                              },
+                              "get": {
+                                        "description": "",
+                                        "operationId": "getNamedCredential",
+                                        "parameters": [
+                                                  {
+                                                            "in": "path",
+                                                            "name": "Id",
+                                                            "required": true,
+                                                            "type": "string"
+                                                  }
+                                        ],
+                                        "produces": [
+                                                  "application/json"
+                                        ],
+                                        "responses": {
+                                                  "200": {
+                                                            "description": "successful operation",
+                                                            "schema": {
+                                                                      "$ref": "#/definitions/NamedCredential"
+                                                            }
+                                                  },
+                                                  "default": {
+                                                            "description": "Error",
+                                                            "schema": {
+                                                                      "items": {
+                                                                                "$ref": "#/definitions/ErrorResponse"
+                                                                      },
+                                                                      "type": "array"
+                                                            }
+                                                  }
+                                        },
+                                        "security": [
+                                                  {
+                                                            "oauth2_password": []
+                                                  }
+                                        ],
+                                        "summary": "Get NamedCredential",
+                                        "tags": [
+                                                  "NamedCredential"
+                                        ]
+                              },
+                              "patch": {
+                                        "description": "",
+                                        "operationId": "updateNamedCredential",
+                                        "parameters": [
+                                                  {
+                                                            "in": "path",
+                                                            "name": "Id",
+                                                            "required": true,
+                                                            "type": "string"
+                                                  },
+                                                  {
+                                                            "in": "body",
+                                                            "name": "body",
+                                                            "required": true,
+                                                            "schema": {
+                                                                      "$ref": "#/definitions/NamedCredentialUpdateRequest"
+                                                            }
+                                                  }
+                                        ],
+                                        "produces": [
+                                                  "application/json"
+                                        ],
+                                        "responses": {
+                                                  "204": {
+                                                            "description": "successful operation"
+                                                  },
+                                                  "default": {
+                                                            "description": "Error",
+                                                            "schema": {
+                                                                      "items": {
+                                                                                "$ref": "#/definitions/ErrorResponse"
+                                                                      },
+                                                                      "type": "array"
+                                                            }
+                                                  }
+                                        },
+                                        "security": [
+                                                  {
+                                                            "oauth2_password": []
+                                                  }
+                                        ],
+                                        "summary": "Update NamedCredential",
+                                        "tags": [
+                                                  "NamedCredential"
+                                        ]
+                              }
+                    },
                     "/PlatformEventChannel": {
                               "post": {
                                         "description": "",
@@ -549,6 +834,9 @@
           "tags": [
                     {
                               "name": "PlatformEventChannelMember"
+                    },
+                    {
+                              "name": "NamedCredential"
                     },
                     {
                               "name": "PlatformEventChannel"
