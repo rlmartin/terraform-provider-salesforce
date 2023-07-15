@@ -63,9 +63,6 @@ func (o *CreatePlatformEventChannelCreated) GetPayload() *models.PlatformEventCh
 }
 
 func (o *CreatePlatformEventChannelCreated) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {
-	//  bytes, _ := io.ReadAll(response.Body())
-	//  log.Printf("[TRACE] response body: ", string(bytes))
-	//  log.Printf("[TRACE] response code: ", response.Code())
 
 	o.Payload = new(models.PlatformEventChannelCreateResponse)
 
@@ -92,7 +89,7 @@ Error
 type CreatePlatformEventChannelDefault struct {
 	_statusCode int
 
-	Payload *models.ErrorResponse
+	Payload []*models.ErrorResponse
 }
 
 // Code gets the status code for the create platform event channel default response
@@ -103,19 +100,14 @@ func (o *CreatePlatformEventChannelDefault) Code() int {
 func (o *CreatePlatformEventChannelDefault) Error() string {
 	return fmt.Sprintf("[POST /PlatformEventChannel][%d] createPlatformEventChannel default  %+v", o._statusCode, o.Payload)
 }
-func (o *CreatePlatformEventChannelDefault) GetPayload() *models.ErrorResponse {
+func (o *CreatePlatformEventChannelDefault) GetPayload() []*models.ErrorResponse {
 	return o.Payload
 }
 
 func (o *CreatePlatformEventChannelDefault) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {
-	//  bytes, _ := io.ReadAll(response.Body())
-	//  log.Printf("[TRACE] response body: ", string(bytes))
-	//  log.Printf("[TRACE] response code: ", response.Code())
-
-	o.Payload = new(models.ErrorResponse)
 
 	// response payload
-	if err := consumer.Consume(response.Body(), o.Payload); err != nil && err != io.EOF {
+	if err := consumer.Consume(response.Body(), &o.Payload); err != nil && err != io.EOF {
 		return err
 	}
 

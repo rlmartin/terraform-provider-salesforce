@@ -1,6 +1,6 @@
 {
   "definitions": {
-    "PlatformEventChannel": {
+    "EventRelayConfig": {
       "example": "isResource",
       "properties": {
         "Id": {
@@ -8,11 +8,11 @@
           "type": "string"
         },
         "FullName": {
-          "example": "My_Channel__chn",
+          "example": "MyEventRelay",
           "type": "string"
         },
         "Metadata": {
-          "$ref": "#/definitions/PlatformEventChannelMetadata"
+          "$ref": "#/definitions/EventRelayConfigMetadata"
         }
       },
       "required": [
@@ -21,7 +21,7 @@
       ],
       "type": "object"
     },
-    "PlatformEventChannelCreateRequest": {
+    "EventRelayConfigCreateRequest": {
       "example": "isResource",
       "properties": {
         "FullName": {
@@ -29,7 +29,7 @@
           "type": "string"
         },
         "Metadata": {
-          "$ref": "#/definitions/PlatformEventChannelMetadata"
+          "$ref": "#/definitions/EventRelayConfigMetadata"
         }
       },
       "required": [
@@ -38,7 +38,7 @@
       ],
       "type": "object"
     },
-    "PlatformEventChannelCreateResponse": {
+    "EventRelayConfigCreateResponse": {
       "example": "isResource",
       "properties": {
         "id": {
@@ -48,53 +48,72 @@
       },
       "type": "object"
     },
-    "PlatformEventChannelMetadata": {
+    "EventRelayConfigMetadata": {
       "properties": {
-        "channelType": {
-          "example": "1234",
-          "type": "string",
-          "enum": [
-            "data",
-            "event"
-          ]
-        },
-        "label": {
-          "example": "My Channel",
+        "destinationResourceName": {
+          "description": "Must be 'callout:' followed by the name of a NamedCredential. This cannot be changed after creation.",
+          "example": "callout:AWS_US_East_1",
           "type": "string"
-        }
-      },
-      "required": [
-        "channelType",
-        "label"
-      ],
-      "type": "object"
-    },
-    "PlatformEventChannelUpdateRequest": {
-      "example": "isResource",
-      "properties": {
-        "FullName": {
+        },
+        "eventChannel": {
+          "description": "The name of the PlatformEventChannel to connect to. This cannot be changed after creation.",
           "example": "My_Channel__chn",
           "type": "string"
         },
+        "relayOption": {
+          "example": "{\"ReplayRecovery\":\"LATEST\"}",
+          "type": "string",
+          "enum": [
+            "{\"ReplayRecovery\":\"EARLIEST\"}",
+            "{\"ReplayRecovery\":\"LATEST\"}"
+          ]
+        }
+      },
+      "required": [
+        "destinationResourceName",
+        "eventChannel",
+        "relayOption"
+      ],
+      "type": "object"
+    },
+    "EventRelayConfigMetadataUpdate": {
+      "properties": {
+        "relayOption": {
+          "example": "{\"ReplayRecovery\":\"LATEST\"}",
+          "type": "string",
+          "enum": [
+            "{\"ReplayRecovery\":\"EARLIEST\"}",
+            "{\"ReplayRecovery\":\"LATEST\"}"
+          ]
+        }
+      },
+      "required": [
+        "relayOption"
+      ],
+      "type": "object"
+    },
+    "EventRelayConfigUpdateRequest": {
+      "example": "isResource",
+      "properties": {
         "Metadata": {
-          "$ref": "#/definitions/PlatformEventChannelMetadata"
+          "$ref": "#/definitions/EventRelayConfigMetadataUpdate"
         }
       },
       "type": "object"
     }
   },
   "paths": {
-    "/PlatformEventChannel": {
+    "/EventRelayConfig": {
       "post": {
         "description": "",
-        "operationId": "createPlatformEventChannel",
+        "operationId": "createEventRelayConfig",
         "parameters": [
           {
             "in": "body",
             "name": "body",
             "required": true,
             "schema": {
-              "$ref": "#/definitions/PlatformEventChannel"
+              "$ref": "#/definitions/EventRelayConfig"
             }
           }
         ],
@@ -105,7 +124,7 @@
           "201": {
             "description": "successful operation",
             "schema": {
-                "$ref": "#/definitions/PlatformEventChannelCreateResponse"
+                "$ref": "#/definitions/EventRelayConfigCreateResponse"
             }
           },
           "default": {
@@ -123,16 +142,16 @@
               "oauth2_password": []
           }
         ],
-        "summary": "Create PlatformEventChannel",
+        "summary": "Create EventRelayConfig",
         "tags": [
-          "PlatformEventChannel"
+          "EventRelayConfig"
         ]
       }
     },
-    "/PlatformEventChannel/{Id}": {
+    "/EventRelayConfig/{Id}": {
       "delete": {
         "description": "",
-        "operationId": "deletePlatformEventChannel",
+        "operationId": "deleteEventRelayConfig",
         "parameters": [
           {
             "in": "path",
@@ -163,14 +182,14 @@
               "oauth2_password": []
           }
         ],
-        "summary": "Delete PlatformEventChannel",
+        "summary": "Delete EventRelayConfig",
         "tags": [
-          "PlatformEventChannel"
+          "EventRelayConfig"
         ]
       },
       "get": {
         "description": "",
-        "operationId": "getPlatformEventChannel",
+        "operationId": "getEventRelayConfig",
         "parameters": [
           {
             "in": "path",
@@ -186,7 +205,7 @@
           "200": {
             "description": "successful operation",
             "schema": {
-                "$ref": "#/definitions/PlatformEventChannel"
+                "$ref": "#/definitions/EventRelayConfig"
             }
           },
           "default": {
@@ -204,14 +223,14 @@
               "oauth2_password": []
           }
         ],
-        "summary": "Get PlatformEventChannel",
+        "summary": "Get EventRelayConfig",
         "tags": [
-          "PlatformEventChannel"
+          "EventRelayConfig"
         ]
       },
       "patch": {
         "description": "",
-        "operationId": "updatePlatformEventChannel",
+        "operationId": "updateEventRelayConfig",
         "parameters": [
           {
             "in": "path",
@@ -224,7 +243,7 @@
             "name": "body",
             "required": true,
             "schema": {
-              "$ref": "#/definitions/PlatformEventChannelUpdateRequest"
+              "$ref": "#/definitions/EventRelayConfigUpdateRequest"
             }
           }
         ],
@@ -250,16 +269,16 @@
               "oauth2_password": []
           }
         ],
-        "summary": "Update PlatformEventChannel",
+        "summary": "Update EventRelayConfig",
         "tags": [
-          "PlatformEventChannel"
+          "EventRelayConfig"
         ]
       }
     }
   },
   "tags": [
     {
-      "name": "PlatformEventChannel"
+      "name": "EventRelayConfig"
     }
   ]
 }
