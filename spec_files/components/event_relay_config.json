@@ -51,12 +51,12 @@
     "EventRelayConfigMetadata": {
       "properties": {
         "destinationResourceName": {
-          "description": "Must be 'callout:' followed by the name of a NamedCredential",
+          "description": "Must be 'callout:' followed by the name of a NamedCredential. This cannot be changed after creation.",
           "example": "callout:AWS_US_East_1",
           "type": "string"
         },
         "eventChannel": {
-          "description": "The name of the PlatformEventChannel to connect to",
+          "description": "The name of the PlatformEventChannel to connect to. This cannot be changed after creation.",
           "example": "My_Channel__chn",
           "type": "string"
         },
@@ -76,15 +76,27 @@
       ],
       "type": "object"
     },
+    "EventRelayConfigMetadataUpdate": {
+      "properties": {
+        "relayOption": {
+          "example": "{\"ReplayRecovery\":\"LATEST\"}",
+          "type": "string",
+          "enum": [
+            "{\"ReplayRecovery\":\"EARLIEST\"}",
+            "{\"ReplayRecovery\":\"LATEST\"}"
+          ]
+        }
+      },
+      "required": [
+        "relayOption"
+      ],
+      "type": "object"
+    },
     "EventRelayConfigUpdateRequest": {
       "example": "isResource",
       "properties": {
-        "FullName": {
-          "example": "My_Channel__chn",
-          "type": "string"
-        },
         "Metadata": {
-          "$ref": "#/definitions/EventRelayConfigMetadata"
+          "$ref": "#/definitions/EventRelayConfigMetadataUpdate"
         }
       },
       "type": "object"

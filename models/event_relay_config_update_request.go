@@ -19,12 +19,8 @@ import (
 // swagger:model EventRelayConfigUpdateRequest
 type EventRelayConfigUpdateRequest struct {
 
-	// full name
-	// Example: My_Channel__chn
-	FullName string `json:"FullName,omitempty"`
-
 	// metadata
-	Metadata *EventRelayConfigMetadata `json:"Metadata,omitempty"`
+	Metadata *EventRelayConfigMetadataUpdate `json:"Metadata,omitempty"`
 }
 
 // Validate validates this event relay config update request

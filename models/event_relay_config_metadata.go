@@ -20,12 +20,12 @@ import (
 // swagger:model EventRelayConfigMetadata
 type EventRelayConfigMetadata struct {
 
-	// Must be 'callout:' followed by the name of a NamedCredential
+	// Must be 'callout:' followed by the name of a NamedCredential. This cannot be changed after creation.
 	// Example: callout:AWS_US_East_1
 	// Required: true
 	DestinationResourceName *string `json:"destinationResourceName"`
 
-	// The name of the PlatformEventChannel to connect to
+	// The name of the PlatformEventChannel to connect to. This cannot be changed after creation.
 	// Example: My_Channel__chn
 	// Required: true
 	EventChannel *string `json:"eventChannel"`
