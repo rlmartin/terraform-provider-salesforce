@@ -15,6 +15,95 @@
                               ],
                               "type": "object"
                     },
+                    "EventRelayConfig": {
+                              "example": "isResource",
+                              "properties": {
+                                        "FullName": {
+                                                  "example": "MyEventRelay",
+                                                  "type": "string"
+                                        },
+                                        "Id": {
+                                                  "example": "1234",
+                                                  "type": "string"
+                                        },
+                                        "Metadata": {
+                                                  "$ref": "#/definitions/EventRelayConfigMetadata"
+                                        }
+                              },
+                              "required": [
+                                        "FullName",
+                                        "Metadata"
+                              ],
+                              "type": "object"
+                    },
+                    "EventRelayConfigCreateRequest": {
+                              "example": "isResource",
+                              "properties": {
+                                        "FullName": {
+                                                  "example": "My_Channel__chn",
+                                                  "type": "string"
+                                        },
+                                        "Metadata": {
+                                                  "$ref": "#/definitions/EventRelayConfigMetadata"
+                                        }
+                              },
+                              "required": [
+                                        "FullName",
+                                        "Metadata"
+                              ],
+                              "type": "object"
+                    },
+                    "EventRelayConfigCreateResponse": {
+                              "example": "isResource",
+                              "properties": {
+                                        "id": {
+                                                  "example": "1234",
+                                                  "type": "string"
+                                        }
+                              },
+                              "type": "object"
+                    },
+                    "EventRelayConfigMetadata": {
+                              "properties": {
+                                        "destinationResourceName": {
+                                                  "description": "Must be 'callout:' followed by the name of a NamedCredential",
+                                                  "example": "callout:AWS_US_East_1",
+                                                  "type": "string"
+                                        },
+                                        "eventChannel": {
+                                                  "description": "The name of the PlatformEventChannel to connect to",
+                                                  "example": "My_Channel__chn",
+                                                  "type": "string"
+                                        },
+                                        "relayOption": {
+                                                  "enum": [
+                                                            "{\"ReplayRecovery\":\"EARLIEST\"}",
+                                                            "{\"ReplayRecovery\":\"LATEST\"}"
+                                                  ],
+                                                  "example": "{\"ReplayRecovery\":\"LATEST\"}",
+                                                  "type": "string"
+                                        }
+                              },
+                              "required": [
+                                        "destinationResourceName",
+                                        "eventChannel",
+                                        "relayOption"
+                              ],
+                              "type": "object"
+                    },
+                    "EventRelayConfigUpdateRequest": {
+                              "example": "isResource",
+                              "properties": {
+                                        "FullName": {
+                                                  "example": "My_Channel__chn",
+                                                  "type": "string"
+                                        },
+                                        "Metadata": {
+                                                  "$ref": "#/definitions/EventRelayConfigMetadata"
+                                        }
+                              },
+                              "type": "object"
+                    },
                     "NamedCredential": {
                               "example": "isResource",
                               "properties": {
@@ -303,6 +392,178 @@
                     "version": "2.0.0"
           },
           "paths": {
+                    "/EventRelayConfig": {
+                              "post": {
+                                        "description": "",
+                                        "operationId": "createEventRelayConfig",
+                                        "parameters": [
+                                                  {
+                                                            "in": "body",
+                                                            "name": "body",
+                                                            "required": true,
+                                                            "schema": {
+                                                                      "$ref": "#/definitions/EventRelayConfig"
+                                                            }
+                                                  }
+                                        ],
+                                        "produces": [
+                                                  "application/json"
+                                        ],
+                                        "responses": {
+                                                  "201": {
+                                                            "description": "successful operation",
+                                                            "schema": {
+                                                                      "$ref": "#/definitions/EventRelayConfigCreateResponse"
+                                                            }
+                                                  },
+                                                  "default": {
+                                                            "description": "Error",
+                                                            "schema": {
+                                                                      "items": {
+                                                                                "$ref": "#/definitions/ErrorResponse"
+                                                                      },
+                                                                      "type": "array"
+                                                            }
+                                                  }
+                                        },
+                                        "security": [
+                                                  {
+                                                            "oauth2_password": []
+                                                  }
+                                        ],
+                                        "summary": "Create EventRelayConfig",
+                                        "tags": [
+                                                  "EventRelayConfig"
+                                        ]
+                              }
+                    },
+                    "/EventRelayConfig/{Id}": {
+                              "delete": {
+                                        "description": "",
+                                        "operationId": "deleteEventRelayConfig",
+                                        "parameters": [
+                                                  {
+                                                            "in": "path",
+                                                            "name": "Id",
+                                                            "required": true,
+                                                            "type": "string"
+                                                  }
+                                        ],
+                                        "produces": [
+                                                  "application/json"
+                                        ],
+                                        "responses": {
+                                                  "204": {
+                                                            "description": "successful operation"
+                                                  },
+                                                  "default": {
+                                                            "description": "Error",
+                                                            "schema": {
+                                                                      "items": {
+                                                                                "$ref": "#/definitions/ErrorResponse"
+                                                                      },
+                                                                      "type": "array"
+                                                            }
+                                                  }
+                                        },
+                                        "security": [
+                                                  {
+                                                            "oauth2_password": []
+                                                  }
+                                        ],
+                                        "summary": "Delete EventRelayConfig",
+                                        "tags": [
+                                                  "EventRelayConfig"
+                                        ]
+                              },
+                              "get": {
+                                        "description": "",
+                                        "operationId": "getEventRelayConfig",
+                                        "parameters": [
+                                                  {
+                                                            "in": "path",
+                                                            "name": "Id",
+                                                            "required": true,
+                                                            "type": "string"
+                                                  }
+                                        ],
+                                        "produces": [
+                                                  "application/json"
+                                        ],
+                                        "responses": {
+                                                  "200": {
+                                                            "description": "successful operation",
+                                                            "schema": {
+                                                                      "$ref": "#/definitions/EventRelayConfig"
+                                                            }
+                                                  },
+                                                  "default": {
+                                                            "description": "Error",
+                                                            "schema": {
+                                                                      "items": {
+                                                                                "$ref": "#/definitions/ErrorResponse"
+                                                                      },
+                                                                      "type": "array"
+                                                            }
+                                                  }
+                                        },
+                                        "security": [
+                                                  {
+                                                            "oauth2_password": []
+                                                  }
+                                        ],
+                                        "summary": "Get EventRelayConfig",
+                                        "tags": [
+                                                  "EventRelayConfig"
+                                        ]
+                              },
+                              "patch": {
+                                        "description": "",
+                                        "operationId": "updateEventRelayConfig",
+                                        "parameters": [
+                                                  {
+                                                            "in": "path",
+                                                            "name": "Id",
+                                                            "required": true,
+                                                            "type": "string"
+                                                  },
+                                                  {
+                                                            "in": "body",
+                                                            "name": "body",
+                                                            "required": true,
+                                                            "schema": {
+                                                                      "$ref": "#/definitions/EventRelayConfigUpdateRequest"
+                                                            }
+                                                  }
+                                        ],
+                                        "produces": [
+                                                  "application/json"
+                                        ],
+                                        "responses": {
+                                                  "204": {
+                                                            "description": "successful operation"
+                                                  },
+                                                  "default": {
+                                                            "description": "Error",
+                                                            "schema": {
+                                                                      "items": {
+                                                                                "$ref": "#/definitions/ErrorResponse"
+                                                                      },
+                                                                      "type": "array"
+                                                            }
+                                                  }
+                                        },
+                                        "security": [
+                                                  {
+                                                            "oauth2_password": []
+                                                  }
+                                        ],
+                                        "summary": "Update EventRelayConfig",
+                                        "tags": [
+                                                  "EventRelayConfig"
+                                        ]
+                              }
+                    },
                     "/NamedCredential": {
                               "post": {
                                         "description": "",
@@ -832,6 +1093,9 @@
           },
           "swagger": "2.0",
           "tags": [
+                    {
+                              "name": "EventRelayConfig"
+                    },
                     {
                               "name": "PlatformEventChannelMember"
                     },

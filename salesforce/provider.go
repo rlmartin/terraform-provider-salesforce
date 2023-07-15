@@ -44,11 +44,13 @@ func Provider() *schema.Provider {
 			},
 		},
 		ResourcesMap: map[string]*schema.Resource{
+			"salesforce_event_relay_config":            resources.EventRelayConfig(),
 			"salesforce_named_credential":              resources.NamedCredential(),
 			"salesforce_platform_event_channel":        resources.PlatformEventChannel(),
 			"salesforce_platform_event_channel_member": resources.PlatformEventChannelMember(),
 		},
 		DataSourcesMap: map[string]*schema.Resource{
+			"salesforce_event_relay_config":            resources.DataResourceEventRelayConfig(),
 			"salesforce_named_credential":              resources.DataResourceNamedCredential(),
 			"salesforce_platform_event_channel":        resources.DataResourcePlatformEventChannel(),
 			"salesforce_platform_event_channel_member": resources.DataResourcePlatformEventChannelMember(),
