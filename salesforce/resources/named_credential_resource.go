@@ -36,7 +36,8 @@ func NamedCredential() *schema.Resource {
 
 func DataResourceNamedCredential() *schema.Resource {
 	return &schema.Resource{
-		Schema: schemata.DataSourceNamedCredentialSchema(),
+		ReadContext: getNamedCredential,
+		Schema:      schemata.DataSourceNamedCredentialSchema(),
 	}
 }
 

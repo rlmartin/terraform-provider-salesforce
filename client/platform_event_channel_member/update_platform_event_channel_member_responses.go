@@ -55,7 +55,7 @@ type UpdatePlatformEventChannelMemberNoContent struct {
 }
 
 func (o *UpdatePlatformEventChannelMemberNoContent) Error() string {
-	return fmt.Sprintf("[PATCH /PlatformEventChannelMember/{Id}][%d] updatePlatformEventChannelMemberNoContent ", 204)
+	return fmt.Sprintf("[PATCH /tooling/sobjects/PlatformEventChannelMember/{Id}][%d] updatePlatformEventChannelMemberNoContent ", 204)
 }
 
 func (o *UpdatePlatformEventChannelMemberNoContent) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {
@@ -87,7 +87,7 @@ func (o *UpdatePlatformEventChannelMemberDefault) Code() int {
 }
 
 func (o *UpdatePlatformEventChannelMemberDefault) Error() string {
-	return fmt.Sprintf("[PATCH /PlatformEventChannelMember/{Id}][%d] updatePlatformEventChannelMember default  %+v", o._statusCode, o.Payload)
+	return fmt.Sprintf("[PATCH /tooling/sobjects/PlatformEventChannelMember/{Id}][%d] updatePlatformEventChannelMember default  %+v", o._statusCode, o.Payload)
 }
 func (o *UpdatePlatformEventChannelMemberDefault) GetPayload() []*models.ErrorResponse {
 	return o.Payload

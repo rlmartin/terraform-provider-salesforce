@@ -36,7 +36,8 @@ func EventRelayConfig() *schema.Resource {
 
 func DataResourceEventRelayConfig() *schema.Resource {
 	return &schema.Resource{
-		Schema: schemata.DataSourceEventRelayConfigSchema(),
+		ReadContext: getEventRelayConfig,
+		Schema:      schemata.DataSourceEventRelayConfigSchema(),
 	}
 }
 

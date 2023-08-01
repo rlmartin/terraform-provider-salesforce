@@ -47,6 +47,7 @@ import (
 {{ blockcomment .Description }}{{ end }}{{ else if .Description}}{{ blockcomment .Description }}{{ else }}{{ humanize $operationGroup }} API{{ end }}
 */
 
+{{ if gt (len .Operations) 1 -}}
 func {{ pascalize $operationGroup }}() *schema.Resource {
 	return &schema.Resource{
 		{{- range .Operations }}
@@ -72,16 +73,15 @@ func {{ pascalize $operationGroup }}() *schema.Resource {
 		Schema: schemata.{{- pascalize $operationGroup -}}Schema(),
 	}
 }
+{{- end }}
 
 func DataResource{{ pascalize $operationGroup }}() *schema.Resource {
 	return &schema.Resource{
 		{{- range .Operations }} {{/* skip everything except GetList opertaions */}}
 			{{- $operation := .Name }}
-			{{- if stringContains $operation "List" }}
 			{{- if eq .Method "GET" }}
 		ReadContext: {{ $operation }},
 			{{- end }}
-			{{- end}}
 		{{- end }}
 		Schema: schemata.DataSource{{- pascalize $operationGroup -}}Schema(),
 	}
@@ -97,20 +97,9 @@ func {{ $operation }}(ctx context.Context, d *schema.ResourceData, m interface{}
 
 	params := {{ $operationGroup }}.New{{ pascalize $operation }}Params()
 		
-		{{- if stringContains $operation "List" }}
-
-	filterVal, filterIsSet := d.GetOk("filter")
-	if filterIsSet {
-		stringVal := filterVal.(string)
-		params.Filter = &stringVal
-	}
-		{{- else }}
-
 	{{ range .Params }}
 		{{- template "handleNonBodyParam" . -}}
 	{{ end }}
-
-		{{- end }}
 
 	client := m.(*client.SalesforceRESTAPI)
 

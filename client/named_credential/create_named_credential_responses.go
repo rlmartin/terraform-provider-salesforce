@@ -56,7 +56,7 @@ type CreateNamedCredentialCreated struct {
 }
 
 func (o *CreateNamedCredentialCreated) Error() string {
-	return fmt.Sprintf("[POST /NamedCredential][%d] createNamedCredentialCreated  %+v", 201, o.Payload)
+	return fmt.Sprintf("[POST /tooling/sobjects/NamedCredential][%d] createNamedCredentialCreated  %+v", 201, o.Payload)
 }
 func (o *CreateNamedCredentialCreated) GetPayload() *models.NamedCredentialCreateResponse {
 	return o.Payload
@@ -98,7 +98,7 @@ func (o *CreateNamedCredentialDefault) Code() int {
 }
 
 func (o *CreateNamedCredentialDefault) Error() string {
-	return fmt.Sprintf("[POST /NamedCredential][%d] createNamedCredential default  %+v", o._statusCode, o.Payload)
+	return fmt.Sprintf("[POST /tooling/sobjects/NamedCredential][%d] createNamedCredential default  %+v", o._statusCode, o.Payload)
 }
 func (o *CreateNamedCredentialDefault) GetPayload() []*models.ErrorResponse {
 	return o.Payload

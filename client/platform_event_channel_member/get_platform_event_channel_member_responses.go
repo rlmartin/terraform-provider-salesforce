@@ -56,7 +56,7 @@ type GetPlatformEventChannelMemberOK struct {
 }
 
 func (o *GetPlatformEventChannelMemberOK) Error() string {
-	return fmt.Sprintf("[GET /PlatformEventChannelMember/{Id}][%d] getPlatformEventChannelMemberOK  %+v", 200, o.Payload)
+	return fmt.Sprintf("[GET /tooling/sobjects/PlatformEventChannelMember/{Id}][%d] getPlatformEventChannelMemberOK  %+v", 200, o.Payload)
 }
 func (o *GetPlatformEventChannelMemberOK) GetPayload() *models.PlatformEventChannelMember {
 	return o.Payload
@@ -98,7 +98,7 @@ func (o *GetPlatformEventChannelMemberDefault) Code() int {
 }
 
 func (o *GetPlatformEventChannelMemberDefault) Error() string {
-	return fmt.Sprintf("[GET /PlatformEventChannelMember/{Id}][%d] getPlatformEventChannelMember default  %+v", o._statusCode, o.Payload)
+	return fmt.Sprintf("[GET /tooling/sobjects/PlatformEventChannelMember/{Id}][%d] getPlatformEventChannelMember default  %+v", o._statusCode, o.Payload)
 }
 func (o *GetPlatformEventChannelMemberDefault) GetPayload() []*models.ErrorResponse {
 	return o.Payload

@@ -42,9 +42,9 @@ func Provider() *schema.Provider {
 			{{ end -}}
 		},
 		ResourcesMap: map[string]*schema.Resource{
-			{{- range .OperationGroups }}
+			{{- range .OperationGroups }}{{- if gt (len .Operations) 1 }}
 			"salesforce_{{ humanize .Name | snakize }}": resources.{{ pascalize .Name }}(),
-			{{- end }}
+			{{- end }}{{- end }}
 		},
 		DataSourcesMap: map[string]*schema.Resource{
 			{{- range .OperationGroups }}

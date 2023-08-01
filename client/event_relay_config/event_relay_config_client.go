@@ -43,7 +43,7 @@ func (a *Client) CreateEventRelayConfig(params *CreateEventRelayConfigParams) (*
 	result, err := a.transport.Submit(&runtime.ClientOperation{
 		ID:                 "createEventRelayConfig",
 		Method:             "POST",
-		PathPattern:        "/EventRelayConfig",
+		PathPattern:        "/tooling/sobjects/EventRelayConfig",
 		ProducesMediaTypes: []string{"application/json"},
 		ConsumesMediaTypes: []string{"application/json"},
 		Schemes:            []string{"https"},
@@ -73,7 +73,7 @@ func (a *Client) DeleteEventRelayConfig(params *DeleteEventRelayConfigParams) (*
 	result, err := a.transport.Submit(&runtime.ClientOperation{
 		ID:                 "deleteEventRelayConfig",
 		Method:             "DELETE",
-		PathPattern:        "/EventRelayConfig/{Id}",
+		PathPattern:        "/tooling/sobjects/EventRelayConfig/{Id}",
 		ProducesMediaTypes: []string{"application/json"},
 		ConsumesMediaTypes: []string{"application/json"},
 		Schemes:            []string{"https"},
@@ -103,7 +103,7 @@ func (a *Client) GetEventRelayConfig(params *GetEventRelayConfigParams) (*GetEve
 	result, err := a.transport.Submit(&runtime.ClientOperation{
 		ID:                 "getEventRelayConfig",
 		Method:             "GET",
-		PathPattern:        "/EventRelayConfig/{Id}",
+		PathPattern:        "/tooling/sobjects/EventRelayConfig/{Id}",
 		ProducesMediaTypes: []string{"application/json"},
 		ConsumesMediaTypes: []string{"application/json"},
 		Schemes:            []string{"https"},
@@ -133,7 +133,7 @@ func (a *Client) UpdateEventRelayConfig(params *UpdateEventRelayConfigParams) (*
 	result, err := a.transport.Submit(&runtime.ClientOperation{
 		ID:                 "updateEventRelayConfig",
 		Method:             "PATCH",
-		PathPattern:        "/EventRelayConfig/{Id}",
+		PathPattern:        "/tooling/sobjects/EventRelayConfig/{Id}",
 		ProducesMediaTypes: []string{"application/json"},
 		ConsumesMediaTypes: []string{"application/json"},
 		Schemes:            []string{"https"},

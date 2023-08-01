@@ -54,6 +54,7 @@ func Provider() *schema.Provider {
 			"salesforce_named_credential":              resources.DataResourceNamedCredential(),
 			"salesforce_platform_event_channel":        resources.DataResourcePlatformEventChannel(),
 			"salesforce_platform_event_channel_member": resources.DataResourcePlatformEventChannelMember(),
+			"salesforce_query_result":                  resources.DataResourceQueryResult(),
 		},
 		ConfigureContextFunc: providerConfigure,
 	}

@@ -43,7 +43,7 @@ func (a *Client) CreateNamedCredential(params *CreateNamedCredentialParams) (*Cr
 	result, err := a.transport.Submit(&runtime.ClientOperation{
 		ID:                 "createNamedCredential",
 		Method:             "POST",
-		PathPattern:        "/NamedCredential",
+		PathPattern:        "/tooling/sobjects/NamedCredential",
 		ProducesMediaTypes: []string{"application/json"},
 		ConsumesMediaTypes: []string{"application/json"},
 		Schemes:            []string{"https"},
@@ -73,7 +73,7 @@ func (a *Client) DeleteNamedCredential(params *DeleteNamedCredentialParams) (*De
 	result, err := a.transport.Submit(&runtime.ClientOperation{
 		ID:                 "deleteNamedCredential",
 		Method:             "DELETE",
-		PathPattern:        "/NamedCredential/{Id}",
+		PathPattern:        "/tooling/sobjects/NamedCredential/{Id}",
 		ProducesMediaTypes: []string{"application/json"},
 		ConsumesMediaTypes: []string{"application/json"},
 		Schemes:            []string{"https"},
@@ -103,7 +103,7 @@ func (a *Client) GetNamedCredential(params *GetNamedCredentialParams) (*GetNamed
 	result, err := a.transport.Submit(&runtime.ClientOperation{
 		ID:                 "getNamedCredential",
 		Method:             "GET",
-		PathPattern:        "/NamedCredential/{Id}",
+		PathPattern:        "/tooling/sobjects/NamedCredential/{Id}",
 		ProducesMediaTypes: []string{"application/json"},
 		ConsumesMediaTypes: []string{"application/json"},
 		Schemes:            []string{"https"},
@@ -133,7 +133,7 @@ func (a *Client) UpdateNamedCredential(params *UpdateNamedCredentialParams) (*Up
 	result, err := a.transport.Submit(&runtime.ClientOperation{
 		ID:                 "updateNamedCredential",
 		Method:             "PATCH",
-		PathPattern:        "/NamedCredential/{Id}",
+		PathPattern:        "/tooling/sobjects/NamedCredential/{Id}",
 		ProducesMediaTypes: []string{"application/json"},
 		ConsumesMediaTypes: []string{"application/json"},
 		Schemes:            []string{"https"},

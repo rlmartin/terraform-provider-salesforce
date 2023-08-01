@@ -1,5 +1,5 @@
 {
-          "basePath": "/services/data/v57.0/tooling/sobjects",
+          "basePath": "/services/data/v57.0",
           "definitions": {
                     "ErrorResponse": {
                               "properties": {
@@ -388,6 +388,38 @@
                                         }
                               },
                               "type": "object"
+                    },
+                    "QueryResult": {
+                              "example": "isResource",
+                              "properties": {
+                                        "done": {
+                                                  "example": "true",
+                                                  "type": "boolean"
+                                        },
+                                        "q": {
+                                                  "type": "string"
+                                        },
+                                        "records": {
+                                                  "items": {
+                                                            "additionalProperties": {
+                                                                      "type": "string"
+                                                            },
+                                                            "type": "object"
+                                                  },
+                                                  "type": "array"
+                                        },
+                                        "totalSize": {
+                                                  "example": "1",
+                                                  "format": "int32",
+                                                  "type": "number"
+                                        }
+                              },
+                              "required": [
+                                        "totalSize",
+                                        "done",
+                                        "records"
+                              ],
+                              "type": "object"
                     }
           },
           "externalDocs": {
@@ -404,7 +436,50 @@
                     "version": "2.0.0"
           },
           "paths": {
-                    "/EventRelayConfig": {
+                    "/query": {
+                              "get": {
+                                        "description": "",
+                                        "operationId": "getQuery",
+                                        "parameters": [
+                                                  {
+                                                            "in": "query",
+                                                            "name": "q",
+                                                            "required": true,
+                                                            "type": "string"
+                                                  }
+                                        ],
+                                        "produces": [
+                                                  "application/json"
+                                        ],
+                                        "responses": {
+                                                  "200": {
+                                                            "description": "successful operation",
+                                                            "schema": {
+                                                                      "$ref": "#/definitions/QueryResult"
+                                                            }
+                                                  },
+                                                  "default": {
+                                                            "description": "Error",
+                                                            "schema": {
+                                                                      "items": {
+                                                                                "$ref": "#/definitions/ErrorResponse"
+                                                                      },
+                                                                      "type": "array"
+                                                            }
+                                                  }
+                                        },
+                                        "security": [
+                                                  {
+                                                            "oauth2_password": []
+                                                  }
+                                        ],
+                                        "summary": "Get QueryResult",
+                                        "tags": [
+                                                  "QueryResult"
+                                        ]
+                              }
+                    },
+                    "/tooling/sobjects/EventRelayConfig": {
                               "post": {
                                         "description": "",
                                         "operationId": "createEventRelayConfig",
@@ -449,7 +524,7 @@
                                         ]
                               }
                     },
-                    "/EventRelayConfig/{Id}": {
+                    "/tooling/sobjects/EventRelayConfig/{Id}": {
                               "delete": {
                                         "description": "",
                                         "operationId": "deleteEventRelayConfig",
@@ -576,7 +651,7 @@
                                         ]
                               }
                     },
-                    "/NamedCredential": {
+                    "/tooling/sobjects/NamedCredential": {
                               "post": {
                                         "description": "",
                                         "operationId": "createNamedCredential",
@@ -621,7 +696,7 @@
                                         ]
                               }
                     },
-                    "/NamedCredential/{Id}": {
+                    "/tooling/sobjects/NamedCredential/{Id}": {
                               "delete": {
                                         "description": "",
                                         "operationId": "deleteNamedCredential",
@@ -748,7 +823,7 @@
                                         ]
                               }
                     },
-                    "/PlatformEventChannel": {
+                    "/tooling/sobjects/PlatformEventChannel": {
                               "post": {
                                         "description": "",
                                         "operationId": "createPlatformEventChannel",
@@ -793,7 +868,7 @@
                                         ]
                               }
                     },
-                    "/PlatformEventChannel/{Id}": {
+                    "/tooling/sobjects/PlatformEventChannel/{Id}": {
                               "delete": {
                                         "description": "",
                                         "operationId": "deletePlatformEventChannel",
@@ -920,7 +995,7 @@
                                         ]
                               }
                     },
-                    "/PlatformEventChannelMember": {
+                    "/tooling/sobjects/PlatformEventChannelMember": {
                               "post": {
                                         "description": "",
                                         "operationId": "createPlatformEventChannelMember",
@@ -965,7 +1040,7 @@
                                         ]
                               }
                     },
-                    "/PlatformEventChannelMember/{Id}": {
+                    "/tooling/sobjects/PlatformEventChannelMember/{Id}": {
                               "delete": {
                                         "description": "",
                                         "operationId": "deletePlatformEventChannelMember",
@@ -1110,6 +1185,9 @@
                     },
                     {
                               "name": "PlatformEventChannelMember"
+                    },
+                    {
+                              "name": "QueryResult"
                     },
                     {
                               "name": "NamedCredential"

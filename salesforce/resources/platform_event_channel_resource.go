@@ -36,7 +36,8 @@ func PlatformEventChannel() *schema.Resource {
 
 func DataResourcePlatformEventChannel() *schema.Resource {
 	return &schema.Resource{
-		Schema: schemata.DataSourcePlatformEventChannelSchema(),
+		ReadContext: getPlatformEventChannel,
+		Schema:      schemata.DataSourcePlatformEventChannelSchema(),
 	}
 }
 

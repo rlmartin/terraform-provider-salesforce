@@ -103,7 +103,7 @@
     }
   },
   "paths": {
-    "/EventRelayConfig": {
+    "/tooling/sobjects/EventRelayConfig": {
       "post": {
         "description": "",
         "operationId": "createEventRelayConfig",
@@ -148,7 +148,7 @@
         ]
       }
     },
-    "/EventRelayConfig/{Id}": {
+    "/tooling/sobjects/EventRelayConfig/{Id}": {
       "delete": {
         "description": "",
         "operationId": "deleteEventRelayConfig",

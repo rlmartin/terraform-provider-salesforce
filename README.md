@@ -100,5 +100,9 @@ provider "salesforce" {
 Test cases can be found in the `/salesforce-terraform-provider/Test` directory.
 
 
+### TODO
+- The Query data source does not yet work, because the generic output is not all `map[string]string`. Some columns may be other datatypes, plus it always returns an `attributes` object that includes `type` and `url` properties. Swagger would support this, but the codegen here needs to be updated to support `properties` _and_ `additionalProperties` (currently it assumes only the latter).
+
+
 ## Source
 The basis of this comes from the [LogicMonitor blog post](http://logicmonitor.com/blog/how-to-write-a-custom-terraform-provider-automatically-with-openapi) detailing a Swagger-driven approach to developing a Terraform provider, plus its accompanying [GitHub repo](https://github.com/logicmonitor/automated-terraform-provider)

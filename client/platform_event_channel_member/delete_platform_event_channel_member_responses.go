@@ -55,7 +55,7 @@ type DeletePlatformEventChannelMemberNoContent struct {
 }
 
 func (o *DeletePlatformEventChannelMemberNoContent) Error() string {
-	return fmt.Sprintf("[DELETE /PlatformEventChannelMember/{Id}][%d] deletePlatformEventChannelMemberNoContent ", 204)
+	return fmt.Sprintf("[DELETE /tooling/sobjects/PlatformEventChannelMember/{Id}][%d] deletePlatformEventChannelMemberNoContent ", 204)
 }
 
 func (o *DeletePlatformEventChannelMemberNoContent) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {
@@ -87,7 +87,7 @@ func (o *DeletePlatformEventChannelMemberDefault) Code() int {
 }
 
 func (o *DeletePlatformEventChannelMemberDefault) Error() string {
-	return fmt.Sprintf("[DELETE /PlatformEventChannelMember/{Id}][%d] deletePlatformEventChannelMember default  %+v", o._statusCode, o.Payload)
+	return fmt.Sprintf("[DELETE /tooling/sobjects/PlatformEventChannelMember/{Id}][%d] deletePlatformEventChannelMember default  %+v", o._statusCode, o.Payload)
 }
 func (o *DeletePlatformEventChannelMemberDefault) GetPayload() []*models.ErrorResponse {
 	return o.Payload

@@ -55,7 +55,7 @@ type UpdateEventRelayConfigNoContent struct {
 }
 
 func (o *UpdateEventRelayConfigNoContent) Error() string {
-	return fmt.Sprintf("[PATCH /EventRelayConfig/{Id}][%d] updateEventRelayConfigNoContent ", 204)
+	return fmt.Sprintf("[PATCH /tooling/sobjects/EventRelayConfig/{Id}][%d] updateEventRelayConfigNoContent ", 204)
 }
 
 func (o *UpdateEventRelayConfigNoContent) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {
@@ -87,7 +87,7 @@ func (o *UpdateEventRelayConfigDefault) Code() int {
 }
 
 func (o *UpdateEventRelayConfigDefault) Error() string {
-	return fmt.Sprintf("[PATCH /EventRelayConfig/{Id}][%d] updateEventRelayConfig default  %+v", o._statusCode, o.Payload)
+	return fmt.Sprintf("[PATCH /tooling/sobjects/EventRelayConfig/{Id}][%d] updateEventRelayConfig default  %+v", o._statusCode, o.Payload)
 }
 func (o *UpdateEventRelayConfigDefault) GetPayload() []*models.ErrorResponse {
 	return o.Payload

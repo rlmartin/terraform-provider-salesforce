@@ -28,6 +28,7 @@ import (
 	"vestahealthcare/client/named_credential"
 	"vestahealthcare/client/platform_event_channel"
 	"vestahealthcare/client/platform_event_channel_member"
+	"vestahealthcare/client/query_result"
 )
 
 const (
@@ -36,7 +37,7 @@ const (
 	DefaultHost string = "localhost"
 	// DefaultBasePath is the default BasePath
 	// found in Meta (info) section of spec file
-	DefaultBasePath string = "/services/data/v57.0/tooling/sobjects"
+	DefaultBasePath string = "/services/data/v57.0"
 )
 
 // DefaultSchees are the default schemes found in Meta (info) section of spec file
@@ -110,6 +111,8 @@ func New(c *Config) *SalesforceRESTAPI {
 
 	cli.PlatformEventChannelMember = platform_event_channel_member.New(transport, strfmt.Default, oauth2PasswordAuthInfo)
 
+	cli.QueryResult = query_result.New(transport, strfmt.Default, oauth2PasswordAuthInfo)
+
 	return cli
 }
 
@@ -162,6 +165,8 @@ type SalesforceRESTAPI struct {
 
 	PlatformEventChannelMember *platform_event_channel_member.Client
 
+	QueryResult *query_result.Client
+
 	Transport runtime.ClientTransport
 }
 
@@ -176,6 +181,8 @@ func (c *SalesforceRESTAPI) SetTransport(transport runtime.ClientTransport) {
 	c.PlatformEventChannel.SetTransport(transport)
 
 	c.PlatformEventChannelMember.SetTransport(transport)
+
+	c.QueryResult.SetTransport(transport)
 
 }
 

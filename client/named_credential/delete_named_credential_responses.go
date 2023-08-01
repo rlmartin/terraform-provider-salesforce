@@ -55,7 +55,7 @@ type DeleteNamedCredentialNoContent struct {
 }
 
 func (o *DeleteNamedCredentialNoContent) Error() string {
-	return fmt.Sprintf("[DELETE /NamedCredential/{Id}][%d] deleteNamedCredentialNoContent ", 204)
+	return fmt.Sprintf("[DELETE /tooling/sobjects/NamedCredential/{Id}][%d] deleteNamedCredentialNoContent ", 204)
 }
 
 func (o *DeleteNamedCredentialNoContent) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {
@@ -87,7 +87,7 @@ func (o *DeleteNamedCredentialDefault) Code() int {
 }
 
 func (o *DeleteNamedCredentialDefault) Error() string {
-	return fmt.Sprintf("[DELETE /NamedCredential/{Id}][%d] deleteNamedCredential default  %+v", o._statusCode, o.Payload)
+	return fmt.Sprintf("[DELETE /tooling/sobjects/NamedCredential/{Id}][%d] deleteNamedCredential default  %+v", o._statusCode, o.Payload)
 }
 func (o *DeleteNamedCredentialDefault) GetPayload() []*models.ErrorResponse {
 	return o.Payload

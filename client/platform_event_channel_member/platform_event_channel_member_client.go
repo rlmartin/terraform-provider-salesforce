@@ -43,7 +43,7 @@ func (a *Client) CreatePlatformEventChannelMember(params *CreatePlatformEventCha
 	result, err := a.transport.Submit(&runtime.ClientOperation{
 		ID:                 "createPlatformEventChannelMember",
 		Method:             "POST",
-		PathPattern:        "/PlatformEventChannelMember",
+		PathPattern:        "/tooling/sobjects/PlatformEventChannelMember",
 		ProducesMediaTypes: []string{"application/json"},
 		ConsumesMediaTypes: []string{"application/json"},
 		Schemes:            []string{"https"},
@@ -73,7 +73,7 @@ func (a *Client) DeletePlatformEventChannelMember(params *DeletePlatformEventCha
 	result, err := a.transport.Submit(&runtime.ClientOperation{
 		ID:                 "deletePlatformEventChannelMember",
 		Method:             "DELETE",
-		PathPattern:        "/PlatformEventChannelMember/{Id}",
+		PathPattern:        "/tooling/sobjects/PlatformEventChannelMember/{Id}",
 		ProducesMediaTypes: []string{"application/json"},
 		ConsumesMediaTypes: []string{"application/json"},
 		Schemes:            []string{"https"},
@@ -103,7 +103,7 @@ func (a *Client) GetPlatformEventChannelMember(params *GetPlatformEventChannelMe
 	result, err := a.transport.Submit(&runtime.ClientOperation{
 		ID:                 "getPlatformEventChannelMember",
 		Method:             "GET",
-		PathPattern:        "/PlatformEventChannelMember/{Id}",
+		PathPattern:        "/tooling/sobjects/PlatformEventChannelMember/{Id}",
 		ProducesMediaTypes: []string{"application/json"},
 		ConsumesMediaTypes: []string{"application/json"},
 		Schemes:            []string{"https"},
@@ -133,7 +133,7 @@ func (a *Client) UpdatePlatformEventChannelMember(params *UpdatePlatformEventCha
 	result, err := a.transport.Submit(&runtime.ClientOperation{
 		ID:                 "updatePlatformEventChannelMember",
 		Method:             "PATCH",
-		PathPattern:        "/PlatformEventChannelMember/{Id}",
+		PathPattern:        "/tooling/sobjects/PlatformEventChannelMember/{Id}",
 		ProducesMediaTypes: []string{"application/json"},
 		ConsumesMediaTypes: []string{"application/json"},
 		Schemes:            []string{"https"},
