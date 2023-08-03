@@ -61,7 +61,10 @@ GetQueryParams contains all the parameters to send to the API endpoint
 */
 type GetQueryParams struct {
 
-	// Q.
+	/* Q.
+
+	   A SOQL query that returns data
+	*/
 	Q string
 
 	timeout    time.Duration

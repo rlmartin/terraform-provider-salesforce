@@ -25,7 +25,7 @@ type QueryResult struct {
 	// Required: true
 	Done *bool `json:"done"`
 
-	// q
+	// Necessary here only for Terraform reasons
 	Q string `json:"q,omitempty"`
 
 	// records

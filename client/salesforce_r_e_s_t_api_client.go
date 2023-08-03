@@ -25,6 +25,7 @@ import (
 	"golang.org/x/oauth2"
 
 	"vestahealthcare/client/event_relay_config"
+	"vestahealthcare/client/event_relay_feedback"
 	"vestahealthcare/client/named_credential"
 	"vestahealthcare/client/platform_event_channel"
 	"vestahealthcare/client/platform_event_channel_member"
@@ -105,6 +106,8 @@ func New(c *Config) *SalesforceRESTAPI {
 
 	cli.EventRelayConfig = event_relay_config.New(transport, strfmt.Default, oauth2PasswordAuthInfo)
 
+	cli.EventRelayFeedback = event_relay_feedback.New(transport, strfmt.Default, oauth2PasswordAuthInfo)
+
 	cli.NamedCredential = named_credential.New(transport, strfmt.Default, oauth2PasswordAuthInfo)
 
 	cli.PlatformEventChannel = platform_event_channel.New(transport, strfmt.Default, oauth2PasswordAuthInfo)
@@ -159,6 +162,8 @@ func (cfg *TransportConfig) WithSchemes(schemes []string) *TransportConfig {
 type SalesforceRESTAPI struct {
 	EventRelayConfig *event_relay_config.Client
 
+	EventRelayFeedback *event_relay_feedback.Client
+
 	NamedCredential *named_credential.Client
 
 	PlatformEventChannel *platform_event_channel.Client
@@ -175,6 +180,8 @@ func (c *SalesforceRESTAPI) SetTransport(transport runtime.ClientTransport) {
 	c.Transport = transport
 
 	c.EventRelayConfig.SetTransport(transport)
+
+	c.EventRelayFeedback.SetTransport(transport)
 
 	c.NamedCredential.SetTransport(transport)
 

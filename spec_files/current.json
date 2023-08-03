@@ -116,6 +116,37 @@
                               },
                               "type": "object"
                     },
+                    "EventRelayFeedback": {
+                              "example": "isResource",
+                              "properties": {
+                                        "EventRelayNumber": {
+                                                  "example": "00000001",
+                                                  "type": "string"
+                                        },
+                                        "Id": {
+                                                  "example": "1234",
+                                                  "type": "string"
+                                        },
+                                        "IsDeleted": {
+                                                  "example": false,
+                                                  "type": "boolean"
+                                        },
+                                        "RemoteResource": {
+                                                  "example": "aws.partner/salesforce.com/000000000000/111111111111",
+                                                  "type": "string"
+                                        },
+                                        "Status": {
+                                                  "example": "STOPPED",
+                                                  "type": "string"
+                                        }
+                              },
+                              "required": [
+                                        "IsDeleted",
+                                        "EventRelayNumber",
+                                        "Status"
+                              ],
+                              "type": "object"
+                    },
                     "NamedCredential": {
                               "example": "isResource",
                               "properties": {
@@ -397,6 +428,7 @@
                                                   "type": "boolean"
                                         },
                                         "q": {
+                                                  "description": "Necessary here only for Terraform reasons",
                                                   "type": "string"
                                         },
                                         "records": {
@@ -442,6 +474,7 @@
                                         "operationId": "getQuery",
                                         "parameters": [
                                                   {
+                                                            "description": "A SOQL query that returns data",
                                                             "in": "query",
                                                             "name": "q",
                                                             "required": true,
@@ -476,6 +509,49 @@
                                         "summary": "Get QueryResult",
                                         "tags": [
                                                   "QueryResult"
+                                        ]
+                              }
+                    },
+                    "/sobjects/EventRelayFeedback/{Id}": {
+                              "get": {
+                                        "description": "",
+                                        "operationId": "getEventRelayFeedback",
+                                        "parameters": [
+                                                  {
+                                                            "in": "path",
+                                                            "name": "Id",
+                                                            "required": true,
+                                                            "type": "string"
+                                                  }
+                                        ],
+                                        "produces": [
+                                                  "application/json"
+                                        ],
+                                        "responses": {
+                                                  "200": {
+                                                            "description": "successful operation",
+                                                            "schema": {
+                                                                      "$ref": "#/definitions/EventRelayFeedback"
+                                                            }
+                                                  },
+                                                  "default": {
+                                                            "description": "Error",
+                                                            "schema": {
+                                                                      "items": {
+                                                                                "$ref": "#/definitions/ErrorResponse"
+                                                                      },
+                                                                      "type": "array"
+                                                            }
+                                                  }
+                                        },
+                                        "security": [
+                                                  {
+                                                            "oauth2_password": []
+                                                  }
+                                        ],
+                                        "summary": "Get EventRelayFeedback",
+                                        "tags": [
+                                                  "EventRelayFeedback"
                                         ]
                               }
                     },
@@ -1191,6 +1267,9 @@
                     },
                     {
                               "name": "NamedCredential"
+                    },
+                    {
+                              "name": "EventRelayFeedback"
                     },
                     {
                               "name": "PlatformEventChannel"
