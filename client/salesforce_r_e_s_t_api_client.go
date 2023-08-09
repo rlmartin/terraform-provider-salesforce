@@ -25,6 +25,8 @@ import (
 	"golang.org/x/oauth2"
 
 	"vestahealthcare/client/event_relay_config"
+	"vestahealthcare/client/event_relay_feedback"
+	"vestahealthcare/client/event_relay_feedback_lookup"
 	"vestahealthcare/client/named_credential"
 	"vestahealthcare/client/platform_event_channel"
 	"vestahealthcare/client/platform_event_channel_member"
@@ -36,7 +38,7 @@ const (
 	DefaultHost string = "localhost"
 	// DefaultBasePath is the default BasePath
 	// found in Meta (info) section of spec file
-	DefaultBasePath string = "/services/data/v57.0/tooling/sobjects"
+	DefaultBasePath string = "/services/data/v57.0"
 )
 
 // DefaultSchees are the default schemes found in Meta (info) section of spec file
@@ -104,6 +106,10 @@ func New(c *Config) *SalesforceRESTAPI {
 
 	cli.EventRelayConfig = event_relay_config.New(transport, strfmt.Default, oauth2PasswordAuthInfo)
 
+	cli.EventRelayFeedback = event_relay_feedback.New(transport, strfmt.Default, oauth2PasswordAuthInfo)
+
+	cli.EventRelayFeedbackLookup = event_relay_feedback_lookup.New(transport, strfmt.Default, oauth2PasswordAuthInfo)
+
 	cli.NamedCredential = named_credential.New(transport, strfmt.Default, oauth2PasswordAuthInfo)
 
 	cli.PlatformEventChannel = platform_event_channel.New(transport, strfmt.Default, oauth2PasswordAuthInfo)
@@ -156,6 +162,10 @@ func (cfg *TransportConfig) WithSchemes(schemes []string) *TransportConfig {
 type SalesforceRESTAPI struct {
 	EventRelayConfig *event_relay_config.Client
 
+	EventRelayFeedback *event_relay_feedback.Client
+
+	EventRelayFeedbackLookup *event_relay_feedback_lookup.Client
+
 	NamedCredential *named_credential.Client
 
 	PlatformEventChannel *platform_event_channel.Client
@@ -170,6 +180,10 @@ func (c *SalesforceRESTAPI) SetTransport(transport runtime.ClientTransport) {
 	c.Transport = transport
 
 	c.EventRelayConfig.SetTransport(transport)
+
+	c.EventRelayFeedback.SetTransport(transport)
+
+	c.EventRelayFeedbackLookup.SetTransport(transport)
 
 	c.NamedCredential.SetTransport(transport)
 

@@ -50,7 +50,15 @@ func {{ $operationGroup }}Schema() map[string]*schema.Schema {
 			},
 					{{- else }}
 			Type: schema.TypeList, //GoType: {{ .GoType }}
-						{{- if stringContains .GoType "[]*" }} 
+						{{- if and .Items .Items.HasAdditionalProperties }}
+			Elem: &schema.Schema{
+				Type: schema.TypeMap,
+				Description: "{{ .Description }}",
+				Elem: &schema.Schema{
+					Type: schema.Type{{ with .Items.AdditionalProperties }}{{ pascalize .GoType }}{{ end }},
+				},
+			},
+						{{- else if stringContains .GoType "[]*" }} 
 			Elem: &schema.Resource{
 				Schema: {{ .Items.GoType }}Schema(),
 			},
@@ -108,7 +116,15 @@ func DataSource{{ $operationGroup }}Schema() map[string]*schema.Schema {
 			},
 					{{- else }}
 			Type: schema.TypeList, //GoType: {{ .GoType }}
-						{{- if stringContains .GoType "[]*" }} 
+						{{- if and .Items .Items.HasAdditionalProperties }}
+			Elem: &schema.Schema{
+				Type: schema.TypeMap,
+				Description: "{{ .Description }}",
+				Elem: &schema.Schema{
+					Type: schema.Type{{ with .Items.AdditionalProperties }}{{ pascalize .GoType }}{{ end }},
+				},
+			},
+						{{- else if stringContains .GoType "[]*" }} 
 			Elem: &schema.Resource{
 				Schema: {{ .Items.GoType }}Schema(),
 			},
@@ -120,6 +136,7 @@ func DataSource{{ $operationGroup }}Schema() map[string]*schema.Schema {
 						{{- end }}
 					{{- end }}
 			Optional: true,
+			Computed: true,
 				{{- end }}
 		},
 		{{ end }}
@@ -132,13 +149,24 @@ func DataSource{{ $operationGroup }}Schema() map[string]*schema.Schema {
 {{- end }}
 
 // Update the underlying {{ $operationGroup }} resource data in the Terraform configuration using the resource model built from the CREATE/UPDATE/READ LM API request response
-func Set{{ $operationGroup }}ResourceData(d *schema.ResourceData, m *models.{{ $operationGroup }}) {
+func Set{{ $operationGroup }}ResourceData(d *schema.ResourceData, m *models.{{ $operationGroup }}, isDataResource bool) {
+	{{- $hasId := 0 -}}
+	{{- range .Properties }}{{ if eq (snakize .Name) "id" }}{{ $hasId = 1 }}{{ end }}{{ end -}}
+	{{- if eq $hasId 0 }}
+	if isDataResource {
+		d.SetId("-")
+	}
+	{{- end -}}
 	{{- range .Properties }}
-		{{- if eq .Name "id" }}
+		{{- if eq (snakize .Name) "id" }}
 			{{- if not (eq .SwaggerType "string") }}
 	d.SetId(strconv.Itoa(int(m.ID)))
 			{{- else }}
-	d.SetId(m.ID)
+	if m.ID == "" && isDataResource {
+		d.SetId("-")
+	} else {
+		d.SetId(m.ID)
+	}
 			{{- end }}
 		{{- else if or .IsComplexObject }}
 	d.Set("{{ snakize .Name }}", Set{{ pascalize .GoType }}SubResourceData([]*models.{{ pascalize .GoType }}{m.{{ pascalize .Name }}}))
@@ -192,6 +220,8 @@ func {{ $operationGroup }}Model(d *schema.ResourceData) *models.{{ $operationGro
 	{{ varname .Name }} := d.Get("{{ snakize .Name }}")
 			{{- else if or (eq .GoType "int32") ( eq .GoType "int64") }}
 	{{ varname .Name }} := {{ .GoType }}(d.Get("{{ snakize .Name }}").(int))
+			{{- else if and .Items .Items.HasAdditionalProperties }}
+	{{ varname .Name }} := d.Get("{{ snakize .Name }}").([]{{ .Items.GoType }})
 			{{- else if and (not (eq .GoType "string")) (not (eq .GoType "[]string")) (not (eq .GoType "bool")) (not (eq .GoType "int")) (not (eq .GoType "float32")) (not (eq .GoType "float64")) (not (eq .GoType "uint32")) (not (eq .GoType "uint64")) }}
 	{{ varname .Name }} := d.Get("{{ snakize .Name }}").({{ if hasPrefix .GoType "[]" }}[]{{ end }}*models.{{ pascalize .GoType }})
 			{{- else }}
@@ -234,6 +264,8 @@ func {{ $operationGroup }}ModelFromMap(m map[string]interface{}) *models.{{ $ope
 	{{ varname .Name }} := m["{{ snakize .Name }}"]
 			{{- else if or (eq .GoType "int32") ( eq .GoType "int64") }}
 	{{ varname .Name }} := {{ .GoType }}(m["{{ snakize .Name }}"].(int))
+			{{- else if and .Items .Items.HasAdditionalProperties }}
+	{{ varname .Name }} := m["{{ snakize .Name }}"].([]{{ .Items.GoType }})
 			{{- else if and (not (eq .GoType "string")) (not (eq .GoType "[]string")) (not (eq .GoType "bool")) (not (eq .GoType "int")) (not (eq .GoType "float32")) (not (eq .GoType "float64")) (not (eq .GoType "uint32")) (not (eq .GoType "uint64")) }}
 	{{ varname .Name }} := m["{{ snakize .Name }}"].({{ if hasPrefix .GoType "[]" }}[]{{ end }}*models.{{ pascalize .GoType }})
 			{{- else }}

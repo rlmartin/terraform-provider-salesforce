@@ -56,7 +56,7 @@ type CreateEventRelayConfigCreated struct {
 }
 
 func (o *CreateEventRelayConfigCreated) Error() string {
-	return fmt.Sprintf("[POST /EventRelayConfig][%d] createEventRelayConfigCreated  %+v", 201, o.Payload)
+	return fmt.Sprintf("[POST /tooling/sobjects/EventRelayConfig][%d] createEventRelayConfigCreated  %+v", 201, o.Payload)
 }
 func (o *CreateEventRelayConfigCreated) GetPayload() *models.EventRelayConfigCreateResponse {
 	return o.Payload
@@ -98,7 +98,7 @@ func (o *CreateEventRelayConfigDefault) Code() int {
 }
 
 func (o *CreateEventRelayConfigDefault) Error() string {
-	return fmt.Sprintf("[POST /EventRelayConfig][%d] createEventRelayConfig default  %+v", o._statusCode, o.Payload)
+	return fmt.Sprintf("[POST /tooling/sobjects/EventRelayConfig][%d] createEventRelayConfig default  %+v", o._statusCode, o.Payload)
 }
 func (o *CreateEventRelayConfigDefault) GetPayload() []*models.ErrorResponse {
 	return o.Payload

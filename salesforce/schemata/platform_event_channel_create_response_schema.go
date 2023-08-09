@@ -34,8 +34,12 @@ func DataSourcePlatformEventChannelCreateResponseSchema() map[string]*schema.Sch
 }
 
 // Update the underlying PlatformEventChannelCreateResponse resource data in the Terraform configuration using the resource model built from the CREATE/UPDATE/READ LM API request response
-func SetPlatformEventChannelCreateResponseResourceData(d *schema.ResourceData, m *models.PlatformEventChannelCreateResponse) {
-	d.SetId(m.ID)
+func SetPlatformEventChannelCreateResponseResourceData(d *schema.ResourceData, m *models.PlatformEventChannelCreateResponse, isDataResource bool) {
+	if m.ID == "" && isDataResource {
+		d.SetId("-")
+	} else {
+		d.SetId(m.ID)
+	}
 }
 
 // Iterate throught and update the PlatformEventChannelCreateResponse resource data within a pagination response (typically defined in the items array field) retrieved from a READ operation for multiple LM resources

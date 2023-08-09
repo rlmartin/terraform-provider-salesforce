@@ -34,8 +34,12 @@ func DataSourceEventRelayConfigCreateResponseSchema() map[string]*schema.Schema 
 }
 
 // Update the underlying EventRelayConfigCreateResponse resource data in the Terraform configuration using the resource model built from the CREATE/UPDATE/READ LM API request response
-func SetEventRelayConfigCreateResponseResourceData(d *schema.ResourceData, m *models.EventRelayConfigCreateResponse) {
-	d.SetId(m.ID)
+func SetEventRelayConfigCreateResponseResourceData(d *schema.ResourceData, m *models.EventRelayConfigCreateResponse, isDataResource bool) {
+	if m.ID == "" && isDataResource {
+		d.SetId("-")
+	} else {
+		d.SetId(m.ID)
+	}
 }
 
 // Iterate throught and update the EventRelayConfigCreateResponse resource data within a pagination response (typically defined in the items array field) retrieved from a READ operation for multiple LM resources

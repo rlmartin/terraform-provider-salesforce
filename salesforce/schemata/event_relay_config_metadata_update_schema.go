@@ -17,7 +17,10 @@ func EventRelayConfigMetadataUpdateSchema() map[string]*schema.Schema {
 }
 
 // Update the underlying EventRelayConfigMetadataUpdate resource data in the Terraform configuration using the resource model built from the CREATE/UPDATE/READ LM API request response
-func SetEventRelayConfigMetadataUpdateResourceData(d *schema.ResourceData, m *models.EventRelayConfigMetadataUpdate) {
+func SetEventRelayConfigMetadataUpdateResourceData(d *schema.ResourceData, m *models.EventRelayConfigMetadataUpdate, isDataResource bool) {
+	if isDataResource {
+		d.SetId("-")
+	}
 	d.Set("relay_option", m.RelayOption)
 }
 

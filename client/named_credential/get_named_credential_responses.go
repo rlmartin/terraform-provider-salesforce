@@ -56,7 +56,7 @@ type GetNamedCredentialOK struct {
 }
 
 func (o *GetNamedCredentialOK) Error() string {
-	return fmt.Sprintf("[GET /NamedCredential/{Id}][%d] getNamedCredentialOK  %+v", 200, o.Payload)
+	return fmt.Sprintf("[GET /tooling/sobjects/NamedCredential/{Id}][%d] getNamedCredentialOK  %+v", 200, o.Payload)
 }
 func (o *GetNamedCredentialOK) GetPayload() *models.NamedCredential {
 	return o.Payload
@@ -98,7 +98,7 @@ func (o *GetNamedCredentialDefault) Code() int {
 }
 
 func (o *GetNamedCredentialDefault) Error() string {
-	return fmt.Sprintf("[GET /NamedCredential/{Id}][%d] getNamedCredential default  %+v", o._statusCode, o.Payload)
+	return fmt.Sprintf("[GET /tooling/sobjects/NamedCredential/{Id}][%d] getNamedCredential default  %+v", o._statusCode, o.Payload)
 }
 func (o *GetNamedCredentialDefault) GetPayload() []*models.ErrorResponse {
 	return o.Payload

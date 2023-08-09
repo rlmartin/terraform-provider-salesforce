@@ -19,7 +19,7 @@ def log(level, log):
 def buildBaseJson():
     base = {}
     base["host"]: "https://vestahealthcare--uat.sandbox.my.salesforce.com"
-    base["basePath"] = "/services/data/v57.0/tooling/sobjects"
+    base["basePath"] = "/services/data/v57.0"
     base["definitions"] = {}
     base["externalDocs"] = {
         "description": "Salesforce Support Docs",

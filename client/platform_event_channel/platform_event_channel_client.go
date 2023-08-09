@@ -43,7 +43,7 @@ func (a *Client) CreatePlatformEventChannel(params *CreatePlatformEventChannelPa
 	result, err := a.transport.Submit(&runtime.ClientOperation{
 		ID:                 "createPlatformEventChannel",
 		Method:             "POST",
-		PathPattern:        "/PlatformEventChannel",
+		PathPattern:        "/tooling/sobjects/PlatformEventChannel",
 		ProducesMediaTypes: []string{"application/json"},
 		ConsumesMediaTypes: []string{"application/json"},
 		Schemes:            []string{"https"},
@@ -73,7 +73,7 @@ func (a *Client) DeletePlatformEventChannel(params *DeletePlatformEventChannelPa
 	result, err := a.transport.Submit(&runtime.ClientOperation{
 		ID:                 "deletePlatformEventChannel",
 		Method:             "DELETE",
-		PathPattern:        "/PlatformEventChannel/{Id}",
+		PathPattern:        "/tooling/sobjects/PlatformEventChannel/{Id}",
 		ProducesMediaTypes: []string{"application/json"},
 		ConsumesMediaTypes: []string{"application/json"},
 		Schemes:            []string{"https"},
@@ -103,7 +103,7 @@ func (a *Client) GetPlatformEventChannel(params *GetPlatformEventChannelParams) 
 	result, err := a.transport.Submit(&runtime.ClientOperation{
 		ID:                 "getPlatformEventChannel",
 		Method:             "GET",
-		PathPattern:        "/PlatformEventChannel/{Id}",
+		PathPattern:        "/tooling/sobjects/PlatformEventChannel/{Id}",
 		ProducesMediaTypes: []string{"application/json"},
 		ConsumesMediaTypes: []string{"application/json"},
 		Schemes:            []string{"https"},
@@ -133,7 +133,7 @@ func (a *Client) UpdatePlatformEventChannel(params *UpdatePlatformEventChannelPa
 	result, err := a.transport.Submit(&runtime.ClientOperation{
 		ID:                 "updatePlatformEventChannel",
 		Method:             "PATCH",
-		PathPattern:        "/PlatformEventChannel/{Id}",
+		PathPattern:        "/tooling/sobjects/PlatformEventChannel/{Id}",
 		ProducesMediaTypes: []string{"application/json"},
 		ConsumesMediaTypes: []string{"application/json"},
 		Schemes:            []string{"https"},

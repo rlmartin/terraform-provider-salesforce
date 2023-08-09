@@ -55,7 +55,7 @@ type UpdateNamedCredentialNoContent struct {
 }
 
 func (o *UpdateNamedCredentialNoContent) Error() string {
-	return fmt.Sprintf("[PATCH /NamedCredential/{Id}][%d] updateNamedCredentialNoContent ", 204)
+	return fmt.Sprintf("[PATCH /tooling/sobjects/NamedCredential/{Id}][%d] updateNamedCredentialNoContent ", 204)
 }
 
 func (o *UpdateNamedCredentialNoContent) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {
@@ -87,7 +87,7 @@ func (o *UpdateNamedCredentialDefault) Code() int {
 }
 
 func (o *UpdateNamedCredentialDefault) Error() string {
-	return fmt.Sprintf("[PATCH /NamedCredential/{Id}][%d] updateNamedCredential default  %+v", o._statusCode, o.Payload)
+	return fmt.Sprintf("[PATCH /tooling/sobjects/NamedCredential/{Id}][%d] updateNamedCredential default  %+v", o._statusCode, o.Payload)
 }
 func (o *UpdateNamedCredentialDefault) GetPayload() []*models.ErrorResponse {
 	return o.Payload

@@ -29,6 +29,7 @@ func DataSourceEventRelayConfigUpdateRequestSchema() map[string]*schema.Schema {
 				Schema: EventRelayConfigMetadataUpdateSchema(),
 			},
 			Optional: true,
+			Computed: true,
 		},
 
 		"filter": {
@@ -39,7 +40,10 @@ func DataSourceEventRelayConfigUpdateRequestSchema() map[string]*schema.Schema {
 }
 
 // Update the underlying EventRelayConfigUpdateRequest resource data in the Terraform configuration using the resource model built from the CREATE/UPDATE/READ LM API request response
-func SetEventRelayConfigUpdateRequestResourceData(d *schema.ResourceData, m *models.EventRelayConfigUpdateRequest) {
+func SetEventRelayConfigUpdateRequestResourceData(d *schema.ResourceData, m *models.EventRelayConfigUpdateRequest, isDataResource bool) {
+	if isDataResource {
+		d.SetId("-")
+	}
 	d.Set("metadata", SetEventRelayConfigMetadataUpdateSubResourceData([]*models.EventRelayConfigMetadataUpdate{m.Metadata}))
 }
 

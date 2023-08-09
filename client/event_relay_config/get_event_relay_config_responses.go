@@ -56,7 +56,7 @@ type GetEventRelayConfigOK struct {
 }
 
 func (o *GetEventRelayConfigOK) Error() string {
-	return fmt.Sprintf("[GET /EventRelayConfig/{Id}][%d] getEventRelayConfigOK  %+v", 200, o.Payload)
+	return fmt.Sprintf("[GET /tooling/sobjects/EventRelayConfig/{Id}][%d] getEventRelayConfigOK  %+v", 200, o.Payload)
 }
 func (o *GetEventRelayConfigOK) GetPayload() *models.EventRelayConfig {
 	return o.Payload
@@ -98,7 +98,7 @@ func (o *GetEventRelayConfigDefault) Code() int {
 }
 
 func (o *GetEventRelayConfigDefault) Error() string {
-	return fmt.Sprintf("[GET /EventRelayConfig/{Id}][%d] getEventRelayConfig default  %+v", o._statusCode, o.Payload)
+	return fmt.Sprintf("[GET /tooling/sobjects/EventRelayConfig/{Id}][%d] getEventRelayConfig default  %+v", o._statusCode, o.Payload)
 }
 func (o *GetEventRelayConfigDefault) GetPayload() []*models.ErrorResponse {
 	return o.Payload

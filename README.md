@@ -47,6 +47,7 @@ The Makefile will then generate the code, build the binary, and copy it to the T
     4. The supported security option(s) must be defined on each endpoint. For this Salesforce provider this will always be `"security": [{"oauth2_password": []}]`.
     5. The `id` field of the main resource definition (which likely is set, returned, and thus loaded into Terraform state) must _not_ be required.
     6. It is possible that the `id` field _must_ be that name (case-insensitive); I would need to double-check the `go-swagger` code to verify this.
+    7. If a parameter should be formatted differently, you can use the `x-format` to set the string to use when formatting. The provider will take the raw value of the parameter and inject it into the formatter when using it against the API.
 3. Consult the model definitions in the [Tooling API](https://developer.salesforce.com/docs/atlas.en-us.api_tooling.meta/api_tooling/reference_objects_list.htm). Add definitions for your new resource.
 4. Replace the copied resource name with your new resource name in all locations.
 5. Run `cd spec_files; python3 createSpecFile.py; cd ..`.
@@ -98,6 +99,10 @@ provider "salesforce" {
 }
 ```
 Test cases can be found in the `/salesforce-terraform-provider/Test` directory.
+
+
+### TODO
+- The Query data source does not yet work, because the generic output is not all `map[string]string`. Some columns may be other datatypes, plus it always returns an `attributes` object that includes `type` and `url` properties. Swagger would support this, but the codegen here needs to be updated to support `properties` _and_ `additionalProperties` (currently it assumes only the latter). An example of how to use the query endpoint is in [event_relay_feedback_lookup.json](./spec_files/components/event_relay_feedback_lookup.json).
 
 
 ## Source

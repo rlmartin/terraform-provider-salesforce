@@ -80,7 +80,7 @@
     }
   },
   "paths": {
-    "/PlatformEventChannelMember": {
+    "/tooling/sobjects/PlatformEventChannelMember": {
       "post": {
         "description": "",
         "operationId": "createPlatformEventChannelMember",
@@ -125,7 +125,7 @@
         ]
       }
     },
-    "/PlatformEventChannelMember/{Id}": {
+    "/tooling/sobjects/PlatformEventChannelMember/{Id}": {
       "delete": {
         "description": "",
         "operationId": "deletePlatformEventChannelMember",

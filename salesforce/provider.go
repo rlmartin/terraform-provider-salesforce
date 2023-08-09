@@ -51,6 +51,8 @@ func Provider() *schema.Provider {
 		},
 		DataSourcesMap: map[string]*schema.Resource{
 			"salesforce_event_relay_config":            resources.DataResourceEventRelayConfig(),
+			"salesforce_event_relay_feedback":          resources.DataResourceEventRelayFeedback(),
+			"salesforce_event_relay_feedback_lookup":   resources.DataResourceEventRelayFeedbackLookup(),
 			"salesforce_named_credential":              resources.DataResourceNamedCredential(),
 			"salesforce_platform_event_channel":        resources.DataResourcePlatformEventChannel(),
 			"salesforce_platform_event_channel_member": resources.DataResourcePlatformEventChannelMember(),

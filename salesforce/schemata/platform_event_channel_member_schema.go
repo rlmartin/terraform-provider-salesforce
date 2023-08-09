@@ -36,11 +36,13 @@ func DataSourcePlatformEventChannelMemberSchema() map[string]*schema.Schema {
 		"full_name": {
 			Type:     schema.TypeString,
 			Optional: true,
+			Computed: true,
 		},
 
 		"id": {
 			Type:     schema.TypeString,
 			Optional: true,
+			Computed: true,
 		},
 
 		"metadata": {
@@ -49,6 +51,7 @@ func DataSourcePlatformEventChannelMemberSchema() map[string]*schema.Schema {
 				Schema: PlatformEventChannelMemberMetadataSchema(),
 			},
 			Optional: true,
+			Computed: true,
 		},
 
 		"filter": {
@@ -59,9 +62,13 @@ func DataSourcePlatformEventChannelMemberSchema() map[string]*schema.Schema {
 }
 
 // Update the underlying PlatformEventChannelMember resource data in the Terraform configuration using the resource model built from the CREATE/UPDATE/READ LM API request response
-func SetPlatformEventChannelMemberResourceData(d *schema.ResourceData, m *models.PlatformEventChannelMember) {
+func SetPlatformEventChannelMemberResourceData(d *schema.ResourceData, m *models.PlatformEventChannelMember, isDataResource bool) {
 	d.Set("full_name", m.FullName)
-	d.Set("id", m.ID)
+	if m.ID == "" && isDataResource {
+		d.SetId("-")
+	} else {
+		d.SetId(m.ID)
+	}
 	d.Set("metadata", SetPlatformEventChannelMemberMetadataSubResourceData([]*models.PlatformEventChannelMemberMetadata{m.Metadata}))
 }
 

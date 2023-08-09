@@ -56,7 +56,7 @@ type CreatePlatformEventChannelMemberCreated struct {
 }
 
 func (o *CreatePlatformEventChannelMemberCreated) Error() string {
-	return fmt.Sprintf("[POST /PlatformEventChannelMember][%d] createPlatformEventChannelMemberCreated  %+v", 201, o.Payload)
+	return fmt.Sprintf("[POST /tooling/sobjects/PlatformEventChannelMember][%d] createPlatformEventChannelMemberCreated  %+v", 201, o.Payload)
 }
 func (o *CreatePlatformEventChannelMemberCreated) GetPayload() *models.PlatformEventChannelMemberCreateResponse {
 	return o.Payload
@@ -98,7 +98,7 @@ func (o *CreatePlatformEventChannelMemberDefault) Code() int {
 }
 
 func (o *CreatePlatformEventChannelMemberDefault) Error() string {
-	return fmt.Sprintf("[POST /PlatformEventChannelMember][%d] createPlatformEventChannelMember default  %+v", o._statusCode, o.Payload)
+	return fmt.Sprintf("[POST /tooling/sobjects/PlatformEventChannelMember][%d] createPlatformEventChannelMember default  %+v", o._statusCode, o.Payload)
 }
 func (o *CreatePlatformEventChannelMemberDefault) GetPayload() []*models.ErrorResponse {
 	return o.Payload

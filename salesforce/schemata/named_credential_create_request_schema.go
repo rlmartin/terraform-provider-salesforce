@@ -31,6 +31,7 @@ func DataSourceNamedCredentialCreateRequestSchema() map[string]*schema.Schema {
 		"full_name": {
 			Type:     schema.TypeString,
 			Optional: true,
+			Computed: true,
 		},
 
 		"metadata": {
@@ -39,6 +40,7 @@ func DataSourceNamedCredentialCreateRequestSchema() map[string]*schema.Schema {
 				Schema: NamedCredentialMetadataSchema(),
 			},
 			Optional: true,
+			Computed: true,
 		},
 
 		"filter": {
@@ -49,7 +51,10 @@ func DataSourceNamedCredentialCreateRequestSchema() map[string]*schema.Schema {
 }
 
 // Update the underlying NamedCredentialCreateRequest resource data in the Terraform configuration using the resource model built from the CREATE/UPDATE/READ LM API request response
-func SetNamedCredentialCreateRequestResourceData(d *schema.ResourceData, m *models.NamedCredentialCreateRequest) {
+func SetNamedCredentialCreateRequestResourceData(d *schema.ResourceData, m *models.NamedCredentialCreateRequest, isDataResource bool) {
+	if isDataResource {
+		d.SetId("-")
+	}
 	d.Set("full_name", m.FullName)
 	d.Set("metadata", SetNamedCredentialMetadataSubResourceData([]*models.NamedCredentialMetadata{m.Metadata}))
 }

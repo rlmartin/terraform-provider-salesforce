@@ -1,0 +1,85 @@
+{
+  "definitions": {
+    "EventRelayFeedback": {
+      "example": "isResource",
+      "properties": {
+        "Id": {
+          "example": "1234",
+          "type": "string"
+        },
+        "IsDeleted": {
+          "example": false,
+          "type": "boolean"
+        },
+        "EventRelayNumber": {
+          "example": "00000001",
+          "type": "string"
+        },
+        "RemoteResource": {
+          "example": "aws.partner/salesforce.com/000000000000/111111111111",
+          "type": "string"
+        },
+        "Status": {
+          "example": "STOPPED",
+          "type": "string"
+        }
+      },
+      "required": [
+        "IsDeleted",
+        "EventRelayNumber",
+        "Status"
+      ],
+      "type": "object"
+    }
+  },
+  "paths": {
+    "/sobjects/EventRelayFeedback/{Id}": {
+      "get": {
+        "description": "",
+        "operationId": "getEventRelayFeedback",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "Id",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": {
+                "$ref": "#/definitions/EventRelayFeedback"
+            }
+          },
+          "default": {
+            "description": "Error",
+            "schema": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/ErrorResponse"
+              }
+            }
+          }
+        },
+        "security": [
+          {
+              "oauth2_password": []
+          }
+        ],
+        "summary": "Get EventRelayFeedback",
+        "tags": [
+          "EventRelayFeedback"
+        ]
+      }
+    }
+  },
+  "tags": [
+    {
+      "name": "EventRelayFeedback"
+    }
+  ]
+}
