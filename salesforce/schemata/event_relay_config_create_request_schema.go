@@ -31,6 +31,7 @@ func DataSourceEventRelayConfigCreateRequestSchema() map[string]*schema.Schema {
 		"full_name": {
 			Type:     schema.TypeString,
 			Optional: true,
+			Computed: true,
 		},
 
 		"metadata": {
@@ -39,6 +40,7 @@ func DataSourceEventRelayConfigCreateRequestSchema() map[string]*schema.Schema {
 				Schema: EventRelayConfigMetadataSchema(),
 			},
 			Optional: true,
+			Computed: true,
 		},
 
 		"filter": {
@@ -49,7 +51,10 @@ func DataSourceEventRelayConfigCreateRequestSchema() map[string]*schema.Schema {
 }
 
 // Update the underlying EventRelayConfigCreateRequest resource data in the Terraform configuration using the resource model built from the CREATE/UPDATE/READ LM API request response
-func SetEventRelayConfigCreateRequestResourceData(d *schema.ResourceData, m *models.EventRelayConfigCreateRequest) {
+func SetEventRelayConfigCreateRequestResourceData(d *schema.ResourceData, m *models.EventRelayConfigCreateRequest, isDataResource bool) {
+	if isDataResource {
+		d.SetId("-")
+	}
 	d.Set("full_name", m.FullName)
 	d.Set("metadata", SetEventRelayConfigMetadataSubResourceData([]*models.EventRelayConfigMetadata{m.Metadata}))
 }

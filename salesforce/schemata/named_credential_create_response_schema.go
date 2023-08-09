@@ -34,8 +34,12 @@ func DataSourceNamedCredentialCreateResponseSchema() map[string]*schema.Schema {
 }
 
 // Update the underlying NamedCredentialCreateResponse resource data in the Terraform configuration using the resource model built from the CREATE/UPDATE/READ LM API request response
-func SetNamedCredentialCreateResponseResourceData(d *schema.ResourceData, m *models.NamedCredentialCreateResponse) {
-	d.SetId(m.ID)
+func SetNamedCredentialCreateResponseResourceData(d *schema.ResourceData, m *models.NamedCredentialCreateResponse, isDataResource bool) {
+	if m.ID == "" && isDataResource {
+		d.SetId("-")
+	} else {
+		d.SetId(m.ID)
+	}
 }
 
 // Iterate throught and update the NamedCredentialCreateResponse resource data within a pagination response (typically defined in the items array field) retrieved from a READ operation for multiple LM resources

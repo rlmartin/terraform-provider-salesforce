@@ -147,6 +147,34 @@
                               ],
                               "type": "object"
                     },
+                    "EventRelayFeedbackLookup": {
+                              "example": "isResource",
+                              "properties": {
+                                        "done": {
+                                                  "example": "true",
+                                                  "type": "boolean"
+                                        },
+                                        "q": {
+                                                  "description": "Necessary here only for Terraform reasons",
+                                                  "type": "string"
+                                        },
+                                        "records": {
+                                                  "items": {
+                                                            "$ref": "#/definitions/Record"
+                                                  },
+                                                  "type": "array"
+                                        },
+                                        "totalSize": {
+                                                  "example": "1",
+                                                  "format": "int32",
+                                                  "type": "number"
+                                        }
+                              },
+                              "required": [
+                                        "q"
+                              ],
+                              "type": "object"
+                    },
                     "NamedCredential": {
                               "example": "isResource",
                               "properties": {
@@ -452,6 +480,16 @@
                                         "records"
                               ],
                               "type": "object"
+                    },
+                    "Record": {
+                              "example": "isResource",
+                              "properties": {
+                                        "Id": {
+                                                  "description": "The Id of the EventRelayFeedback record. Can be used in the event_relay_feedback resource.",
+                                                  "type": "string"
+                                        }
+                              },
+                              "type": "object"
                     }
           },
           "externalDocs": {
@@ -474,11 +512,12 @@
                                         "operationId": "getQuery",
                                         "parameters": [
                                                   {
-                                                            "description": "A SOQL query that returns data",
+                                                            "description": "Comma-delimited list of the Ids of the EventRelayConfigs for which to find the EventRelayFeedbacks",
                                                             "in": "query",
                                                             "name": "q",
                                                             "required": true,
-                                                            "type": "string"
+                                                            "type": "string",
+                                                            "x-format": "SELECT Id FROM EventRelayFeedback WHERE EventRelayConfigId='%s'"
                                                   }
                                         ],
                                         "produces": [
@@ -488,7 +527,7 @@
                                                   "200": {
                                                             "description": "successful operation",
                                                             "schema": {
-                                                                      "$ref": "#/definitions/QueryResult"
+                                                                      "$ref": "#/definitions/EventRelayFeedbackLookup"
                                                             }
                                                   },
                                                   "default": {
@@ -506,9 +545,9 @@
                                                             "oauth2_password": []
                                                   }
                                         ],
-                                        "summary": "Get QueryResult",
+                                        "summary": "Get EventRelayFeedbackLookup",
                                         "tags": [
-                                                  "QueryResult"
+                                                  "EventRelayFeedbackLookup"
                                         ]
                               }
                     },
@@ -1258,6 +1297,9 @@
           "tags": [
                     {
                               "name": "EventRelayConfig"
+                    },
+                    {
+                              "name": "EventRelayFeedbackLookup"
                     },
                     {
                               "name": "PlatformEventChannelMember"

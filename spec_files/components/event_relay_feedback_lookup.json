@@ -1,0 +1,94 @@
+{
+  "definitions": {
+    "EventRelayFeedbackLookup": {
+      "example": "isResource",
+      "properties": {
+        "q": {
+          "description": "Necessary here only for Terraform reasons",
+          "type": "string"
+        },
+        "totalSize": {
+          "example": "1",
+          "type": "number",
+          "format": "int32"
+        },
+        "done": {
+          "example": "true",
+          "type": "boolean"
+        },
+        "records": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/Record"
+          }
+        }
+      },
+      "required": [
+        "q"
+      ],
+      "type": "object"
+    },
+    "Record": {
+      "example": "isResource",
+      "type": "object",
+      "properties": {
+        "Id": {
+          "type": "string",
+          "description": "The Id of the EventRelayFeedback record. Can be used in the event_relay_feedback resource."
+        }
+      }
+    }
+  },
+  "paths": {
+    "/query": {
+      "get": {
+        "description": "",
+        "operationId": "getQuery",
+        "parameters": [
+          {
+            "in": "query",
+            "description": "Comma-delimited list of the Ids of the EventRelayConfigs for which to find the EventRelayFeedbacks",
+            "name": "q",
+            "required": true,
+            "type": "string",
+            "x-format": "SELECT Id FROM EventRelayFeedback WHERE EventRelayConfigId='%s'"
+          }
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": {
+                "$ref": "#/definitions/EventRelayFeedbackLookup"
+            }
+          },
+          "default": {
+            "description": "Error",
+            "schema": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/ErrorResponse"
+              }
+            }
+          }
+        },
+        "security": [
+          {
+              "oauth2_password": []
+          }
+        ],
+        "summary": "Get EventRelayFeedbackLookup",
+        "tags": [
+          "EventRelayFeedbackLookup"
+        ]
+      }
+    }
+  },
+  "tags": [
+    {
+      "name": "EventRelayFeedbackLookup"
+    }
+  ]
+}

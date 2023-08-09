@@ -36,7 +36,7 @@ func EventRelayConfig() *schema.Resource {
 
 func DataResourceEventRelayConfig() *schema.Resource {
 	return &schema.Resource{
-		ReadContext: getEventRelayConfig,
+		ReadContext: getEventRelayConfigData,
 		Schema:      schemata.DataSourceEventRelayConfigSchema(),
 	}
 }
@@ -58,7 +58,7 @@ func createEventRelayConfig(ctx context.Context, d *schema.ResourceData, m inter
 	}
 
 	respModel := resp.GetPayload()
-	schemata.SetEventRelayConfigCreateResponseResourceData(d, respModel)
+	schemata.SetEventRelayConfigCreateResponseResourceData(d, respModel, false)
 	return diags
 }
 
@@ -89,7 +89,7 @@ func deleteEventRelayConfig(ctx context.Context, d *schema.ResourceData, m inter
 	return diags
 }
 
-func getEventRelayConfig(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
+func getEventRelayConfigInternal(ctx context.Context, d *schema.ResourceData, m interface{}, isDataResource bool) diag.Diagnostics {
 	var diags diag.Diagnostics
 
 	params := event_relay_config.NewGetEventRelayConfigParams()
@@ -113,9 +113,16 @@ func getEventRelayConfig(ctx context.Context, d *schema.ResourceData, m interfac
 	}
 
 	respModel := resp.GetPayload()
-	schemata.SetEventRelayConfigResourceData(d, respModel)
+	schemata.SetEventRelayConfigResourceData(d, respModel, isDataResource)
 
 	return diags
+}
+func getEventRelayConfigData(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
+	return getEventRelayConfigInternal(ctx, d, m, true)
+}
+
+func getEventRelayConfig(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
+	return getEventRelayConfigInternal(ctx, d, m, false)
 }
 
 func updateEventRelayConfig(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {

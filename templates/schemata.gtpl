@@ -136,6 +136,7 @@ func DataSource{{ $operationGroup }}Schema() map[string]*schema.Schema {
 						{{- end }}
 					{{- end }}
 			Optional: true,
+			Computed: true,
 				{{- end }}
 		},
 		{{ end }}
@@ -148,13 +149,24 @@ func DataSource{{ $operationGroup }}Schema() map[string]*schema.Schema {
 {{- end }}
 
 // Update the underlying {{ $operationGroup }} resource data in the Terraform configuration using the resource model built from the CREATE/UPDATE/READ LM API request response
-func Set{{ $operationGroup }}ResourceData(d *schema.ResourceData, m *models.{{ $operationGroup }}) {
+func Set{{ $operationGroup }}ResourceData(d *schema.ResourceData, m *models.{{ $operationGroup }}, isDataResource bool) {
+	{{- $hasId := 0 -}}
+	{{- range .Properties }}{{ if eq (snakize .Name) "id" }}{{ $hasId = 1 }}{{ end }}{{ end -}}
+	{{- if eq $hasId 0 }}
+	if isDataResource {
+		d.SetId("-")
+	}
+	{{- end -}}
 	{{- range .Properties }}
-		{{- if eq .Name "id" }}
+		{{- if eq (snakize .Name) "id" }}
 			{{- if not (eq .SwaggerType "string") }}
 	d.SetId(strconv.Itoa(int(m.ID)))
 			{{- else }}
-	d.SetId(m.ID)
+	if m.ID == "" && isDataResource {
+		d.SetId("-")
+	} else {
+		d.SetId(m.ID)
+	}
 			{{- end }}
 		{{- else if or .IsComplexObject }}
 	d.Set("{{ snakize .Name }}", Set{{ pascalize .GoType }}SubResourceData([]*models.{{ pascalize .GoType }}{m.{{ pascalize .Name }}}))

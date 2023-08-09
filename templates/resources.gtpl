@@ -6,6 +6,8 @@
 		{{- if and (eq (camelize .ID) "id") (not (eq .SwaggerType "string")) }}
 			{{ camelize .ID }}, _ := strconv.Atoi({{ camelize .ID }}Val.(string))
 			params.{{ pascalize .ID}} = {{ if and (not .IsArray) (not .IsMap) (not .HasDiscriminator) (not .IsInterface) (not .IsStream) (or .IsNullable  ) }}{{ end }}{{ if not .IsFileParam }}{{ if and (not .IsArray) (not .IsMap) (not .HasDiscriminator) (not .IsInterface) (not .IsStream) (or .IsNullable  ) }}&{{ end }}int32({{ camelize .ID }}){{ else }}runtime.NamedReadCloser{{- end -}}
+		{{- else if ne (index .Extensions "x-format") nil }}
+			params.{{ pascalize .ID}} = fmt.Sprintf("{{index .Extensions "x-format"}}", {{ camelize .ID }}Val.({{ if and (not .IsArray) (not .IsMap) (not .HasDiscriminator) (not .IsInterface) (not .IsStream) (or .IsNullable  ) }}*{{ end }}{{ .GoType }}))
 		{{- else }}
 			params.{{ pascalize .ID}} = {{ camelize .ID }}Val.({{ if and (not .IsArray) (not .IsMap) (not .HasDiscriminator) (not .IsInterface) (not .IsStream) (or .IsNullable  ) }}*{{ end }}{{ .GoType }})
 		{{- end }}
@@ -80,7 +82,7 @@ func DataResource{{ pascalize $operationGroup }}() *schema.Resource {
 		{{- range .Operations }} {{/* skip everything except GetList opertaions */}}
 			{{- $operation := .Name }}
 			{{- if eq .Method "GET" }}
-		ReadContext: {{ $operation }},
+		ReadContext: {{ $operation }}Data,
 			{{- end }}
 		{{- end }}
 		Schema: schemata.DataSource{{- pascalize $operationGroup -}}Schema(),
@@ -90,7 +92,7 @@ func DataResource{{ pascalize $operationGroup }}() *schema.Resource {
 {{ range .Operations }}
 	{{- $operation := .Name }}
 	{{- if or (eq .Method "GET") (eq .Method "POST") (eq .Method "PUT") (eq .Method "PATCH") (eq .Method "DELETE") }} {{/* the only valid API methods for us */}}
-func {{ $operation }}(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
+func {{ $operation }}{{ if eq .Method "GET" }}Internal{{ end }}(ctx context.Context, d *schema.ResourceData, m interface{}{{ if eq .Method "GET" }}, isDataResource bool{{ end }}) diag.Diagnostics {
 	var diags diag.Diagnostics
 	{{- end}}
 	{{- if eq .Method "GET" }} {{/* this is either the Get endpoint used by the resource or the GetList endpoint used by the datasource */}}
@@ -118,10 +120,10 @@ func {{ $operation }}(ctx context.Context, d *schema.ResourceData, m interface{}
 		// limit output to a single result
 		result := respModel.Items[0]
 		d.SetId(strconv.Itoa(int(result.ID)))
-		schemata.Set{{- pascalize $operationGroup -}}ResourceData(d, result)
+		schemata.Set{{- pascalize $operationGroup -}}ResourceData(d, result, isDataResource)
 	}
 	{{- else }}
-	schemata.Set{{- pascalize $operationGroup -}}ResourceData(d, respModel)
+	schemata.Set{{- pascalize $operationGroup -}}ResourceData(d, respModel, isDataResource)
 	{{- end}}
 
 	return diags
@@ -144,7 +146,7 @@ func {{ $operation }}(ctx context.Context, d *schema.ResourceData, m interface{}
 	}
 
 	respModel := resp.GetPayload()
-	schemata.Set{{ .SuccessResponse.Schema.GoType | replace "models." "" }}ResourceData(d, respModel)
+	schemata.Set{{ .SuccessResponse.Schema.GoType | replace "models." "" }}ResourceData(d, respModel, false)
 	return diags
 }
 	{{- end }}
@@ -186,7 +188,7 @@ func {{ $operation }}(ctx context.Context, d *schema.ResourceData, m interface{}
 
 	{{- if not (eq .SuccessResponse.Code 204) }}
 	respModel := resp.GetPayload()	
-	schemata.Set{{ .SuccessResponse.Schema.GoType | replace "models." "" }}ResourceData(d, respModel)
+	schemata.Set{{ .SuccessResponse.Schema.GoType | replace "models." "" }}ResourceData(d, respModel, false)
 	{{ end }}
 	d.Partial(false)
 
@@ -213,6 +215,15 @@ func {{ $operation }}(ctx context.Context, d *schema.ResourceData, m interface{}
 	
 	d.SetId("")
 	return diags
+}
+	{{- end }}
+	{{- if eq .Method "GET" }}
+func {{ $operation }}Data(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
+	return {{ $operation }}Internal(ctx, d, m, true)
+}
+
+func {{ $operation }}(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
+	return {{ $operation }}Internal(ctx, d, m, false)
 }
 	{{- end }}
 {{ end }}

@@ -36,7 +36,7 @@ func PlatformEventChannelMember() *schema.Resource {
 
 func DataResourcePlatformEventChannelMember() *schema.Resource {
 	return &schema.Resource{
-		ReadContext: getPlatformEventChannelMember,
+		ReadContext: getPlatformEventChannelMemberData,
 		Schema:      schemata.DataSourcePlatformEventChannelMemberSchema(),
 	}
 }
@@ -58,7 +58,7 @@ func createPlatformEventChannelMember(ctx context.Context, d *schema.ResourceDat
 	}
 
 	respModel := resp.GetPayload()
-	schemata.SetPlatformEventChannelMemberCreateResponseResourceData(d, respModel)
+	schemata.SetPlatformEventChannelMemberCreateResponseResourceData(d, respModel, false)
 	return diags
 }
 
@@ -89,7 +89,7 @@ func deletePlatformEventChannelMember(ctx context.Context, d *schema.ResourceDat
 	return diags
 }
 
-func getPlatformEventChannelMember(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
+func getPlatformEventChannelMemberInternal(ctx context.Context, d *schema.ResourceData, m interface{}, isDataResource bool) diag.Diagnostics {
 	var diags diag.Diagnostics
 
 	params := platform_event_channel_member.NewGetPlatformEventChannelMemberParams()
@@ -113,9 +113,16 @@ func getPlatformEventChannelMember(ctx context.Context, d *schema.ResourceData, 
 	}
 
 	respModel := resp.GetPayload()
-	schemata.SetPlatformEventChannelMemberResourceData(d, respModel)
+	schemata.SetPlatformEventChannelMemberResourceData(d, respModel, isDataResource)
 
 	return diags
+}
+func getPlatformEventChannelMemberData(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
+	return getPlatformEventChannelMemberInternal(ctx, d, m, true)
+}
+
+func getPlatformEventChannelMember(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
+	return getPlatformEventChannelMemberInternal(ctx, d, m, false)
 }
 
 func updatePlatformEventChannelMember(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {

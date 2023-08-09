@@ -43,26 +43,31 @@ func DataSourceEventRelayFeedbackSchema() map[string]*schema.Schema {
 		"event_relay_number": {
 			Type:     schema.TypeString,
 			Optional: true,
+			Computed: true,
 		},
 
 		"id": {
 			Type:     schema.TypeString,
 			Optional: true,
+			Computed: true,
 		},
 
 		"is_deleted": {
 			Type:     schema.TypeBool,
 			Optional: true,
+			Computed: true,
 		},
 
 		"remote_resource": {
 			Type:     schema.TypeString,
 			Optional: true,
+			Computed: true,
 		},
 
 		"status": {
 			Type:     schema.TypeString,
 			Optional: true,
+			Computed: true,
 		},
 
 		"filter": {
@@ -73,9 +78,13 @@ func DataSourceEventRelayFeedbackSchema() map[string]*schema.Schema {
 }
 
 // Update the underlying EventRelayFeedback resource data in the Terraform configuration using the resource model built from the CREATE/UPDATE/READ LM API request response
-func SetEventRelayFeedbackResourceData(d *schema.ResourceData, m *models.EventRelayFeedback) {
+func SetEventRelayFeedbackResourceData(d *schema.ResourceData, m *models.EventRelayFeedback, isDataResource bool) {
 	d.Set("event_relay_number", m.EventRelayNumber)
-	d.Set("id", m.ID)
+	if m.ID == "" && isDataResource {
+		d.SetId("-")
+	} else {
+		d.SetId(m.ID)
+	}
 	d.Set("is_deleted", m.IsDeleted)
 	d.Set("remote_resource", m.RemoteResource)
 	d.Set("status", m.Status)

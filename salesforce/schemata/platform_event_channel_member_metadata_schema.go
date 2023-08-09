@@ -22,7 +22,10 @@ func PlatformEventChannelMemberMetadataSchema() map[string]*schema.Schema {
 }
 
 // Update the underlying PlatformEventChannelMemberMetadata resource data in the Terraform configuration using the resource model built from the CREATE/UPDATE/READ LM API request response
-func SetPlatformEventChannelMemberMetadataResourceData(d *schema.ResourceData, m *models.PlatformEventChannelMemberMetadata) {
+func SetPlatformEventChannelMemberMetadataResourceData(d *schema.ResourceData, m *models.PlatformEventChannelMemberMetadata, isDataResource bool) {
+	if isDataResource {
+		d.SetId("-")
+	}
 	d.Set("event_channel", m.EventChannel)
 	d.Set("selected_entity", m.SelectedEntity)
 }

@@ -22,12 +22,12 @@ EventRelayFeedback event relay feedback API
 
 func DataResourceEventRelayFeedback() *schema.Resource {
 	return &schema.Resource{
-		ReadContext: getEventRelayFeedback,
+		ReadContext: getEventRelayFeedbackData,
 		Schema:      schemata.DataSourceEventRelayFeedbackSchema(),
 	}
 }
 
-func getEventRelayFeedback(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
+func getEventRelayFeedbackInternal(ctx context.Context, d *schema.ResourceData, m interface{}, isDataResource bool) diag.Diagnostics {
 	var diags diag.Diagnostics
 
 	params := event_relay_feedback.NewGetEventRelayFeedbackParams()
@@ -51,7 +51,14 @@ func getEventRelayFeedback(ctx context.Context, d *schema.ResourceData, m interf
 	}
 
 	respModel := resp.GetPayload()
-	schemata.SetEventRelayFeedbackResourceData(d, respModel)
+	schemata.SetEventRelayFeedbackResourceData(d, respModel, isDataResource)
 
 	return diags
+}
+func getEventRelayFeedbackData(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
+	return getEventRelayFeedbackInternal(ctx, d, m, true)
+}
+
+func getEventRelayFeedback(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
+	return getEventRelayFeedbackInternal(ctx, d, m, false)
 }

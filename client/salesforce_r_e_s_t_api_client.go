@@ -26,10 +26,10 @@ import (
 
 	"vestahealthcare/client/event_relay_config"
 	"vestahealthcare/client/event_relay_feedback"
+	"vestahealthcare/client/event_relay_feedback_lookup"
 	"vestahealthcare/client/named_credential"
 	"vestahealthcare/client/platform_event_channel"
 	"vestahealthcare/client/platform_event_channel_member"
-	"vestahealthcare/client/query_result"
 )
 
 const (
@@ -108,13 +108,13 @@ func New(c *Config) *SalesforceRESTAPI {
 
 	cli.EventRelayFeedback = event_relay_feedback.New(transport, strfmt.Default, oauth2PasswordAuthInfo)
 
+	cli.EventRelayFeedbackLookup = event_relay_feedback_lookup.New(transport, strfmt.Default, oauth2PasswordAuthInfo)
+
 	cli.NamedCredential = named_credential.New(transport, strfmt.Default, oauth2PasswordAuthInfo)
 
 	cli.PlatformEventChannel = platform_event_channel.New(transport, strfmt.Default, oauth2PasswordAuthInfo)
 
 	cli.PlatformEventChannelMember = platform_event_channel_member.New(transport, strfmt.Default, oauth2PasswordAuthInfo)
-
-	cli.QueryResult = query_result.New(transport, strfmt.Default, oauth2PasswordAuthInfo)
 
 	return cli
 }
@@ -164,13 +164,13 @@ type SalesforceRESTAPI struct {
 
 	EventRelayFeedback *event_relay_feedback.Client
 
+	EventRelayFeedbackLookup *event_relay_feedback_lookup.Client
+
 	NamedCredential *named_credential.Client
 
 	PlatformEventChannel *platform_event_channel.Client
 
 	PlatformEventChannelMember *platform_event_channel_member.Client
-
-	QueryResult *query_result.Client
 
 	Transport runtime.ClientTransport
 }
@@ -183,13 +183,13 @@ func (c *SalesforceRESTAPI) SetTransport(transport runtime.ClientTransport) {
 
 	c.EventRelayFeedback.SetTransport(transport)
 
+	c.EventRelayFeedbackLookup.SetTransport(transport)
+
 	c.NamedCredential.SetTransport(transport)
 
 	c.PlatformEventChannel.SetTransport(transport)
 
 	c.PlatformEventChannelMember.SetTransport(transport)
-
-	c.QueryResult.SetTransport(transport)
 
 }
 

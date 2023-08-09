@@ -45,11 +45,13 @@ func DataSourceQueryResultSchema() map[string]*schema.Schema {
 		"done": {
 			Type:     schema.TypeBool,
 			Optional: true,
+			Computed: true,
 		},
 
 		"q": {
 			Type:     schema.TypeString,
 			Optional: true,
+			Computed: true,
 		},
 
 		"records": {
@@ -62,11 +64,13 @@ func DataSourceQueryResultSchema() map[string]*schema.Schema {
 				},
 			},
 			Optional: true,
+			Computed: true,
 		},
 
 		"total_size": {
 			Type:     schema.TypeInt,
 			Optional: true,
+			Computed: true,
 		},
 
 		"filter": {
@@ -77,7 +81,10 @@ func DataSourceQueryResultSchema() map[string]*schema.Schema {
 }
 
 // Update the underlying QueryResult resource data in the Terraform configuration using the resource model built from the CREATE/UPDATE/READ LM API request response
-func SetQueryResultResourceData(d *schema.ResourceData, m *models.QueryResult) {
+func SetQueryResultResourceData(d *schema.ResourceData, m *models.QueryResult, isDataResource bool) {
+	if isDataResource {
+		d.SetId("-")
+	}
 	d.Set("done", m.Done)
 	d.Set("q", m.Q)
 	d.Set("records", m.Records)

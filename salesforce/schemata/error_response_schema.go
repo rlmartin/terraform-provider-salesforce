@@ -22,7 +22,10 @@ func ErrorResponseSchema() map[string]*schema.Schema {
 }
 
 // Update the underlying ErrorResponse resource data in the Terraform configuration using the resource model built from the CREATE/UPDATE/READ LM API request response
-func SetErrorResponseResourceData(d *schema.ResourceData, m *models.ErrorResponse) {
+func SetErrorResponseResourceData(d *schema.ResourceData, m *models.ErrorResponse, isDataResource bool) {
+	if isDataResource {
+		d.SetId("-")
+	}
 	d.Set("error_code", m.ErrorCode)
 	d.Set("message", m.Message)
 }

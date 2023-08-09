@@ -36,7 +36,7 @@ func NamedCredential() *schema.Resource {
 
 func DataResourceNamedCredential() *schema.Resource {
 	return &schema.Resource{
-		ReadContext: getNamedCredential,
+		ReadContext: getNamedCredentialData,
 		Schema:      schemata.DataSourceNamedCredentialSchema(),
 	}
 }
@@ -58,7 +58,7 @@ func createNamedCredential(ctx context.Context, d *schema.ResourceData, m interf
 	}
 
 	respModel := resp.GetPayload()
-	schemata.SetNamedCredentialCreateResponseResourceData(d, respModel)
+	schemata.SetNamedCredentialCreateResponseResourceData(d, respModel, false)
 	return diags
 }
 
@@ -89,7 +89,7 @@ func deleteNamedCredential(ctx context.Context, d *schema.ResourceData, m interf
 	return diags
 }
 
-func getNamedCredential(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
+func getNamedCredentialInternal(ctx context.Context, d *schema.ResourceData, m interface{}, isDataResource bool) diag.Diagnostics {
 	var diags diag.Diagnostics
 
 	params := named_credential.NewGetNamedCredentialParams()
@@ -113,9 +113,16 @@ func getNamedCredential(ctx context.Context, d *schema.ResourceData, m interface
 	}
 
 	respModel := resp.GetPayload()
-	schemata.SetNamedCredentialResourceData(d, respModel)
+	schemata.SetNamedCredentialResourceData(d, respModel, isDataResource)
 
 	return diags
+}
+func getNamedCredentialData(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
+	return getNamedCredentialInternal(ctx, d, m, true)
+}
+
+func getNamedCredential(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
+	return getNamedCredentialInternal(ctx, d, m, false)
 }
 
 func updateNamedCredential(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {

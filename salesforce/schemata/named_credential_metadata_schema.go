@@ -47,7 +47,10 @@ func NamedCredentialMetadataSchema() map[string]*schema.Schema {
 }
 
 // Update the underlying NamedCredentialMetadata resource data in the Terraform configuration using the resource model built from the CREATE/UPDATE/READ LM API request response
-func SetNamedCredentialMetadataResourceData(d *schema.ResourceData, m *models.NamedCredentialMetadata) {
+func SetNamedCredentialMetadataResourceData(d *schema.ResourceData, m *models.NamedCredentialMetadata, isDataResource bool) {
+	if isDataResource {
+		d.SetId("-")
+	}
 	d.Set("allow_merge_fields_in_body", m.AllowMergeFieldsInBody)
 	d.Set("allow_merge_fields_in_header", m.AllowMergeFieldsInHeader)
 	d.Set("endpoint", m.Endpoint)
