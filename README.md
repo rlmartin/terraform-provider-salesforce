@@ -5,12 +5,15 @@ This is a work-in-progress, but any resources already included in this provider 
 
 
 ## Authentication
+Auth for this provider is performed using [OAuth via a Connected App](https://developer.salesforce.com/docs/atlas.en-us.244.0.api_rest.meta/api_rest/intro_oauth_and_connected_apps.htm). Follow the [setup instructions for the Connected App](https://help.salesforce.com/s/articleView?id=sf.connected_app_client_credentials_setup.htm&type=5), which should result in the `client_id` and `client_secret`.
+
 In order to use this provider, you must provide the following information:
 
 1. `subdomain`: This is the part of your environment's hostname that comes before `.my.salesforce.com`.
 2. `token_url`: This will be `https://{your subdomain}.my.salesforce.com/services/oauth2/token`.
-3. `client_id`/`client_secret`: These are provided __TODO__
-4. `username`/`password`: These are the actual credentials for the user connected to the __TODO__.
+3. `client_id`/`client_secret`: See above.
+4. `username`: The username for the execution user assigned to the Connected App during the setup above.
+5. `password`: [A direct concatenation](https://docs.aws.amazon.com/eventbridge/latest/userguide/eb-tutorial-salesforce.html) of the execution user's password + the [security token](https://help.salesforce.com/s/articleView?id=sf.user_security_token.htm&type=5) for the execution user.
 
 
 ### Setup
