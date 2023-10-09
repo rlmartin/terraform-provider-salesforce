@@ -5,7 +5,22 @@ This is a work-in-progress, but any resources already included in this provider 
 
 
 ## Authentication
-Auth for this provider is performed using [OAuth via a Connected App](https://developer.salesforce.com/docs/atlas.en-us.244.0.api_rest.meta/api_rest/intro_oauth_and_connected_apps.htm). Follow the [setup instructions for the Connected App](https://help.salesforce.com/s/articleView?id=sf.connected_app_client_credentials_setup.htm&type=5), which should result in the `client_id` and `client_secret`.
+Auth for this provider is performed using [OAuth via a Connected App](https://developer.salesforce.com/docs/atlas.en-us.244.0.api_rest.meta/api_rest/intro_oauth_and_connected_apps.htm). Follow these steps:
+
+1. [Setup instructions for the Connected App](https://help.salesforce.com/s/articleView?id=sf.ev_relay_create_connected_app.htm&type=5). Choose the following:
+    1. Check "Enable OAuth Settings"
+    2. Check "Enable for Device Flow"
+    3. Leave "Callback URL" as auto-populated. It can be anything because it is not used for API calls.
+    4. Select the "Manage user data via APIs" OAuth Scope.
+    5. Check "Require Secret for Web Server Flow"
+    6. Check "Require Secret for Refresh Token Flow"
+    7. Check "Enable Client Credentials Flow"
+    8. Everything else is find as-is.
+2. Add [client credentials](https://help.salesforce.com/s/articleView?id=sf.connected_app_client_credentials_setup.htm&type=5).
+3. Navigate to Build => Create => Apps and find your new app in the Connected Apps section. Click on the linked name (NOT Manage or Edit). On the next screen click the "Manage Consumer Details" button.
+4. Copy the Consumer Key (aka `client_id`) and Consumer Secret (aka `client_secret`) for later use.
+5. NOTE: This Connected App can be managed by nagivating to Build => Create => Apps => Connected Apps section. DO NOT waste your time in Administer => Manage Apps => Connected Apps.
+
 
 In order to use this provider, you must provide the following information:
 
