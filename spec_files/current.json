@@ -1,6 +1,18 @@
 {
           "basePath": "/services/data/v57.0",
           "definitions": {
+                    "EnrichedField": {
+                              "properties": {
+                                        "name": {
+                                                  "example": "External_Account_ID__c",
+                                                  "type": "string"
+                                        }
+                              },
+                              "required": [
+                                        "name"
+                              ],
+                              "type": "object"
+                    },
                     "ErrorResponse": {
                               "properties": {
                                         "errorCode": {
@@ -386,6 +398,12 @@
                     },
                     "PlatformEventChannelMemberMetadata": {
                               "properties": {
+                                        "enrichedFields": {
+                                                  "items": {
+                                                            "$ref": "#/definitions/EnrichedField"
+                                                  },
+                                                  "type": "array"
+                                        },
                                         "eventChannel": {
                                                   "example": "My_Channel__chn",
                                                   "type": "string"

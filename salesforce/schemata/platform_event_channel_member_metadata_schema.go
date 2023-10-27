@@ -9,6 +9,15 @@ import (
 // Schema mapping representing the PlatformEventChannelMemberMetadata resource defined in the Terraform configuration
 func PlatformEventChannelMemberMetadataSchema() map[string]*schema.Schema {
 	return map[string]*schema.Schema{
+		"enriched_fields": {
+			Type: schema.TypeList, //GoType: []*EnrichedField
+			Elem: &schema.Resource{
+				Schema: EnrichedFieldSchema(),
+			},
+			ConfigMode: schema.SchemaConfigModeAttr,
+			Optional:   true,
+		},
+
 		"event_channel": {
 			Type:     schema.TypeString,
 			Required: true,
@@ -26,6 +35,7 @@ func SetPlatformEventChannelMemberMetadataResourceData(d *schema.ResourceData, m
 	if isDataResource {
 		d.SetId("-")
 	}
+	d.Set("enriched_fields", SetEnrichedFieldSubResourceData(m.EnrichedFields))
 	d.Set("event_channel", m.EventChannel)
 	d.Set("selected_entity", m.SelectedEntity)
 }
@@ -35,6 +45,7 @@ func SetPlatformEventChannelMemberMetadataSubResourceData(m []*models.PlatformEv
 	for _, platformEventChannelMemberMetadata := range m {
 		if platformEventChannelMemberMetadata != nil {
 			properties := make(map[string]interface{})
+			properties["enriched_fields"] = SetEnrichedFieldSubResourceData(platformEventChannelMemberMetadata.EnrichedFields)
 			properties["event_channel"] = platformEventChannelMemberMetadata.EventChannel
 			properties["selected_entity"] = platformEventChannelMemberMetadata.SelectedEntity
 			d = append(d, &properties)
@@ -47,10 +58,12 @@ func SetPlatformEventChannelMemberMetadataSubResourceData(m []*models.PlatformEv
 // (1) Translate PlatformEventChannelMemberMetadata resource data into a schema model struct that will sent to the LM API for resource creation/updating
 // (2) Translate LM API response object from (1) or from a READ operation into a model that can be used to mofify the underlying resource data in the Terrraform configuration
 func PlatformEventChannelMemberMetadataModel(d *schema.ResourceData) *models.PlatformEventChannelMemberMetadata {
+	enrichedFields := d.Get("enriched_fields").([]*models.EnrichedField)
 	eventChannel := d.Get("event_channel").(string)
 	selectedEntity := d.Get("selected_entity").(string)
 
 	return &models.PlatformEventChannelMemberMetadata{
+		EnrichedFields: enrichedFields,
 		EventChannel:   &eventChannel,
 		SelectedEntity: &selectedEntity,
 	}
@@ -58,10 +71,12 @@ func PlatformEventChannelMemberMetadataModel(d *schema.ResourceData) *models.Pla
 
 // Function to perform the following actions:
 func PlatformEventChannelMemberMetadataModelFromMap(m map[string]interface{}) *models.PlatformEventChannelMemberMetadata {
+	enrichedFields := m["enriched_fields"].([]*models.EnrichedField)
 	eventChannel := m["event_channel"].(string)
 	selectedEntity := m["selected_entity"].(string)
 
 	return &models.PlatformEventChannelMemberMetadata{
+		EnrichedFields: enrichedFields,
 		EventChannel:   &eventChannel,
 		SelectedEntity: &selectedEntity,
 	}
@@ -70,6 +85,7 @@ func PlatformEventChannelMemberMetadataModelFromMap(m map[string]interface{}) *m
 // Retrieve property field names for updating the PlatformEventChannelMemberMetadata resource
 func GetPlatformEventChannelMemberMetadataPropertyFields() (t []string) {
 	return []string{
+		"enriched_fields",
 		"event_channel",
 		"selected_entity",
 	}

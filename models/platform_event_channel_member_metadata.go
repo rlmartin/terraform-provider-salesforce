@@ -7,6 +7,7 @@ package models
 
 import (
 	"context"
+	"strconv"
 
 	"github.com/go-openapi/errors"
 	"github.com/go-openapi/strfmt"
@@ -18,6 +19,9 @@ import (
 //
 // swagger:model PlatformEventChannelMemberMetadata
 type PlatformEventChannelMemberMetadata struct {
+
+	// enriched fields
+	EnrichedFields []*EnrichedField `json:"enrichedFields"`
 
 	// event channel
 	// Example: My_Channel__chn
@@ -34,6 +38,10 @@ type PlatformEventChannelMemberMetadata struct {
 func (m *PlatformEventChannelMemberMetadata) Validate(formats strfmt.Registry) error {
 	var res []error
 
+	if err := m.validateEnrichedFields(formats); err != nil {
+		res = append(res, err)
+	}
+
 	if err := m.validateEventChannel(formats); err != nil {
 		res = append(res, err)
 	}
@@ -45,6 +53,32 @@ func (m *PlatformEventChannelMemberMetadata) Validate(formats strfmt.Registry) e
 	if len(res) > 0 {
 		return errors.CompositeValidationError(res...)
 	}
+	return nil
+}
+
+func (m *PlatformEventChannelMemberMetadata) validateEnrichedFields(formats strfmt.Registry) error {
+	if swag.IsZero(m.EnrichedFields) { // not required
+		return nil
+	}
+
+	for i := 0; i < len(m.EnrichedFields); i++ {
+		if swag.IsZero(m.EnrichedFields[i]) { // not required
+			continue
+		}
+
+		if m.EnrichedFields[i] != nil {
+			if err := m.EnrichedFields[i].Validate(formats); err != nil {
+				if ve, ok := err.(*errors.Validation); ok {
+					return ve.ValidateName("enrichedFields" + "." + strconv.Itoa(i))
+				} else if ce, ok := err.(*errors.CompositeError); ok {
+					return ce.ValidateName("enrichedFields" + "." + strconv.Itoa(i))
+				}
+				return err
+			}
+		}
+
+	}
+
 	return nil
 }
 
@@ -66,8 +100,42 @@ func (m *PlatformEventChannelMemberMetadata) validateSelectedEntity(formats strf
 	return nil
 }
 
-// ContextValidate validates this platform event channel member metadata based on context it is used
+// ContextValidate validate this platform event channel member metadata based on the context it is used
 func (m *PlatformEventChannelMemberMetadata) ContextValidate(ctx context.Context, formats strfmt.Registry) error {
+	var res []error
+
+	if err := m.contextValidateEnrichedFields(ctx, formats); err != nil {
+		res = append(res, err)
+	}
+
+	if len(res) > 0 {
+		return errors.CompositeValidationError(res...)
+	}
+	return nil
+}
+
+func (m *PlatformEventChannelMemberMetadata) contextValidateEnrichedFields(ctx context.Context, formats strfmt.Registry) error {
+
+	for i := 0; i < len(m.EnrichedFields); i++ {
+
+		if m.EnrichedFields[i] != nil {
+
+			if swag.IsZero(m.EnrichedFields[i]) { // not required
+				return nil
+			}
+
+			if err := m.EnrichedFields[i].ContextValidate(ctx, formats); err != nil {
+				if ve, ok := err.(*errors.Validation); ok {
+					return ve.ValidateName("enrichedFields" + "." + strconv.Itoa(i))
+				} else if ce, ok := err.(*errors.CompositeError); ok {
+					return ce.ValidateName("enrichedFields" + "." + strconv.Itoa(i))
+				}
+				return err
+			}
+		}
+
+	}
+
 	return nil
 }
 

@@ -1,5 +1,17 @@
 {
   "definitions": {
+    "EnrichedField": {
+      "properties": {
+        "name": {
+          "example": "External_Account_ID__c",
+          "type": "string"
+        }
+      },
+      "required": [
+        "name"
+      ],
+      "type": "object"
+    },
     "PlatformEventChannelMember": {
       "example": "isResource",
       "properties": {
@@ -50,6 +62,12 @@
     },
     "PlatformEventChannelMemberMetadata": {
       "properties": {
+        "enrichedFields": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/EnrichedField"
+          }
+        },
         "eventChannel": {
           "example": "My_Channel__chn",
           "type": "string"
