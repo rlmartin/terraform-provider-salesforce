@@ -74,6 +74,14 @@ func PlatformEventChannelMemberCreateResponseModelFromMap(m map[string]interface
 	}
 }
 
+func PlatformEventChannelMemberCreateResponseModelFromArrayOfMap(m []interface{}) []*models.PlatformEventChannelMemberCreateResponse {
+	mapped := make([]*models.PlatformEventChannelMemberCreateResponse, len(m))
+	for i, v := range m {
+		mapped[i] = PlatformEventChannelMemberCreateResponseModelFromMap(v.(map[string]interface{}))
+	}
+	return mapped
+}
+
 // Retrieve property field names for updating the PlatformEventChannelMemberCreateResponse resource
 func GetPlatformEventChannelMemberCreateResponsePropertyFields() (t []string) {
 	return []string{

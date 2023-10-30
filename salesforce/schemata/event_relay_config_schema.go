@@ -122,6 +122,14 @@ func EventRelayConfigModelFromMap(m map[string]interface{}) *models.EventRelayCo
 	}
 }
 
+func EventRelayConfigModelFromArrayOfMap(m []interface{}) []*models.EventRelayConfig {
+	mapped := make([]*models.EventRelayConfig, len(m))
+	for i, v := range m {
+		mapped[i] = EventRelayConfigModelFromMap(v.(map[string]interface{}))
+	}
+	return mapped
+}
+
 // Retrieve property field names for updating the EventRelayConfig resource
 func GetEventRelayConfigPropertyFields() (t []string) {
 	return []string{

@@ -121,7 +121,10 @@ func EventRelayFeedbackLookupModel(d *schema.ResourceData) *models.EventRelayFee
 func EventRelayFeedbackLookupModelFromMap(m map[string]interface{}) *models.EventRelayFeedbackLookup {
 	done := m["done"].(bool)
 	q := m["q"].(string)
-	records := m["records"].([]*models.Record)
+	var records []*models.Record = nil //hit complex
+	if m["records"] != nil {
+		records = RecordModelFromArrayOfMap(m["records"].([]interface{}))
+	}
 	totalSize := int32(m["total_size"].(int))
 
 	return &models.EventRelayFeedbackLookup{
@@ -130,6 +133,14 @@ func EventRelayFeedbackLookupModelFromMap(m map[string]interface{}) *models.Even
 		Records:   records,
 		TotalSize: totalSize,
 	}
+}
+
+func EventRelayFeedbackLookupModelFromArrayOfMap(m []interface{}) []*models.EventRelayFeedbackLookup {
+	mapped := make([]*models.EventRelayFeedbackLookup, len(m))
+	for i, v := range m {
+		mapped[i] = EventRelayFeedbackLookupModelFromMap(v.(map[string]interface{}))
+	}
+	return mapped
 }
 
 // Retrieve property field names for updating the EventRelayFeedbackLookup resource

@@ -56,6 +56,14 @@ func EnrichedFieldModelFromMap(m map[string]interface{}) *models.EnrichedField {
 	}
 }
 
+func EnrichedFieldModelFromArrayOfMap(m []interface{}) []*models.EnrichedField {
+	mapped := make([]*models.EnrichedField, len(m))
+	for i, v := range m {
+		mapped[i] = EnrichedFieldModelFromMap(v.(map[string]interface{}))
+	}
+	return mapped
+}
+
 // Retrieve property field names for updating the EnrichedField resource
 func GetEnrichedFieldPropertyFields() (t []string) {
 	return []string{

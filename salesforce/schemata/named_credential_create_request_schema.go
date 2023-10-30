@@ -104,6 +104,14 @@ func NamedCredentialCreateRequestModelFromMap(m map[string]interface{}) *models.
 	}
 }
 
+func NamedCredentialCreateRequestModelFromArrayOfMap(m []interface{}) []*models.NamedCredentialCreateRequest {
+	mapped := make([]*models.NamedCredentialCreateRequest, len(m))
+	for i, v := range m {
+		mapped[i] = NamedCredentialCreateRequestModelFromMap(v.(map[string]interface{}))
+	}
+	return mapped
+}
+
 // Retrieve property field names for updating the NamedCredentialCreateRequest resource
 func GetNamedCredentialCreateRequestPropertyFields() (t []string) {
 	return []string{

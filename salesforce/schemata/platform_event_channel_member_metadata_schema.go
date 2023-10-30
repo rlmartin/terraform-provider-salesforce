@@ -71,7 +71,10 @@ func PlatformEventChannelMemberMetadataModel(d *schema.ResourceData) *models.Pla
 
 // Function to perform the following actions:
 func PlatformEventChannelMemberMetadataModelFromMap(m map[string]interface{}) *models.PlatformEventChannelMemberMetadata {
-	enrichedFields := m["enriched_fields"].([]*models.EnrichedField)
+	var enrichedFields []*models.EnrichedField = nil //hit complex
+	if m["enriched_fields"] != nil {
+		enrichedFields = EnrichedFieldModelFromArrayOfMap(m["enriched_fields"].([]interface{}))
+	}
 	eventChannel := m["event_channel"].(string)
 	selectedEntity := m["selected_entity"].(string)
 
@@ -80,6 +83,14 @@ func PlatformEventChannelMemberMetadataModelFromMap(m map[string]interface{}) *m
 		EventChannel:   &eventChannel,
 		SelectedEntity: &selectedEntity,
 	}
+}
+
+func PlatformEventChannelMemberMetadataModelFromArrayOfMap(m []interface{}) []*models.PlatformEventChannelMemberMetadata {
+	mapped := make([]*models.PlatformEventChannelMemberMetadata, len(m))
+	for i, v := range m {
+		mapped[i] = PlatformEventChannelMemberMetadataModelFromMap(v.(map[string]interface{}))
+	}
+	return mapped
 }
 
 // Retrieve property field names for updating the PlatformEventChannelMemberMetadata resource

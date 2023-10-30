@@ -67,6 +67,14 @@ func ErrorResponseModelFromMap(m map[string]interface{}) *models.ErrorResponse {
 	}
 }
 
+func ErrorResponseModelFromArrayOfMap(m []interface{}) []*models.ErrorResponse {
+	mapped := make([]*models.ErrorResponse, len(m))
+	for i, v := range m {
+		mapped[i] = ErrorResponseModelFromMap(v.(map[string]interface{}))
+	}
+	return mapped
+}
+
 // Retrieve property field names for updating the ErrorResponse resource
 func GetErrorResponsePropertyFields() (t []string) {
 	return []string{

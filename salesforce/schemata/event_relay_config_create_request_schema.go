@@ -104,6 +104,14 @@ func EventRelayConfigCreateRequestModelFromMap(m map[string]interface{}) *models
 	}
 }
 
+func EventRelayConfigCreateRequestModelFromArrayOfMap(m []interface{}) []*models.EventRelayConfigCreateRequest {
+	mapped := make([]*models.EventRelayConfigCreateRequest, len(m))
+	for i, v := range m {
+		mapped[i] = EventRelayConfigCreateRequestModelFromMap(v.(map[string]interface{}))
+	}
+	return mapped
+}
+
 // Retrieve property field names for updating the EventRelayConfigCreateRequest resource
 func GetEventRelayConfigCreateRequestPropertyFields() (t []string) {
 	return []string{

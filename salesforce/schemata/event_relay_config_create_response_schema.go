@@ -74,6 +74,14 @@ func EventRelayConfigCreateResponseModelFromMap(m map[string]interface{}) *model
 	}
 }
 
+func EventRelayConfigCreateResponseModelFromArrayOfMap(m []interface{}) []*models.EventRelayConfigCreateResponse {
+	mapped := make([]*models.EventRelayConfigCreateResponse, len(m))
+	for i, v := range m {
+		mapped[i] = EventRelayConfigCreateResponseModelFromMap(v.(map[string]interface{}))
+	}
+	return mapped
+}
+
 // Retrieve property field names for updating the EventRelayConfigCreateResponse resource
 func GetEventRelayConfigCreateResponsePropertyFields() (t []string) {
 	return []string{

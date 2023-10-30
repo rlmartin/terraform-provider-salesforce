@@ -142,6 +142,14 @@ func EventRelayFeedbackModelFromMap(m map[string]interface{}) *models.EventRelay
 	}
 }
 
+func EventRelayFeedbackModelFromArrayOfMap(m []interface{}) []*models.EventRelayFeedback {
+	mapped := make([]*models.EventRelayFeedback, len(m))
+	for i, v := range m {
+		mapped[i] = EventRelayFeedbackModelFromMap(v.(map[string]interface{}))
+	}
+	return mapped
+}
+
 // Retrieve property field names for updating the EventRelayFeedback resource
 func GetEventRelayFeedbackPropertyFields() (t []string) {
 	return []string{

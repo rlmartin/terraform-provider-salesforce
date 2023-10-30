@@ -74,6 +74,14 @@ func NamedCredentialCreateResponseModelFromMap(m map[string]interface{}) *models
 	}
 }
 
+func NamedCredentialCreateResponseModelFromArrayOfMap(m []interface{}) []*models.NamedCredentialCreateResponse {
+	mapped := make([]*models.NamedCredentialCreateResponse, len(m))
+	for i, v := range m {
+		mapped[i] = NamedCredentialCreateResponseModelFromMap(v.(map[string]interface{}))
+	}
+	return mapped
+}
+
 // Retrieve property field names for updating the NamedCredentialCreateResponse resource
 func GetNamedCredentialCreateResponsePropertyFields() (t []string) {
 	return []string{
