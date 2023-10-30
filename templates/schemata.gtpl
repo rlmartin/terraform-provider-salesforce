@@ -267,7 +267,10 @@ func {{ $operationGroup }}ModelFromMap(m map[string]interface{}) *models.{{ $ope
 			{{- else if and .Items .Items.HasAdditionalProperties }}
 	{{ varname .Name }} := m["{{ snakize .Name }}"].([]{{ .Items.GoType }})
 			{{- else if and (not (eq .GoType "string")) (not (eq .GoType "[]string")) (not (eq .GoType "bool")) (not (eq .GoType "int")) (not (eq .GoType "float32")) (not (eq .GoType "float64")) (not (eq .GoType "uint32")) (not (eq .GoType "uint64")) }}
-	{{ varname .Name }} := m["{{ snakize .Name }}"].({{ if hasPrefix .GoType "[]" }}[]{{ end }}*models.{{ pascalize .GoType }})
+	var {{ varname .Name }} {{ if hasPrefix .GoType "[]" }}[]{{ end }}*models.{{ pascalize .GoType }} = nil//hit complex
+	if m["{{ snakize .Name }}"] != nil {
+		{{ varname .Name }} = {{ pascalize .GoType }}ModelFrom{{ if hasPrefix .GoType "[]" }}ArrayOf{{ end }}Map(m["{{ snakize .Name }}"].({{ if hasPrefix .GoType "[]" }}[]{{ else }}map[string]{{ end }}interface{}))
+	}
 			{{- else }}
 	{{ varname .Name }} := m["{{ snakize .Name }}"].({{ .GoType }})
 			{{- end }}
@@ -289,6 +292,14 @@ func {{ $operationGroup }}ModelFromMap(m map[string]interface{}) *models.{{ $ope
 		{{- end }}
 		{{- end }}
 	}
+}
+
+func {{ $operationGroup }}ModelFromArrayOfMap(m []interface{}) []*models.{{ $operationGroup }} {
+	mapped := make([]*models.{{ $operationGroup }}, len(m))
+  for i, v := range m {
+    mapped[i] = {{ $operationGroup }}ModelFromMap(v.(map[string]interface{}))
+  }
+  return mapped
 }
 
 // Retrieve property field names for updating the {{ $operationGroup }} resource 

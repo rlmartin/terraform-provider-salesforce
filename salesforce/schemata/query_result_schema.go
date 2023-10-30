@@ -138,6 +138,14 @@ func QueryResultModelFromMap(m map[string]interface{}) *models.QueryResult {
 	}
 }
 
+func QueryResultModelFromArrayOfMap(m []interface{}) []*models.QueryResult {
+	mapped := make([]*models.QueryResult, len(m))
+	for i, v := range m {
+		mapped[i] = QueryResultModelFromMap(v.(map[string]interface{}))
+	}
+	return mapped
+}
+
 // Retrieve property field names for updating the QueryResult resource
 func GetQueryResultPropertyFields() (t []string) {
 	return []string{

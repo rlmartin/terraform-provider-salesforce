@@ -74,6 +74,14 @@ func RecordModelFromMap(m map[string]interface{}) *models.Record {
 	}
 }
 
+func RecordModelFromArrayOfMap(m []interface{}) []*models.Record {
+	mapped := make([]*models.Record, len(m))
+	for i, v := range m {
+		mapped[i] = RecordModelFromMap(v.(map[string]interface{}))
+	}
+	return mapped
+}
+
 // Retrieve property field names for updating the Record resource
 func GetRecordPropertyFields() (t []string) {
 	return []string{

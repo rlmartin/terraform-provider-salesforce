@@ -122,6 +122,14 @@ func NamedCredentialMetadataModelFromMap(m map[string]interface{}) *models.Named
 	}
 }
 
+func NamedCredentialMetadataModelFromArrayOfMap(m []interface{}) []*models.NamedCredentialMetadata {
+	mapped := make([]*models.NamedCredentialMetadata, len(m))
+	for i, v := range m {
+		mapped[i] = NamedCredentialMetadataModelFromMap(v.(map[string]interface{}))
+	}
+	return mapped
+}
+
 // Retrieve property field names for updating the NamedCredentialMetadata resource
 func GetNamedCredentialMetadataPropertyFields() (t []string) {
 	return []string{

@@ -67,6 +67,14 @@ func PlatformEventChannelMetadataModelFromMap(m map[string]interface{}) *models.
 	}
 }
 
+func PlatformEventChannelMetadataModelFromArrayOfMap(m []interface{}) []*models.PlatformEventChannelMetadata {
+	mapped := make([]*models.PlatformEventChannelMetadata, len(m))
+	for i, v := range m {
+		mapped[i] = PlatformEventChannelMetadataModelFromMap(v.(map[string]interface{}))
+	}
+	return mapped
+}
+
 // Retrieve property field names for updating the PlatformEventChannelMetadata resource
 func GetPlatformEventChannelMetadataPropertyFields() (t []string) {
 	return []string{

@@ -31,3 +31,14 @@ Required:
 
 - `event_channel` (String)
 - `selected_entity` (String)
+
+Optional:
+
+- `enriched_fields` (List of Object) (see [below for nested schema](#nestedatt--metadata--enriched_fields))
+
+<a id="nestedatt--metadata--enriched_fields"></a>
+### Nested Schema for `metadata.enriched_fields`
+
+Optional:
+
+- `name` (String)

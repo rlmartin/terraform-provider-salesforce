@@ -1,6 +1,18 @@
 {
           "basePath": "/services/data/v57.0",
           "definitions": {
+                    "EnrichedField": {
+                              "properties": {
+                                        "name": {
+                                                  "example": "External_Account_ID__c",
+                                                  "type": "string"
+                                        }
+                              },
+                              "required": [
+                                        "name"
+                              ],
+                              "type": "object"
+                    },
                     "ErrorResponse": {
                               "properties": {
                                         "errorCode": {
@@ -386,6 +398,13 @@
                     },
                     "PlatformEventChannelMemberMetadata": {
                               "properties": {
+                                        "enrichedFields": {
+                                                  "description": "This will not work until 'Change data capture event enrichment' is supported for Event Relay. See https://help.salesforce.com/s/articleView?id=sf.ev_relay_feature_support.htm&type=5. Until it is supported, using this will result in http 403 errors.",
+                                                  "items": {
+                                                            "$ref": "#/definitions/EnrichedField"
+                                                  },
+                                                  "type": "array"
+                                        },
                                         "eventChannel": {
                                                   "example": "My_Channel__chn",
                                                   "type": "string"

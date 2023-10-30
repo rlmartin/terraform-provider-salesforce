@@ -104,6 +104,14 @@ func PlatformEventChannelMemberCreateRequestModelFromMap(m map[string]interface{
 	}
 }
 
+func PlatformEventChannelMemberCreateRequestModelFromArrayOfMap(m []interface{}) []*models.PlatformEventChannelMemberCreateRequest {
+	mapped := make([]*models.PlatformEventChannelMemberCreateRequest, len(m))
+	for i, v := range m {
+		mapped[i] = PlatformEventChannelMemberCreateRequestModelFromMap(v.(map[string]interface{}))
+	}
+	return mapped
+}
+
 // Retrieve property field names for updating the PlatformEventChannelMemberCreateRequest resource
 func GetPlatformEventChannelMemberCreateRequestPropertyFields() (t []string) {
 	return []string{
