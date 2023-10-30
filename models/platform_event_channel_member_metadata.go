@@ -20,7 +20,7 @@ import (
 // swagger:model PlatformEventChannelMemberMetadata
 type PlatformEventChannelMemberMetadata struct {
 
-	// enriched fields
+	// This will not work until 'Change data capture event enrichment' is supported for Event Relay. See https://help.salesforce.com/s/articleView?id=sf.ev_relay_feature_support.htm&type=5. Until it is supported, using this will result in http 403 errors.
 	EnrichedFields []*EnrichedField `json:"enrichedFields"`
 
 	// event channel
