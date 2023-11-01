@@ -6,6 +6,7 @@ package named_credential
 // Editing this file might prove futile when you re-run the swagger generate command
 
 import (
+	"encoding/json"
 	"fmt"
 	"io"
 
@@ -55,6 +56,7 @@ type DeleteNamedCredentialNoContent struct {
 }
 
 func (o *DeleteNamedCredentialNoContent) Error() string {
+
 	return fmt.Sprintf("[DELETE /tooling/sobjects/NamedCredential/{Id}][%d] deleteNamedCredentialNoContent ", 204)
 }
 
@@ -87,7 +89,12 @@ func (o *DeleteNamedCredentialDefault) Code() int {
 }
 
 func (o *DeleteNamedCredentialDefault) Error() string {
-	return fmt.Sprintf("[DELETE /tooling/sobjects/NamedCredential/{Id}][%d] deleteNamedCredential default  %+v", o._statusCode, o.Payload)
+	s := fmt.Sprintf("%+v", o.Payload)
+	b, err := json.Marshal(o.Payload)
+	if err == nil {
+		s = string(b)
+	}
+	return fmt.Sprintf("[DELETE /tooling/sobjects/NamedCredential/{Id}][%d] deleteNamedCredential default  %s", o._statusCode, s)
 }
 func (o *DeleteNamedCredentialDefault) GetPayload() []*models.ErrorResponse {
 	return o.Payload

@@ -76,7 +76,14 @@ func ({{ .ReceiverName }} *{{ pascalize .Name }}) Code() int {
 
 
 func ({{ .ReceiverName }} *{{ pascalize .Name }}) Error() string {
-	return fmt.Sprintf("[{{ upper .Method }} {{ .Path }}][%d] {{ if .Name }}{{ .Name }} {{ else }}unknown error {{ end }}{{ if .Schema }} %+v{{ end }}", {{ if eq .Code -1 }}{{ .ReceiverName }}._statusCode{{ else }}{{ .Code }}{{ end }}{{ if .Schema }}, o.Payload{{ end }})
+  {{ if .Schema -}}
+  s := fmt.Sprintf("%+v", o.Payload)
+  b, err := json.Marshal(o.Payload)
+  if err == nil {
+    s = string(b)
+  }
+  {{- end }}
+	return fmt.Sprintf("[{{ upper .Method }} {{ .Path }}][%d] {{ if .Name }}{{ .Name }} {{ else }}unknown error {{ end }}{{ if .Schema }} %s{{ end }}", {{ if eq .Code -1 }}{{ .ReceiverName }}._statusCode{{ else }}{{ .Code }}{{ end }}{{ if .Schema }}, s{{ end }})
 }
 
   {{- if .Schema }}

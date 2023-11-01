@@ -6,6 +6,7 @@ package platform_event_channel_member
 // Editing this file might prove futile when you re-run the swagger generate command
 
 import (
+	"encoding/json"
 	"fmt"
 	"io"
 
@@ -55,6 +56,7 @@ type DeletePlatformEventChannelMemberNoContent struct {
 }
 
 func (o *DeletePlatformEventChannelMemberNoContent) Error() string {
+
 	return fmt.Sprintf("[DELETE /tooling/sobjects/PlatformEventChannelMember/{Id}][%d] deletePlatformEventChannelMemberNoContent ", 204)
 }
 
@@ -87,7 +89,12 @@ func (o *DeletePlatformEventChannelMemberDefault) Code() int {
 }
 
 func (o *DeletePlatformEventChannelMemberDefault) Error() string {
-	return fmt.Sprintf("[DELETE /tooling/sobjects/PlatformEventChannelMember/{Id}][%d] deletePlatformEventChannelMember default  %+v", o._statusCode, o.Payload)
+	s := fmt.Sprintf("%+v", o.Payload)
+	b, err := json.Marshal(o.Payload)
+	if err == nil {
+		s = string(b)
+	}
+	return fmt.Sprintf("[DELETE /tooling/sobjects/PlatformEventChannelMember/{Id}][%d] deletePlatformEventChannelMember default  %s", o._statusCode, s)
 }
 func (o *DeletePlatformEventChannelMemberDefault) GetPayload() []*models.ErrorResponse {
 	return o.Payload

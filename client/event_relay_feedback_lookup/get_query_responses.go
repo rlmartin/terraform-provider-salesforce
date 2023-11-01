@@ -6,6 +6,7 @@ package event_relay_feedback_lookup
 // Editing this file might prove futile when you re-run the swagger generate command
 
 import (
+	"encoding/json"
 	"fmt"
 	"io"
 
@@ -56,7 +57,12 @@ type GetQueryOK struct {
 }
 
 func (o *GetQueryOK) Error() string {
-	return fmt.Sprintf("[GET /query][%d] getQueryOK  %+v", 200, o.Payload)
+	s := fmt.Sprintf("%+v", o.Payload)
+	b, err := json.Marshal(o.Payload)
+	if err == nil {
+		s = string(b)
+	}
+	return fmt.Sprintf("[GET /query][%d] getQueryOK  %s", 200, s)
 }
 func (o *GetQueryOK) GetPayload() *models.EventRelayFeedbackLookup {
 	return o.Payload
@@ -98,7 +104,12 @@ func (o *GetQueryDefault) Code() int {
 }
 
 func (o *GetQueryDefault) Error() string {
-	return fmt.Sprintf("[GET /query][%d] getQuery default  %+v", o._statusCode, o.Payload)
+	s := fmt.Sprintf("%+v", o.Payload)
+	b, err := json.Marshal(o.Payload)
+	if err == nil {
+		s = string(b)
+	}
+	return fmt.Sprintf("[GET /query][%d] getQuery default  %s", o._statusCode, s)
 }
 func (o *GetQueryDefault) GetPayload() []*models.ErrorResponse {
 	return o.Payload

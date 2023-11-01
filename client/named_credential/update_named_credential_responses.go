@@ -6,6 +6,7 @@ package named_credential
 // Editing this file might prove futile when you re-run the swagger generate command
 
 import (
+	"encoding/json"
 	"fmt"
 	"io"
 
@@ -55,6 +56,7 @@ type UpdateNamedCredentialNoContent struct {
 }
 
 func (o *UpdateNamedCredentialNoContent) Error() string {
+
 	return fmt.Sprintf("[PATCH /tooling/sobjects/NamedCredential/{Id}][%d] updateNamedCredentialNoContent ", 204)
 }
 
@@ -87,7 +89,12 @@ func (o *UpdateNamedCredentialDefault) Code() int {
 }
 
 func (o *UpdateNamedCredentialDefault) Error() string {
-	return fmt.Sprintf("[PATCH /tooling/sobjects/NamedCredential/{Id}][%d] updateNamedCredential default  %+v", o._statusCode, o.Payload)
+	s := fmt.Sprintf("%+v", o.Payload)
+	b, err := json.Marshal(o.Payload)
+	if err == nil {
+		s = string(b)
+	}
+	return fmt.Sprintf("[PATCH /tooling/sobjects/NamedCredential/{Id}][%d] updateNamedCredential default  %s", o._statusCode, s)
 }
 func (o *UpdateNamedCredentialDefault) GetPayload() []*models.ErrorResponse {
 	return o.Payload
