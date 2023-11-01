@@ -6,6 +6,7 @@ package event_relay_config
 // Editing this file might prove futile when you re-run the swagger generate command
 
 import (
+	"encoding/json"
 	"fmt"
 	"io"
 
@@ -56,7 +57,12 @@ type CreateEventRelayConfigCreated struct {
 }
 
 func (o *CreateEventRelayConfigCreated) Error() string {
-	return fmt.Sprintf("[POST /tooling/sobjects/EventRelayConfig][%d] createEventRelayConfigCreated  %+v", 201, o.Payload)
+	s := fmt.Sprintf("%+v", o.Payload)
+	b, err := json.Marshal(o.Payload)
+	if err == nil {
+		s = string(b)
+	}
+	return fmt.Sprintf("[POST /tooling/sobjects/EventRelayConfig][%d] createEventRelayConfigCreated  %s", 201, s)
 }
 func (o *CreateEventRelayConfigCreated) GetPayload() *models.EventRelayConfigCreateResponse {
 	return o.Payload
@@ -98,7 +104,12 @@ func (o *CreateEventRelayConfigDefault) Code() int {
 }
 
 func (o *CreateEventRelayConfigDefault) Error() string {
-	return fmt.Sprintf("[POST /tooling/sobjects/EventRelayConfig][%d] createEventRelayConfig default  %+v", o._statusCode, o.Payload)
+	s := fmt.Sprintf("%+v", o.Payload)
+	b, err := json.Marshal(o.Payload)
+	if err == nil {
+		s = string(b)
+	}
+	return fmt.Sprintf("[POST /tooling/sobjects/EventRelayConfig][%d] createEventRelayConfig default  %s", o._statusCode, s)
 }
 func (o *CreateEventRelayConfigDefault) GetPayload() []*models.ErrorResponse {
 	return o.Payload

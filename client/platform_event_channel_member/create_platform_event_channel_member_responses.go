@@ -6,6 +6,7 @@ package platform_event_channel_member
 // Editing this file might prove futile when you re-run the swagger generate command
 
 import (
+	"encoding/json"
 	"fmt"
 	"io"
 
@@ -56,7 +57,12 @@ type CreatePlatformEventChannelMemberCreated struct {
 }
 
 func (o *CreatePlatformEventChannelMemberCreated) Error() string {
-	return fmt.Sprintf("[POST /tooling/sobjects/PlatformEventChannelMember][%d] createPlatformEventChannelMemberCreated  %+v", 201, o.Payload)
+	s := fmt.Sprintf("%+v", o.Payload)
+	b, err := json.Marshal(o.Payload)
+	if err == nil {
+		s = string(b)
+	}
+	return fmt.Sprintf("[POST /tooling/sobjects/PlatformEventChannelMember][%d] createPlatformEventChannelMemberCreated  %s", 201, s)
 }
 func (o *CreatePlatformEventChannelMemberCreated) GetPayload() *models.PlatformEventChannelMemberCreateResponse {
 	return o.Payload
@@ -98,7 +104,12 @@ func (o *CreatePlatformEventChannelMemberDefault) Code() int {
 }
 
 func (o *CreatePlatformEventChannelMemberDefault) Error() string {
-	return fmt.Sprintf("[POST /tooling/sobjects/PlatformEventChannelMember][%d] createPlatformEventChannelMember default  %+v", o._statusCode, o.Payload)
+	s := fmt.Sprintf("%+v", o.Payload)
+	b, err := json.Marshal(o.Payload)
+	if err == nil {
+		s = string(b)
+	}
+	return fmt.Sprintf("[POST /tooling/sobjects/PlatformEventChannelMember][%d] createPlatformEventChannelMember default  %s", o._statusCode, s)
 }
 func (o *CreatePlatformEventChannelMemberDefault) GetPayload() []*models.ErrorResponse {
 	return o.Payload

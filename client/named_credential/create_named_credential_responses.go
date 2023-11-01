@@ -6,6 +6,7 @@ package named_credential
 // Editing this file might prove futile when you re-run the swagger generate command
 
 import (
+	"encoding/json"
 	"fmt"
 	"io"
 
@@ -56,7 +57,12 @@ type CreateNamedCredentialCreated struct {
 }
 
 func (o *CreateNamedCredentialCreated) Error() string {
-	return fmt.Sprintf("[POST /tooling/sobjects/NamedCredential][%d] createNamedCredentialCreated  %+v", 201, o.Payload)
+	s := fmt.Sprintf("%+v", o.Payload)
+	b, err := json.Marshal(o.Payload)
+	if err == nil {
+		s = string(b)
+	}
+	return fmt.Sprintf("[POST /tooling/sobjects/NamedCredential][%d] createNamedCredentialCreated  %s", 201, s)
 }
 func (o *CreateNamedCredentialCreated) GetPayload() *models.NamedCredentialCreateResponse {
 	return o.Payload
@@ -98,7 +104,12 @@ func (o *CreateNamedCredentialDefault) Code() int {
 }
 
 func (o *CreateNamedCredentialDefault) Error() string {
-	return fmt.Sprintf("[POST /tooling/sobjects/NamedCredential][%d] createNamedCredential default  %+v", o._statusCode, o.Payload)
+	s := fmt.Sprintf("%+v", o.Payload)
+	b, err := json.Marshal(o.Payload)
+	if err == nil {
+		s = string(b)
+	}
+	return fmt.Sprintf("[POST /tooling/sobjects/NamedCredential][%d] createNamedCredential default  %s", o._statusCode, s)
 }
 func (o *CreateNamedCredentialDefault) GetPayload() []*models.ErrorResponse {
 	return o.Payload

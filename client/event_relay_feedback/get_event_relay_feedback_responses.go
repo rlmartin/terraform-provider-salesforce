@@ -6,6 +6,7 @@ package event_relay_feedback
 // Editing this file might prove futile when you re-run the swagger generate command
 
 import (
+	"encoding/json"
 	"fmt"
 	"io"
 
@@ -56,7 +57,12 @@ type GetEventRelayFeedbackOK struct {
 }
 
 func (o *GetEventRelayFeedbackOK) Error() string {
-	return fmt.Sprintf("[GET /sobjects/EventRelayFeedback/{Id}][%d] getEventRelayFeedbackOK  %+v", 200, o.Payload)
+	s := fmt.Sprintf("%+v", o.Payload)
+	b, err := json.Marshal(o.Payload)
+	if err == nil {
+		s = string(b)
+	}
+	return fmt.Sprintf("[GET /sobjects/EventRelayFeedback/{Id}][%d] getEventRelayFeedbackOK  %s", 200, s)
 }
 func (o *GetEventRelayFeedbackOK) GetPayload() *models.EventRelayFeedback {
 	return o.Payload
@@ -98,7 +104,12 @@ func (o *GetEventRelayFeedbackDefault) Code() int {
 }
 
 func (o *GetEventRelayFeedbackDefault) Error() string {
-	return fmt.Sprintf("[GET /sobjects/EventRelayFeedback/{Id}][%d] getEventRelayFeedback default  %+v", o._statusCode, o.Payload)
+	s := fmt.Sprintf("%+v", o.Payload)
+	b, err := json.Marshal(o.Payload)
+	if err == nil {
+		s = string(b)
+	}
+	return fmt.Sprintf("[GET /sobjects/EventRelayFeedback/{Id}][%d] getEventRelayFeedback default  %s", o._statusCode, s)
 }
 func (o *GetEventRelayFeedbackDefault) GetPayload() []*models.ErrorResponse {
 	return o.Payload

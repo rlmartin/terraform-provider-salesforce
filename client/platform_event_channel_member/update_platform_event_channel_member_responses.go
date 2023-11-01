@@ -6,6 +6,7 @@ package platform_event_channel_member
 // Editing this file might prove futile when you re-run the swagger generate command
 
 import (
+	"encoding/json"
 	"fmt"
 	"io"
 
@@ -55,6 +56,7 @@ type UpdatePlatformEventChannelMemberNoContent struct {
 }
 
 func (o *UpdatePlatformEventChannelMemberNoContent) Error() string {
+
 	return fmt.Sprintf("[PATCH /tooling/sobjects/PlatformEventChannelMember/{Id}][%d] updatePlatformEventChannelMemberNoContent ", 204)
 }
 
@@ -87,7 +89,12 @@ func (o *UpdatePlatformEventChannelMemberDefault) Code() int {
 }
 
 func (o *UpdatePlatformEventChannelMemberDefault) Error() string {
-	return fmt.Sprintf("[PATCH /tooling/sobjects/PlatformEventChannelMember/{Id}][%d] updatePlatformEventChannelMember default  %+v", o._statusCode, o.Payload)
+	s := fmt.Sprintf("%+v", o.Payload)
+	b, err := json.Marshal(o.Payload)
+	if err == nil {
+		s = string(b)
+	}
+	return fmt.Sprintf("[PATCH /tooling/sobjects/PlatformEventChannelMember/{Id}][%d] updatePlatformEventChannelMember default  %s", o._statusCode, s)
 }
 func (o *UpdatePlatformEventChannelMemberDefault) GetPayload() []*models.ErrorResponse {
 	return o.Payload

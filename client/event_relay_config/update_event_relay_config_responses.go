@@ -6,6 +6,7 @@ package event_relay_config
 // Editing this file might prove futile when you re-run the swagger generate command
 
 import (
+	"encoding/json"
 	"fmt"
 	"io"
 
@@ -55,6 +56,7 @@ type UpdateEventRelayConfigNoContent struct {
 }
 
 func (o *UpdateEventRelayConfigNoContent) Error() string {
+
 	return fmt.Sprintf("[PATCH /tooling/sobjects/EventRelayConfig/{Id}][%d] updateEventRelayConfigNoContent ", 204)
 }
 
@@ -87,7 +89,12 @@ func (o *UpdateEventRelayConfigDefault) Code() int {
 }
 
 func (o *UpdateEventRelayConfigDefault) Error() string {
-	return fmt.Sprintf("[PATCH /tooling/sobjects/EventRelayConfig/{Id}][%d] updateEventRelayConfig default  %+v", o._statusCode, o.Payload)
+	s := fmt.Sprintf("%+v", o.Payload)
+	b, err := json.Marshal(o.Payload)
+	if err == nil {
+		s = string(b)
+	}
+	return fmt.Sprintf("[PATCH /tooling/sobjects/EventRelayConfig/{Id}][%d] updateEventRelayConfig default  %s", o._statusCode, s)
 }
 func (o *UpdateEventRelayConfigDefault) GetPayload() []*models.ErrorResponse {
 	return o.Payload
